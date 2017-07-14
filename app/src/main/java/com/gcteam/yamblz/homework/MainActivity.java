@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TITLE_KEY = "title";
+    private MainActivityRouter router = new MainActivityRouter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null) {
-            setTitle(R.string.settings);
-            replaceFragment(new SettingsFragment(), SettingsFragment.class.getSimpleName(), true);
+            router.showSettings();
         }
     }
 
@@ -67,37 +67,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_settings) {
-            setTitle(R.string.settings);
-            replaceFragment(new SettingsFragment(), SettingsFragment.class.getSimpleName(), true);
+            router.showSettings();
         } else if (id == R.id.nav_about) {
-            setTitle(R.string.about_app);
-            replaceFragment(new AboutFragment(), AboutFragment.class.getSimpleName(), true);
+            router.showAbout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void replaceFragment(Fragment fragmentToSet, String tag, boolean top) {
-        FragmentManager manager = getSupportFragmentManager();
-        if(top) {
-            boolean removed = manager.popBackStackImmediate();
-            while (removed) {
-                removed = manager.popBackStackImmediate();
-            }
-        }
-
-        if(manager.findFragmentByTag(tag) == null) {
-            FragmentTransaction transaction = manager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    .replace(R.id.content_main, fragmentToSet, tag);
-
-            if(!top) {
-                transaction.addToBackStack(null);
-            }
-
-            transaction.commit();
-        }
     }
 }
