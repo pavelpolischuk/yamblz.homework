@@ -2,10 +2,17 @@
 <resources>
     <string name="app_name">Погода</string>
 
+    <string name="action_weather">Погода</string>
     <string name="action_settings">Настройки</string>
-    <string name="settings">Настройки</string>
     <string name="action_about">О приложении</string>
+
+    <string name="weather">Погода</string>
+    <string name="settings">Настройки</string>
     <string name="about_app">О приложении</string>
+
     <string name="navigation_drawer_open">Открыть меню</string>
     <string name="navigation_drawer_close">Закрыть меню</string>
+
+    <string name="update_interval">Интервал обновления</string>
+    <string name="update_interval_default">2 часа</string>
 </resources>

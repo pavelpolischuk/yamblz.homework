@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null) {
-            router.showSettings();
+            router.showWeather();
         }
     }
 
@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_settings) {
+        if (id == R.id.nav_weather) {
+            router.showWeather();
+        } else if (id == R.id.nav_settings) {
             router.showSettings();
         } else if (id == R.id.nav_about) {
             router.showAbout();

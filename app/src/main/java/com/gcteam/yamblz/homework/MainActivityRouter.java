@@ -5,6 +5,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.gcteam.yamblz.homework.settings.SettingsFragment;
+import com.gcteam.yamblz.homework.weather.WeatherFragment;
+
 /**
  * Created by turist on 14.07.2017.
  */
@@ -15,6 +18,12 @@ public class MainActivityRouter implements MainRouter {
 
     public MainActivityRouter(FragmentActivity activity) {
         this.activity = activity;
+    }
+
+    @Override
+    public void showWeather() {
+        activity.setTitle(R.string.weather);
+        replaceFragment(new WeatherFragment(), WeatherFragment.class.getSimpleName(), true);
     }
 
     @Override

@@ -5,6 +5,7 @@ package com.gcteam.yamblz.homework;
  */
 
 public interface MainRouter {
+    void showWeather();
     void showSettings();
     void showAbout();
 }
