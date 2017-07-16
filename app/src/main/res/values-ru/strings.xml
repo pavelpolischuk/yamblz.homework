@@ -15,4 +15,19 @@
 
     <string name="update_interval">Интервал обновления</string>
     <string name="update_interval_default">2 часа</string>
+
+    <string name="wind_n">%s м/с, С</string>
+    <string name="wind_no">%s м/с, СВ</string>
+    <string name="wind_o">%s м/с, В</string>
+    <string name="wind_so">%s м/с, ЮВ</string>
+    <string name="wind_s">%s м/с, Ю</string>
+    <string name="wind_sw">%s м/с, ЮЗ</string>
+    <string name="wind_w">%s м/с, З</string>
+    <string name="wind_nw">%s м/с, СЗ</string>
+
+    <string name="pressure_label">Давление</string>
+    <string name="humidity_label">Влажность</string>
+    <string name="wind_label">Ветер</string>
+
+    <string name="loading_error">Ошибка загрузки</string>
 </resources>

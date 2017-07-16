@@ -14,4 +14,19 @@
 
     <string name="update_interval">Update interval</string>
     <string name="update_interval_default">2 hours</string>
+
+    <string name="wind_n">%s m/s, N</string>
+    <string name="wind_no">%s m/s, NO</string>
+    <string name="wind_o">%s m/s, O</string>
+    <string name="wind_so">%s m/s, SO</string>
+    <string name="wind_s">%s m/s, S</string>
+    <string name="wind_sw">%s m/s, SW</string>
+    <string name="wind_w">%s m/s, W</string>
+    <string name="wind_nw">%s m/s, NW</string>
+
+    <string name="pressure_label">Pressure</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="wind_label">Wind</string>
+
+    <string name="loading_error">Loading error</string>
 </resources>
