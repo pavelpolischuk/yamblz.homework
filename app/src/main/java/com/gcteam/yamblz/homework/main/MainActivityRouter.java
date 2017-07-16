@@ -1,10 +1,12 @@
-package com.gcteam.yamblz.homework;
+package com.gcteam.yamblz.homework.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.gcteam.yamblz.homework.AboutFragment;
+import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.settings.SettingsFragment;
 import com.gcteam.yamblz.homework.weather.WeatherFragment;
 

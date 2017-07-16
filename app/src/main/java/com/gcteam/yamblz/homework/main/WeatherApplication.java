@@ -1,7 +1,8 @@
-package com.gcteam.yamblz.homework;
+package com.gcteam.yamblz.homework.main;
 
 import android.app.Application;
 
+import com.evernote.android.job.JobManager;
 import com.gcteam.yamblz.homework.weather.WeatherStorage;
 
 /**
@@ -15,5 +16,6 @@ public class WeatherApplication extends Application {
         super.onCreate();
 
         WeatherStorage.init(getApplicationContext());
+        JobManager.create(this).addJobCreator(new WeatherJobCreator());
     }
 }

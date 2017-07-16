@@ -16,9 +16,6 @@ import io.reactivex.functions.Consumer;
 
 public class WeatherLoadingInteractor {
 
-    private static final int MOSCOW_CITY_ID = 524901;
-    private static final String METRIC_UNITS = "metric";
-
     private Disposable subscription;
     private Consumer<Throwable> errorHandler;
 
@@ -68,7 +65,7 @@ public class WeatherLoadingInteractor {
 
     Disposable startRefresh() {
         Observable<Weather> currentWeather = WeatherService.get()
-                .currentWeather(MOSCOW_CITY_ID, METRIC_UNITS, Locale.getDefault().getLanguage());
+                .currentWeather(Locale.getDefault().getLanguage());
 
         return currentWeather
                 .observeOn(AndroidSchedulers.mainThread())

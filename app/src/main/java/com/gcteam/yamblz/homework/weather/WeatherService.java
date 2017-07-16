@@ -22,6 +22,8 @@ public class WeatherService {
     private static final String API_BASE_URL = "http://api.openweathermap.org/data/";
     private static final String API_KEY = "8fd5656437393710869297fbf372df49";
 
+    private static final int MOSCOW_CITY_ID = 524901;
+    private static final String METRIC_UNITS = "metric";
 
     private static final HashSet<String> units = new HashSet<>(Arrays.asList(
             "standard", "metric", "imperial"));
@@ -53,6 +55,10 @@ public class WeatherService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .map(new WeatherMapper());
+    }
+
+    public Observable<Weather> currentWeather(String lang) {
+        return currentWeather(MOSCOW_CITY_ID, METRIC_UNITS, lang);
     }
 
     public static String checkUnitsType(String unitsType) {
