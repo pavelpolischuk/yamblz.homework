@@ -31,6 +31,7 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
     @BindView(R.id.pressure) TextView pressure;
     @BindView(R.id.humidity) TextView humidity;
     @BindView(R.id.wind) TextView wind;
+    @BindView(R.id.updated) TextView updated;
 
     private WeatherLoadingInteractor interactor = new WeatherLoadingInteractor();
 
@@ -74,6 +75,7 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
         humidity.setText(String.format("%s%%", weather.getHumidity()));
         wind.setText(String.format(getString(weather.getWindFormat()), weather.getWindSpeed()));
         refreshLayout.setRefreshing(false);
+        updated.setText(weather.getUpdatingTime().getTime().toString());
     }
 
     @Override

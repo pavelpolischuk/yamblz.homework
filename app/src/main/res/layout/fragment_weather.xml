@@ -74,5 +74,18 @@
             android:layout_marginLeft="2dp"
             app:layout_constraintLeft_toRightOf="@+id/wind_label"
             app:layout_constraintBaseline_toBaselineOf="@+id/wind_label"/>
+
+        <TextView android:id="@+id/updated_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/updated_label"
+                android:padding="4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wind_label"/>
+        <TextView android:id="@+id/updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/updated_label"
+            app:layout_constraintBaseline_toBaselineOf="@+id/updated_label"/>
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

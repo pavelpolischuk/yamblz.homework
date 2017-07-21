@@ -29,4 +29,5 @@
     <string name="wind_label">Wind</string>
 
     <string name="loading_error">Loading error</string>
+    <string name="updated_label">Updated</string>
 </resources>

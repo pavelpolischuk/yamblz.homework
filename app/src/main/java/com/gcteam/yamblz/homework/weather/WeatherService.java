@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -50,14 +51,14 @@ public class WeatherService {
         return instance;
     }
 
-    public Observable<Weather> currentWeather(int cityId, String units, String lang) {
+    public Single<Weather> currentWeather(int cityId, String units, String lang) {
         return api.current(API_KEY, cityId, checkUnitsType(units), checkLangCode(lang))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .map(new WeatherMapper());
     }
 
-    public Observable<Weather> currentWeather(String lang) {
+    public Single<Weather> currentWeather(String lang) {
         return currentWeather(MOSCOW_CITY_ID, METRIC_UNITS, lang);
     }
 

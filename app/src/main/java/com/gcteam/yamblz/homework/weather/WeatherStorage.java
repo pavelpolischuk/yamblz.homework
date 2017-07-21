@@ -45,10 +45,15 @@ public class WeatherStorage {
         return new Consumer<Weather>() {
             @Override
             public void accept(@NonNull Weather weather) throws Exception {
-                save(weather);
-                weatherSubject.onNext(weather);
+                updateLastWeather(weather);
             }
         };
+    }
+
+    @NonNull
+    public void updateLastWeather(Weather weather) {
+        save(weather);
+        weatherSubject.onNext(weather);
     }
 
     public void save(Weather weather) {

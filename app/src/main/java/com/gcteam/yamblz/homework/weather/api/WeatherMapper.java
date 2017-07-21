@@ -5,6 +5,8 @@ import android.support.annotation.StringRes;
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.weather.api.dto.WeatherCondition;
 
+import java.util.Calendar;
+
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
@@ -26,7 +28,7 @@ public class WeatherMapper implements Function<com.gcteam.yamblz.homework.weathe
 
         return new Weather(iconUrl(condition.iconId), condition.main, condition.description,
                 w.main.temperature, w.main.pressure, w.main.humidity,
-                w.wind.speed, windDirection(w.wind.directionDegree));
+                w.wind.speed, windDirection(w.wind.directionDegree), Calendar.getInstance());
     }
 
     public static String iconUrl(String iconId) {

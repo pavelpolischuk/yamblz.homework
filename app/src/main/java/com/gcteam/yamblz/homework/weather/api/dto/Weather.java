@@ -17,7 +17,7 @@ public class Weather {
     public ArrayList<WeatherCondition> conditions =  new ArrayList<>();
 
     public Wind wind;
-    public Main main;
+    public MainDto main;
 
     @SerializedName("name")
     public String cityName;

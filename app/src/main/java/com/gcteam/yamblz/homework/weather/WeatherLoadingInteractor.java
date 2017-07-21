@@ -5,6 +5,7 @@ import com.gcteam.yamblz.homework.weather.api.Weather;
 import java.util.Locale;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -64,7 +65,7 @@ public class WeatherLoadingInteractor {
     }
 
     Disposable startRefresh() {
-        Observable<Weather> currentWeather = WeatherService.get()
+        Single<Weather> currentWeather = WeatherService.get()
                 .currentWeather(Locale.getDefault().getLanguage());
 
         return currentWeather

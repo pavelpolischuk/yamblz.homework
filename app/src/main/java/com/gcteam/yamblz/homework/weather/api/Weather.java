@@ -3,6 +3,7 @@ package com.gcteam.yamblz.homework.weather.api;
 import android.support.annotation.StringRes;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Created by turist on 16.07.2017.
@@ -18,13 +19,14 @@ public class Weather implements Serializable {
     private int humidity; // %
 
     private float windSpeed;
+    private long updated;
 
     @StringRes
     private int windFormat;
 
     public Weather(String iconUri, String condition, String description,
                    float temperature, int pressure, int humidity,
-                   float windSpeed, @StringRes int windFormat) {
+                   float windSpeed, @StringRes int windFormat, Calendar updated) {
         this.iconUri = iconUri;
         this.condition = condition;
         this.description = description;
@@ -33,6 +35,7 @@ public class Weather implements Serializable {
         this.humidity = humidity;
         this.windSpeed = windSpeed;
         this.windFormat = windFormat;
+        this.updated = updated.getTimeInMillis();
     }
 
     public String getIconUri() {
@@ -66,5 +69,11 @@ public class Weather implements Serializable {
     @StringRes
     public int getWindFormat() {
         return windFormat;
+    }
+
+    public Calendar getUpdatingTime() {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(updated);
+        return c;
     }
 }

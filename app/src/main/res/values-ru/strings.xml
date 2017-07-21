@@ -30,4 +30,5 @@
     <string name="wind_label">Ветер</string>
 
     <string name="loading_error">Ошибка загрузки</string>
+    <string name="updated_label">Обновлено</string>
 </resources>

@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Created by turist on 16.07.2017.
@@ -27,16 +28,6 @@ import io.reactivex.functions.Consumer;
 public class UpdateJob extends Job {
 
     public static final String TAG = "current_weather_update_job";
-
-    private static class ErrorConsumer implements Consumer<Throwable> {
-
-        boolean hasError = false;
-
-        @Override
-        public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-            hasError = true;
-        }
-    }
 
     @Override
     @NonNull
@@ -48,19 +39,30 @@ public class UpdateJob extends Job {
             return Result.SUCCESS;
         }
 
-        ErrorConsumer errorConsumer = new ErrorConsumer();
-        WeatherService.get()
+        Weather weather = WeatherService.get()
                 .currentWeather(Locale.getDefault().getLanguage())
-                .doOnNext(new Consumer<Weather>() {
+                .doOnSuccess(new Consumer<Weather>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Weather weather) throws Exception {
                         Picasso.with(getContext()).load(weather.getIconUri()).fetch();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .blockingSubscribe(WeatherStorage.get().updateLastWeather(), errorConsumer);
+                .onErrorReturn(new Function<Throwable, Weather>() {
+                    @Override
+                    public Weather apply(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        return null;
+                    }
+                })
+                .blockingGet();
 
-        return errorConsumer.hasError ? Result.FAILURE : Result.SUCCESS;
+        if(weather == null) {
+            return Result.FAILURE;
+        }
+
+        WeatherStorage.get().updateLastWeather(weather);
+
+        return Result.SUCCESS;
     }
 
     public static void startUpdate(int minutesInterval) {

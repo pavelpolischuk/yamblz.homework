@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by turist on 16.07.2017.
  */
 
-public class Main {
+public class MainDto {
 
     @SerializedName("temp")
     public float temperature;

@@ -31,33 +31,53 @@ android {
         release {
             minifyEnabled true
             signingConfig signingConfigs.temp
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles fileTree('proguard').asList().toArray()
         }
     }
+}
+
+ext {
+    support = '25.3.1'
+    constraint_layout = '1.0.2'
+
+    play_services = '9.8.0'
+    evernote = '1.1.11'
+
+    okhttp = '3.4.1'
+    picasso = '2.5.2'
+    retrofit = '2.3.0'
+    glide = '3.7.0'
+
+    butterknife = '8.7.0'
+
+    rxbinding = '2.0.0'
+    rxandroid = '2.0.1'
+    rxjava = '2.1.1'
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:preference-v7:25.3.1'
-    compile 'com.android.support:preference-v14:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support:appcompat-v7:${support}"
+    compile "com.android.support:preference-v7:${support}"
+    compile "com.android.support:preference-v14:${support}"
+    compile "com.android.support:design:${support}"
+    compile "com.android.support.constraint:constraint-layout:${constraint_layout}"
 
-    compile 'com.evernote:android-job:1.1.11'
+    compile "com.evernote:android-job:${evernote}"
+    compile "com.google.android.gms:play-services-gcm:${play_services}"
 
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "com.squareup.retrofit2:retrofit:${retrofit}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofit}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${retrofit}"
+    compile "com.squareup.picasso:picasso:${picasso}"
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.1'
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
-    compile 'com.jakewharton:butterknife:8.7.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    compile "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+    compile "io.reactivex.rxjava2:rxjava:${rxjava}"
+    compile "com.jakewharton.rxbinding2:rxbinding:${rxbinding}"
+    compile "com.jakewharton.rxbinding2:rxbinding-support-v4:${rxbinding}"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rxbinding}"
+    compile "com.jakewharton:butterknife:${butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
 }

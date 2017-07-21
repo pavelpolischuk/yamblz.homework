@@ -23,3 +23,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.gcteam.yamblz.homework.weather.api.dto.** { *; }
+-keep class com.gcteam.yamblz.homework.weather.api.Weather { *; }
