@@ -17,7 +17,8 @@ public class SettingsInteractor implements SharedPreferences.OnSharedPreferenceC
 
     static final String UPDATE_INTERVAL_KEY = "update_interval_key";
     static final String CHOOSE_CITY_KEY = "city_key";
-    static final String LATLNG_KEY = "latlng_key";
+    static final String LAT_KEY = "lat_key";
+    static final String LNG_KEY = "lng_key";
 
     private SettingsView view;
 
@@ -33,7 +34,8 @@ public class SettingsInteractor implements SharedPreferences.OnSharedPreferenceC
     public void setPlace(Place place, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         preferences.edit()
-                .putString(LATLNG_KEY, place.getLatLng().toString())
+                .putString(LAT_KEY, Double.toString(place.getLatLng().latitude))
+                .putString(LNG_KEY, Double.toString(place.getLatLng().longitude))
                 .putString(CHOOSE_CITY_KEY, place.getName().toString())
                 .apply();
     }

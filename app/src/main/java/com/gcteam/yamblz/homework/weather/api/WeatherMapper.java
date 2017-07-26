@@ -36,7 +36,7 @@ public class WeatherMapper implements Function<com.gcteam.yamblz.homework.weathe
     }
 
     @StringRes
-    public static int windDirection(int directionDegree) {
+    public static int windDirection(double directionDegree) {
 
         if(directionDegree < 158) {
             if(directionDegree < 68) {

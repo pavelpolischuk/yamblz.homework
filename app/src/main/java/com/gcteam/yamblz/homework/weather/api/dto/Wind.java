@@ -12,5 +12,5 @@ public class Wind {
     public float speed; // m/s or miles/hour
 
     @SerializedName("deg")
-    public int directionDegree;
+    public double directionDegree;
 }

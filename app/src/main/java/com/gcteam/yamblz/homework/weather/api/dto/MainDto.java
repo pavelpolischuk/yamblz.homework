@@ -10,7 +10,7 @@ public class MainDto {
 
     @SerializedName("temp")
     public float temperature;
-    public int pressure; // hPa
+    public double pressure; // hPa
     public int humidity; // %
     public float temp_min;
     public float temp_max;
