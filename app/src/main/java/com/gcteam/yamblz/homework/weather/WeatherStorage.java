@@ -8,6 +8,8 @@ import android.support.v7.preference.PreferenceManager;
 import com.gcteam.yamblz.homework.weather.api.Weather;
 import com.google.gson.Gson;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -25,14 +27,9 @@ public class WeatherStorage {
     private final Subject<Weather> weatherSubject = PublishSubject.create();
     private SharedPreferences preferences;
 
-    private static final WeatherStorage impl = new WeatherStorage();
-
-    public static void init(Context context) {
-        impl.preferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    public static WeatherStorage get() {
-        return impl;
+    @Inject
+    public WeatherStorage(Context context) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @NonNull

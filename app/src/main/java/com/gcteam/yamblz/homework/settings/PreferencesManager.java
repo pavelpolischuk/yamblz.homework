@@ -16,7 +16,6 @@ public class PreferencesManager {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-
     public double getLat() {
         return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LAT_KEY, ""));
     }

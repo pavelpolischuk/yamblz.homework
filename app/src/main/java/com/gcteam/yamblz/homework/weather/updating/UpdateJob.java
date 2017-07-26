@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -30,17 +32,16 @@ public class UpdateJob extends Job {
 
     public static final String TAG = "current_weather_update_job";
 
+    @Inject
+    WeatherService weatherService;
+    @Inject
+    WeatherStorage weatherStorage;
+
     @Override
     @NonNull
     protected Result onRunJob(Params params) {
 
-        if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.INTERNET )
-                        != PackageManager.PERMISSION_GRANTED) {
-            return Result.SUCCESS;
-        }
-
-        Weather weather = WeatherService.get(new PreferencesManager(getContext()))
+        Weather weather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage())
                 .doOnSuccess(new Consumer<Weather>() {
                     @Override
@@ -61,7 +62,7 @@ public class UpdateJob extends Job {
             return Result.FAILURE;
         }
 
-        WeatherStorage.get().updateLastWeather(weather);
+        weatherStorage.updateLastWeather(weather);
 
         return Result.SUCCESS;
     }

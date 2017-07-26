@@ -9,6 +9,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,10 +26,14 @@ public class WeatherLoadingInteractor {
 
     private Disposable subscription;
     private Consumer<Throwable> errorHandler;
-    private PreferencesManager preferencesManager;
+    private WeatherStorage weatherStorage;
+    private WeatherService weatherService;
 
-    public WeatherLoadingInteractor(PreferencesManager preferencesManager) {
-        this.preferencesManager = preferencesManager;
+    @Inject
+    public WeatherLoadingInteractor(WeatherStorage weatherStorage,
+                                    WeatherService weatherService) {
+        this.weatherStorage = weatherStorage;
+        this.weatherService = weatherService;
     }
 
     void bind(final WeatherLoadingView view) {
@@ -38,8 +44,8 @@ public class WeatherLoadingInteractor {
             }
         };
 
-        Observable<Weather> lastWeather = WeatherStorage.get().lastWeather();
-        Weather fromStorage = WeatherStorage.get().load();
+        Observable<Weather> lastWeather = weatherStorage.lastWeather();
+        Weather fromStorage = weatherStorage.load();
         if(fromStorage != null) {
             this.subscription = lastWeather.startWith(fromStorage).subscribe(new Consumer<Weather>() {
                 @Override
@@ -75,11 +81,11 @@ public class WeatherLoadingInteractor {
     }
 
     Disposable startRefresh() {
-        Single<Weather> currentWeather = WeatherService.get(preferencesManager)
+        Single<Weather> currentWeather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage());
 
         return currentWeather
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(WeatherStorage.get().updateLastWeather(), errorHandler);
+                .subscribe(weatherStorage.updateLastWeather(), errorHandler);
     }
 }

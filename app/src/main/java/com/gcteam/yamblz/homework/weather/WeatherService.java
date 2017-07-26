@@ -12,6 +12,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -39,31 +41,26 @@ public class WeatherService {
             "it", "ja", "kr", "la", "lt", "mk", "nl", "pl", "pt", "ro", "ru", "se", "sk",
             "sl", "es", "tr", "ua", "vi", "zh_cn", "zh_tw"));
 
-    private static WeatherService instance;
-
     private OpenWeatherMapApi api;
     private WeatherMapper weatherMapper;
     private PreferencesManager preferencesManager;
 
-    public static WeatherService get(PreferencesManager preferencesManager) {
-        if(instance == null) {
-            instance = new WeatherService();
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-            instance.api = new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(client)
-                    .build()
-                    .create(OpenWeatherMapApi.class);
-            instance.weatherMapper = new WeatherMapper();
-            instance.preferencesManager = preferencesManager;
-        }
-
-        return instance;
+    @Inject
+    public WeatherService(PreferencesManager preferencesManager, WeatherMapper weatherMapper) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        this.api = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+                .create(OpenWeatherMapApi.class);
+        this.weatherMapper = weatherMapper;
+        this.preferencesManager = preferencesManager;
     }
+
 
     public Single<Weather> currentWeather(int cityId, String units, String lang) {
         return api.weatherByCityId(API_KEY, cityId, checkUnitsType(units), checkLangCode(lang))
