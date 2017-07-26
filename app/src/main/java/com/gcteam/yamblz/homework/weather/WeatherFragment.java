@@ -49,6 +49,7 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
         interactor = new WeatherLoadingInteractor(new PreferencesManager(getContext()));
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -60,6 +61,12 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
                 save(interactor.startRefresh());
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        save(interactor.startRefresh());
     }
 
     @Override

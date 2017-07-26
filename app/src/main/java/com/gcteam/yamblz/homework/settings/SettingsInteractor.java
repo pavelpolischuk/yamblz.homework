@@ -53,6 +53,8 @@ public class SettingsInteractor implements SharedPreferences.OnSharedPreferenceC
 
         if(UPDATE_INTERVAL_KEY.equals(key)) {
             UpdateJob.startUpdate(Integer.decode(value));
+        } else if (CHOOSE_CITY_KEY.equals(key)) {
+            UpdateJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
         }
 
     }
