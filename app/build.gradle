@@ -35,6 +35,10 @@ android {
             proguardFiles fileTree('proguard').asList().toArray()
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 ext {

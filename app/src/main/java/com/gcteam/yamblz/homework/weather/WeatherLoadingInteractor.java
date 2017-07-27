@@ -86,6 +86,6 @@ public class WeatherLoadingInteractor {
 
         return currentWeather
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(weatherStorage.updateLastWeather(), errorHandler);
+                 .subscribe(weatherStorage.updateLastWeather(), errorHandler);
     }
 }

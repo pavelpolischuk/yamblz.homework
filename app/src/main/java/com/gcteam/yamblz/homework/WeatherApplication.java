@@ -22,6 +22,7 @@ public class WeatherApplication extends Application {
     public void onCreate() {
         super.onCreate();
         setInstance(this);
+        JobManager.create(this).addJobCreator(new WeatherJobCreator());
     }
 
     private static void setInstance(WeatherApplication instance) {
@@ -29,6 +30,7 @@ public class WeatherApplication extends Application {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(instance.getApplicationContext()))
                 .build();
+
     }
 
     public static WeatherApplication getInstance() {
