@@ -12,6 +12,9 @@ import com.gcteam.yamblz.homework.weather.api.dto.Weather;
 
 public interface OpenWeatherMapApi {
 
+    public static final String API_BASE_URL = "http://api.openweathermap.org/data/";
+    public static final String API_KEY = "8fd5656437393710869297fbf372df49";
+
     @GET("2.5/weather")
     Single<Weather> weatherByCityId(@Query("appid") String apiKey,
                                     @Query("id") int cityId,

@@ -22,14 +22,13 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.gcteam.yamblz.homework.weather.api.OpenWeatherMapApi.API_KEY;
+
 /**
  * Created by turist on 16.07.2017.
  */
 
 public class WeatherService {
-
-    private static final String API_BASE_URL = "http://api.openweathermap.org/data/";
-    private static final String API_KEY = "8fd5656437393710869297fbf372df49";
 
     private static final int MOSCOW_CITY_ID = 524901;
     private static final String METRIC_UNITS = "metric";
@@ -46,19 +45,11 @@ public class WeatherService {
     private PreferencesManager preferencesManager;
 
     @Inject
-    public WeatherService(PreferencesManager preferencesManager, WeatherMapper weatherMapper) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-        this.api = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
-                .create(OpenWeatherMapApi.class);
+    public WeatherService(PreferencesManager preferencesManager, WeatherMapper weatherMapper, OpenWeatherMapApi api) {
+
         this.weatherMapper = weatherMapper;
         this.preferencesManager = preferencesManager;
+        this.api = api;
     }
 
 
