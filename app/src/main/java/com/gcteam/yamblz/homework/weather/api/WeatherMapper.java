@@ -3,6 +3,7 @@ package com.gcteam.yamblz.homework.weather.api;
 import android.support.annotation.StringRes;
 
 import com.gcteam.yamblz.homework.R;
+import com.gcteam.yamblz.homework.weather.api.dto.Weather;
 import com.gcteam.yamblz.homework.weather.api.dto.WeatherCondition;
 
 import java.util.Calendar;
@@ -14,10 +15,10 @@ import io.reactivex.functions.Function;
  * Created by turist on 16.07.2017.
  */
 
-public class WeatherMapper implements Function<com.gcteam.yamblz.homework.weather.api.dto.Weather, Weather> {
+public class WeatherMapper implements Function<Weather, WeatherData> {
 
     @Override
-    public Weather apply(@NonNull com.gcteam.yamblz.homework.weather.api.dto.Weather w) throws Exception {
+    public WeatherData apply(@NonNull Weather w) throws Exception {
 
         WeatherCondition condition;
         if(w.conditions.isEmpty()) {
@@ -26,7 +27,7 @@ public class WeatherMapper implements Function<com.gcteam.yamblz.homework.weathe
             condition = w.conditions.get(0);
         }
 
-        return new Weather(iconUrl(condition.iconId), condition.main, condition.description,
+        return new WeatherData(iconUrl(condition.iconId), condition.main, condition.description,
                 w.main.temperature, w.main.pressure, w.main.humidity,
                 w.wind.speed, windDirection(w.wind.directionDegree), Calendar.getInstance());
     }

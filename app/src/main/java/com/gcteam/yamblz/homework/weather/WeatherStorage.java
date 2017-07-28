@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.preference.PreferenceManager;
 
-import com.gcteam.yamblz.homework.weather.api.Weather;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ public class WeatherStorage {
 
     private static final String CURRENT_WEATHER_KEY = "current_weather_key";
 
-    private final Subject<Weather> weatherSubject = PublishSubject.create();
+    private final Subject<WeatherData> weatherSubject = PublishSubject.create();
     private SharedPreferences preferences;
 
     @Inject
@@ -33,34 +33,34 @@ public class WeatherStorage {
     }
 
     @NonNull
-    public Observable<Weather> lastWeather() {
+    public Observable<WeatherData> lastWeather() {
         return weatherSubject;
     }
 
     @NonNull
-    public Consumer<Weather> updateLastWeather() {
-        return new Consumer<Weather>() {
+    public Consumer<WeatherData> updateLastWeather() {
+        return new Consumer<WeatherData>() {
             @Override
-            public void accept(@NonNull Weather weather) throws Exception {
+            public void accept(@NonNull WeatherData weather) throws Exception {
                 updateLastWeather(weather);
             }
         };
     }
 
     @NonNull
-    public void updateLastWeather(Weather weather) {
+    public void updateLastWeather(WeatherData weather) {
         save(weather);
         weatherSubject.onNext(weather);
     }
 
-    public void save(Weather weather) {
+    public void save(WeatherData weather) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(CURRENT_WEATHER_KEY, new Gson().toJson(weather));
         editor.apply();
     }
 
     @Nullable
-    public Weather load() {
-        return new Gson().fromJson(preferences.getString(CURRENT_WEATHER_KEY, null), Weather.class);
+    public WeatherData load() {
+        return new Gson().fromJson(preferences.getString(CURRENT_WEATHER_KEY, null), WeatherData.class);
     }
 }

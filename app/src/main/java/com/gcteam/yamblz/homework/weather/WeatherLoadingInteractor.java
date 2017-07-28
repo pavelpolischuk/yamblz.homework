@@ -1,11 +1,6 @@
 package com.gcteam.yamblz.homework.weather;
 
-import android.content.SharedPreferences;
-import android.support.v7.preference.PreferenceManager;
-
-import com.gcteam.yamblz.homework.settings.PreferencesManager;
-import com.gcteam.yamblz.homework.weather.api.Weather;
-import com.google.android.gms.maps.model.LatLng;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 
 import java.util.Locale;
 
@@ -44,21 +39,21 @@ public class WeatherLoadingInteractor {
             }
         };
 
-        Observable<Weather> lastWeather = weatherStorage.lastWeather();
-        Weather fromStorage = weatherStorage.load();
+        Observable<WeatherData> lastWeather = weatherStorage.lastWeather();
+        WeatherData fromStorage = weatherStorage.load();
         if(fromStorage != null) {
-            this.subscription = lastWeather.startWith(fromStorage).subscribe(new Consumer<Weather>() {
+            this.subscription = lastWeather.startWith(fromStorage).subscribe(new Consumer<WeatherData>() {
                 @Override
-                public void accept(@NonNull Weather weather) throws Exception {
+                public void accept(@NonNull WeatherData weather) throws Exception {
                     view.loaded(weather);
                 }
             });
             return;
         }
 
-        this.subscription = lastWeather.subscribe(new Consumer<Weather>() {
+        this.subscription = lastWeather.subscribe(new Consumer<WeatherData>() {
             @Override
-            public void accept(@NonNull Weather weather) throws Exception {
+            public void accept(@NonNull WeatherData weather) throws Exception {
                 view.loaded(weather);
             }
         });
@@ -81,7 +76,7 @@ public class WeatherLoadingInteractor {
     }
 
     Disposable startRefresh() {
-        Single<Weather> currentWeather = weatherService
+        Single<WeatherData> currentWeather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage());
 
         return currentWeather

@@ -10,17 +10,17 @@ import android.support.v7.preference.PreferenceManager;
 public class PreferencesManager {
 
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     public PreferencesManager(Context context) {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public double getLat() {
-        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LAT_KEY, ""));
+        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LAT_KEY, "0d"));
     }
 
     public double getLng() {
-        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LNG_KEY, ""));
+        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LNG_KEY, "0d"));
     }
 }

@@ -1,7 +1,7 @@
 package com.gcteam.yamblz.homework.weather;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.weather.api.Weather;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,15 +30,15 @@ public class WeatherLoadingInteractorTest {
     @Mock
     private WeatherService weatherService;
     @Mock
-    private Consumer<Weather> consumer;
+    private Consumer<WeatherData> consumer;
 
-    Weather testWeather;
+    WeatherData testWeather;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        testWeather = new Weather(
+        testWeather = new WeatherData(
                 "", "", "desc", 100, 20d, 10, 12f, R.string.wind_nw, Calendar.getInstance());
 
         when(weatherStorage.lastWeather()).thenReturn(Observable.just(testWeather));

@@ -1,18 +1,13 @@
 package com.gcteam.yamblz.homework.weather.updating;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
-import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.weather.WeatherService;
 import com.gcteam.yamblz.homework.weather.WeatherStorage;
-import com.gcteam.yamblz.homework.weather.api.Weather;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -41,18 +36,18 @@ public class UpdateJob extends Job {
     @NonNull
     protected Result onRunJob(Params params) {
 
-        Weather weather = weatherService
+        WeatherData weather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage())
-                .doOnSuccess(new Consumer<Weather>() {
+                .doOnSuccess(new Consumer<WeatherData>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull Weather weather) throws Exception {
+                    public void accept(@io.reactivex.annotations.NonNull WeatherData weather) throws Exception {
                         Picasso.with(getContext()).load(weather.getIconUri()).fetch();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Function<Throwable, Weather>() {
+                .onErrorReturn(new Function<Throwable, WeatherData>() {
                     @Override
-                    public Weather apply(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                    public WeatherData apply(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
                         return null;
                     }
                 })

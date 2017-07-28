@@ -7,7 +7,6 @@ import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.weather.WeatherService;
 import com.gcteam.yamblz.homework.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.weather.api.OpenWeatherMapApi;
-import com.gcteam.yamblz.homework.weather.api.Weather;
 import com.gcteam.yamblz.homework.weather.api.WeatherMapper;
 
 import javax.inject.Singleton;
