@@ -8,6 +8,7 @@ import com.gcteam.yamblz.homework.weather.WeatherService;
 import com.gcteam.yamblz.homework.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.weather.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.weather.api.WeatherMapper;
+import com.google.gson.Gson;
 
 import javax.inject.Singleton;
 
@@ -49,8 +50,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    WeatherStorage provideWeatherStorage(Context context) {
-        return new WeatherStorage(context);
+    WeatherStorage provideWeatherStorage(PreferencesManager preferencesManager) {
+        return new WeatherStorage(preferencesManager);
     }
 
     @Provides
@@ -61,8 +62,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    PreferencesManager providePreferencesManager(Context context) {
-        return new PreferencesManager(context);
+    PreferencesManager providePreferencesManager(Context context, Gson gson) {
+        return new PreferencesManager(context, gson);
+    }
+
+    @Provides
+    @Singleton
+    Gson provideGson() {
+        return new Gson();
     }
 
     @Provides

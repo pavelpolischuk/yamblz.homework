@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.preference.PreferenceManager;
 
+import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.weather.api.WeatherData;
 import com.google.gson.Gson;
 
@@ -22,14 +23,12 @@ import io.reactivex.subjects.Subject;
 
 public class WeatherStorage {
 
-    private static final String CURRENT_WEATHER_KEY = "current_weather_key";
-
     private final Subject<WeatherData> weatherSubject = PublishSubject.create();
-    private SharedPreferences preferences;
+    private PreferencesManager preferencesManager;
 
     @Inject
-    public WeatherStorage(Context context) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    public WeatherStorage(PreferencesManager preferencesManager) {
+        this.preferencesManager = preferencesManager;
     }
 
     @NonNull
@@ -54,13 +53,11 @@ public class WeatherStorage {
     }
 
     public void save(WeatherData weather) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(CURRENT_WEATHER_KEY, new Gson().toJson(weather));
-        editor.apply();
+        preferencesManager.putCurrentWeather(weather);
     }
 
     @Nullable
     public WeatherData load() {
-        return new Gson().fromJson(preferences.getString(CURRENT_WEATHER_KEY, null), WeatherData.class);
+        return preferencesManager.loadCachedWeather();
     }
 }
