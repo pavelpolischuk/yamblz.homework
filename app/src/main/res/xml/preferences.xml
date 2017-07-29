@@ -9,7 +9,7 @@
         android:summary="@string/update_interval_default"
         android:entries="@array/update_intervals"
         android:entryValues="@array/update_intervals_values"
-        android:dialogTitle="@string/update_interval"/>
+        android:dialogTitle="@string/update_interval" />
 
     <com.gcteam.yamblz.homework.settings.preference.CityPreference
         android:defaultValue="@string/default_city"

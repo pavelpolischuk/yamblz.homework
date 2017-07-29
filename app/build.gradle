@@ -42,7 +42,7 @@ android {
 }
 
 ext {
-    support = '25.3.1'
+    support = '25.4.0'
     constraint_layout = '1.0.2'
 
     play_services = '8.4.0'
@@ -66,6 +66,9 @@ ext {
     daggerAnnotations = '1.0'
 
     roboelectric = '3.4'
+
+    espresso = '3.0.0'
+    testRunner = '1.0.0'
 
 }
 
@@ -105,4 +108,10 @@ dependencies {
     provided "javax.annotation:jsr250-api:${daggerAnnotations}"
 
     testCompile "org.robolectric:robolectric:${roboelectric}"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${espresso}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:${espresso}"
+    androidTestCompile "com.android.support.test:runner:${testRunner}"
 }

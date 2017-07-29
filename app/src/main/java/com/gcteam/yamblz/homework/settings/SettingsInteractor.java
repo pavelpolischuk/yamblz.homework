@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceManager;
 
+import com.gcteam.yamblz.homework.settings.preference.CityPreference;
 import com.gcteam.yamblz.homework.weather.updating.UpdateJob;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
@@ -53,7 +54,8 @@ public class SettingsInteractor implements SharedPreferences.OnSharedPreferenceC
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        view.showCityChooser();
+        if (preference instanceof CityPreference)
+            view.showCityChooser();
         return false;
     }
 }

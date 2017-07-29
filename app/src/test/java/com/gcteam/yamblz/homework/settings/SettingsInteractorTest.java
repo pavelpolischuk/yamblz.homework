@@ -37,4 +37,5 @@ public class SettingsInteractorTest {
         verify(settingsView).updateSummary(UPDATE_INTERVAL_KEY, String.valueOf(interval));
         verify(settingsView).updateSummary(CHOOSE_CITY_KEY, city);
     }
+
 }
