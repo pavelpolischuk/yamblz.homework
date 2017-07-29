@@ -15,8 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.gcteam.yamblz.homework.R;
+import com.gcteam.yamblz.homework.WeatherApplication;
+import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.settings.SettingsInteractor;
 import com.gcteam.yamblz.homework.weather.updating.UpdateJob;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,10 +28,13 @@ public class MainActivity extends AppCompatActivity
     private static final String TITLE_KEY = "title";
     private static final int PERMISSION_REQUEST_CODE = 123;
     private MainActivityRouter router = new MainActivityRouter(this);
+    @Inject
+    PreferencesManager preferencesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WeatherApplication.getInstance().getAppComponent().inject(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +58,7 @@ public class MainActivity extends AppCompatActivity
             router.showWeather();
 
             if(!UpdateJob.checkStarted()) {
-                UpdateJob.startUpdate(SettingsInteractor.getUpdateInterval(this));
+                UpdateJob.startUpdate(preferencesManager.getUpdateInterval());
             }
         }
     }

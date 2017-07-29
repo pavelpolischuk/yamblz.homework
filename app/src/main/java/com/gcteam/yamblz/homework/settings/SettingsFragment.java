@@ -8,12 +8,15 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
 import com.gcteam.yamblz.homework.R;
+import com.gcteam.yamblz.homework.WeatherApplication;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+
+import javax.inject.Inject;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -27,12 +30,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     SettingsInteractor interactor;
+    @Inject
+    PreferencesManager preferencesManager;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        interactor = new SettingsInteractor(this);
-        interactor.initView(getContext());
+        WeatherApplication.getInstance().getAppComponent().inject(this);
+        interactor = new SettingsInteractor(this, preferencesManager);
+        interactor.initView();
     }
 
     @Override
@@ -42,7 +53,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getContext(), data);
-                interactor.setPlace(place, getContext());
+                interactor.setPlace(place);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getContext(), data);
             } else if (resultCode == RESULT_CANCELED) {

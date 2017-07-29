@@ -1,5 +1,7 @@
 package com.gcteam.yamblz.homework.weather;
 
+import android.support.annotation.UiThread;
+
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.weather.api.OpenWeatherMapApi;
@@ -62,7 +64,5 @@ public class WeatherServiceTest {
         WeatherData weatherData = weatherService.currentWeather("ru").blockingGet();
         assertTrue(weatherData.equals(testWeatherMapped));
     }
-
-
 
 }

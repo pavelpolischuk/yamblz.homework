@@ -65,6 +65,8 @@ ext {
     dagger = '2.11'
     daggerAnnotations = '1.0'
 
+    roboelectric = '3.4'
+
 }
 
 dependencies {
@@ -101,4 +103,6 @@ dependencies {
     compile "com.google.dagger:dagger:${dagger}"
     annotationProcessor "com.google.dagger:dagger-compiler:${dagger}"
     provided "javax.annotation:jsr250-api:${daggerAnnotations}"
+
+    testCompile "org.robolectric:robolectric:${roboelectric}"
 }

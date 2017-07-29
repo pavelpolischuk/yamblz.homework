@@ -1,6 +1,8 @@
 package com.gcteam.yamblz.homework.di.component;
 
 import com.gcteam.yamblz.homework.di.module.AppModule;
+import com.gcteam.yamblz.homework.main.MainActivity;
+import com.gcteam.yamblz.homework.settings.SettingsFragment;
 import com.gcteam.yamblz.homework.weather.WeatherFragment;
 import com.gcteam.yamblz.homework.weather.WeatherLoadingInteractor;
 
@@ -17,4 +19,6 @@ public interface AppComponent {
 
     void inject(WeatherFragment weatherFragment);
     void inject(WeatherLoadingInteractor weatherLoadingInteractor);
+    void inject(SettingsFragment settingsFragment);
+    void inject(MainActivity mainActivity);
 }

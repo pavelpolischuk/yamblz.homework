@@ -1,7 +1,9 @@
 package com.gcteam.yamblz.homework.di.module;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.v7.preference.PreferenceManager;
 
 import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.weather.WeatherService;
@@ -62,8 +64,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    PreferencesManager providePreferencesManager(Context context, Gson gson) {
-        return new PreferencesManager(context, gson);
+    PreferencesManager providePreferencesManager(SharedPreferences sharedPreferences, Gson gson) {
+        return new PreferencesManager(sharedPreferences, gson);
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferences provideSharedPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Provides
