@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.preference.PreferenceManager;
 
-import com.gcteam.yamblz.homework.weather.api.Weather;
+import com.gcteam.yamblz.homework.settings.PreferencesManager;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 import com.google.gson.Gson;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
@@ -20,50 +23,41 @@ import io.reactivex.subjects.Subject;
 
 public class WeatherStorage {
 
-    private static final String CURRENT_WEATHER_KEY = "current_weather_key";
+    private final Subject<WeatherData> weatherSubject = PublishSubject.create();
+    private PreferencesManager preferencesManager;
 
-    private final Subject<Weather> weatherSubject = PublishSubject.create();
-    private SharedPreferences preferences;
-
-    private static final WeatherStorage impl = new WeatherStorage();
-
-    public static void init(Context context) {
-        impl.preferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    public static WeatherStorage get() {
-        return impl;
+    @Inject
+    public WeatherStorage(PreferencesManager preferencesManager) {
+        this.preferencesManager = preferencesManager;
     }
 
     @NonNull
-    public Observable<Weather> lastWeather() {
+    public Observable<WeatherData> lastWeather() {
         return weatherSubject;
     }
 
     @NonNull
-    public Consumer<Weather> updateLastWeather() {
-        return new Consumer<Weather>() {
+    public Consumer<WeatherData> updateLastWeather() {
+        return new Consumer<WeatherData>() {
             @Override
-            public void accept(@NonNull Weather weather) throws Exception {
+            public void accept(@NonNull WeatherData weather) throws Exception {
                 updateLastWeather(weather);
             }
         };
     }
 
     @NonNull
-    public void updateLastWeather(Weather weather) {
+    public void updateLastWeather(WeatherData weather) {
         save(weather);
         weatherSubject.onNext(weather);
     }
 
-    public void save(Weather weather) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(CURRENT_WEATHER_KEY, new Gson().toJson(weather));
-        editor.apply();
+    public void save(WeatherData weather) {
+        preferencesManager.putCurrentWeather(weather);
     }
 
     @Nullable
-    public Weather load() {
-        return new Gson().fromJson(preferences.getString(CURRENT_WEATHER_KEY, null), Weather.class);
+    public WeatherData load() {
+        return preferencesManager.loadCachedWeather();
     }
 }

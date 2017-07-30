@@ -1,13 +1,10 @@
 package com.gcteam.yamblz.homework.weather;
 
-import android.content.SharedPreferences;
-import android.support.v7.preference.PreferenceManager;
-
-import com.gcteam.yamblz.homework.settings.PreferencesManager;
-import com.gcteam.yamblz.homework.weather.api.Weather;
-import com.google.android.gms.maps.model.LatLng;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -24,10 +21,14 @@ public class WeatherLoadingInteractor {
 
     private Disposable subscription;
     private Consumer<Throwable> errorHandler;
-    private PreferencesManager preferencesManager;
+    private WeatherStorage weatherStorage;
+    private WeatherService weatherService;
 
-    public WeatherLoadingInteractor(PreferencesManager preferencesManager) {
-        this.preferencesManager = preferencesManager;
+    @Inject
+    public WeatherLoadingInteractor(WeatherStorage weatherStorage,
+                                    WeatherService weatherService) {
+        this.weatherStorage = weatherStorage;
+        this.weatherService = weatherService;
     }
 
     void bind(final WeatherLoadingView view) {
@@ -38,21 +39,21 @@ public class WeatherLoadingInteractor {
             }
         };
 
-        Observable<Weather> lastWeather = WeatherStorage.get().lastWeather();
-        Weather fromStorage = WeatherStorage.get().load();
+        Observable<WeatherData> lastWeather = weatherStorage.lastWeather();
+        WeatherData fromStorage = weatherStorage.load();
         if(fromStorage != null) {
-            this.subscription = lastWeather.startWith(fromStorage).subscribe(new Consumer<Weather>() {
+            this.subscription = lastWeather.startWith(fromStorage).subscribe(new Consumer<WeatherData>() {
                 @Override
-                public void accept(@NonNull Weather weather) throws Exception {
+                public void accept(@NonNull WeatherData weather) throws Exception {
                     view.loaded(weather);
                 }
             });
             return;
         }
 
-        this.subscription = lastWeather.subscribe(new Consumer<Weather>() {
+        this.subscription = lastWeather.subscribe(new Consumer<WeatherData>() {
             @Override
-            public void accept(@NonNull Weather weather) throws Exception {
+            public void accept(@NonNull WeatherData weather) throws Exception {
                 view.loaded(weather);
             }
         });
@@ -75,11 +76,11 @@ public class WeatherLoadingInteractor {
     }
 
     Disposable startRefresh() {
-        Single<Weather> currentWeather = WeatherService.get(preferencesManager)
+        Single<WeatherData> currentWeather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage());
 
         return currentWeather
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(WeatherStorage.get().updateLastWeather(), errorHandler);
+                 .subscribe(weatherStorage.updateLastWeather(), errorHandler);
     }
 }

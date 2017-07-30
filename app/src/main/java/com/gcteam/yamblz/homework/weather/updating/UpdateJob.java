@@ -1,22 +1,22 @@
 package com.gcteam.yamblz.homework.weather.updating;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
-import com.gcteam.yamblz.homework.settings.PreferencesManager;
+import com.gcteam.yamblz.homework.WeatherApplication;
+import com.gcteam.yamblz.homework.di.component.DaggerAppComponent;
+import com.gcteam.yamblz.homework.di.module.AppModule;
 import com.gcteam.yamblz.homework.weather.WeatherService;
 import com.gcteam.yamblz.homework.weather.WeatherStorage;
-import com.gcteam.yamblz.homework.weather.api.Weather;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -30,28 +30,28 @@ public class UpdateJob extends Job {
 
     public static final String TAG = "current_weather_update_job";
 
+    @Inject
+    WeatherService weatherService;
+    @Inject
+    WeatherStorage weatherStorage;
+
     @Override
     @NonNull
     protected Result onRunJob(Params params) {
+        DaggerAppComponent.builder().appModule(new AppModule(getContext())).build().inject(this);
 
-        if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.INTERNET )
-                        != PackageManager.PERMISSION_GRANTED) {
-            return Result.SUCCESS;
-        }
-
-        Weather weather = WeatherService.get(new PreferencesManager(getContext()))
+        WeatherData weather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage())
-                .doOnSuccess(new Consumer<Weather>() {
+                .doOnSuccess(new Consumer<WeatherData>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull Weather weather) throws Exception {
+                    public void accept(@io.reactivex.annotations.NonNull WeatherData weather) throws Exception {
                         Picasso.with(getContext()).load(weather.getIconUri()).fetch();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Function<Throwable, Weather>() {
+                .onErrorReturn(new Function<Throwable, WeatherData>() {
                     @Override
-                    public Weather apply(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                    public WeatherData apply(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
                         return null;
                     }
                 })
@@ -61,7 +61,7 @@ public class UpdateJob extends Job {
             return Result.FAILURE;
         }
 
-        WeatherStorage.get().updateLastWeather(weather);
+        weatherStorage.updateLastWeather(weather);
 
         return Result.SUCCESS;
     }

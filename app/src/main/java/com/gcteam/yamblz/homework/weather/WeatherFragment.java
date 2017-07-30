@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.settings.PreferencesManager;
+import com.gcteam.yamblz.homework.WeatherApplication;
 import com.gcteam.yamblz.homework.utils.RxKnifeFragment;
-import com.gcteam.yamblz.homework.weather.api.Weather;
+import com.gcteam.yamblz.homework.weather.api.WeatherData;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -34,7 +36,8 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
     @BindView(R.id.wind) TextView wind;
     @BindView(R.id.updated) TextView updated;
 
-    private WeatherLoadingInteractor interactor;
+    @Inject
+    WeatherLoadingInteractor interactor;
 
     @Nullable
     @Override
@@ -46,7 +49,7 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        interactor = new WeatherLoadingInteractor(new PreferencesManager(getContext()));
+        WeatherApplication.getInstance().getAppComponent().inject(this);
     }
 
 
@@ -76,7 +79,7 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
     }
 
     @Override
-    public void loaded(Weather weather) {
+    public void loaded(WeatherData weather) {
         Picasso.with(getContext()).load(weather.getIconUri()).into(icon);
         description.setText(weather.getDescription());
         temperature.setText(String.format("%.1f°C", weather.getTemperature()));

@@ -35,10 +35,14 @@ android {
             proguardFiles fileTree('proguard').asList().toArray()
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 ext {
-    support = '25.3.1'
+    support = '25.4.0'
     constraint_layout = '1.0.2'
 
     play_services = '8.4.0'
@@ -55,10 +59,24 @@ ext {
     rxandroid = '2.0.1'
     rxjava = '2.1.1'
 
+    junit = '4.12'
+    mockito = '2.8.47'
+
+    dagger = '2.11'
+    daggerAnnotations = '1.0'
+
+    roboelectric = '3.4'
+
+    espresso = '3.0.0'
+    testRunner = '1.0.0'
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    testCompile "junit:junit:${junit}"
+    testCompile "org.mockito:mockito-core:${mockito}"
 
     compile "com.android.support:appcompat-v7:${support}"
     compile "com.android.support:preference-v7:${support}"
@@ -84,4 +102,16 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rxbinding}"
     compile "com.jakewharton:butterknife:${butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
+
+    compile "com.google.dagger:dagger:${dagger}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${dagger}"
+    provided "javax.annotation:jsr250-api:${daggerAnnotations}"
+
+    testCompile "org.robolectric:robolectric:${roboelectric}"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${espresso}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:${espresso}"
+    androidTestCompile "com.android.support.test:runner:${testRunner}"
 }

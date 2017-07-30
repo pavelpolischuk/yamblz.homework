@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceManager;
 
+import com.gcteam.yamblz.homework.settings.preference.CityPreference;
 import com.gcteam.yamblz.homework.weather.updating.UpdateJob;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 
 /**
  * Created by turist on 16.07.2017.
@@ -21,29 +23,20 @@ public class SettingsInteractor implements SharedPreferences.OnSharedPreferenceC
     static final String LNG_KEY = "lng_key";
 
     private SettingsView view;
+    private PreferencesManager preferencesManager;
 
-    SettingsInteractor(SettingsView view) {
+    SettingsInteractor(SettingsView view, PreferencesManager preferencesManager) {
         this.view = view;
+        this.preferencesManager = preferencesManager;
     }
 
-    public static int getUpdateInterval(Context context) {
-        return Integer.decode(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(UPDATE_INTERVAL_KEY, "120"));
+    public void setPlace(Place place) {
+        preferencesManager.savePlace(place);
     }
 
-    public void setPlace(Place place, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        preferences.edit()
-                .putString(LAT_KEY, Double.toString(place.getLatLng().latitude))
-                .putString(LNG_KEY, Double.toString(place.getLatLng().longitude))
-                .putString(CHOOSE_CITY_KEY, place.getName().toString())
-                .apply();
-    }
-
-    public void initView(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        view.updateSummary(UPDATE_INTERVAL_KEY, preferences.getString(UPDATE_INTERVAL_KEY, ""));
-        view.updateSummary(CHOOSE_CITY_KEY, preferences.getString(CHOOSE_CITY_KEY, ""));
+    public void initView() {
+        view.updateSummary(UPDATE_INTERVAL_KEY, String.valueOf(preferencesManager.getUpdateInterval()));
+        view.updateSummary(CHOOSE_CITY_KEY, preferencesManager.getChosenCity());
     }
 
     @Override
@@ -61,7 +54,8 @@ public class SettingsInteractor implements SharedPreferences.OnSharedPreferenceC
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        view.showCityChooser();
+        if (preference instanceof CityPreference)
+            view.showCityChooser();
         return false;
     }
 }
