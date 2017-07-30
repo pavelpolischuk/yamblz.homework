@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
+import com.gcteam.yamblz.homework.WeatherApplication;
 import com.gcteam.yamblz.homework.weather.WeatherService;
 import com.gcteam.yamblz.homework.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.weather.api.WeatherData;
@@ -35,6 +36,8 @@ public class UpdateJob extends Job {
     @Override
     @NonNull
     protected Result onRunJob(Params params) {
+
+        WeatherApplication.getInstance().getAppComponent().inject(this);
 
         WeatherData weather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage())

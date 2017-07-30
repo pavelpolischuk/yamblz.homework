@@ -5,6 +5,7 @@ import com.gcteam.yamblz.homework.main.MainActivity;
 import com.gcteam.yamblz.homework.settings.SettingsFragment;
 import com.gcteam.yamblz.homework.weather.WeatherFragment;
 import com.gcteam.yamblz.homework.weather.WeatherLoadingInteractor;
+import com.gcteam.yamblz.homework.weather.updating.UpdateJob;
 
 import javax.inject.Singleton;
 
@@ -21,4 +22,5 @@ public interface AppComponent {
     void inject(WeatherLoadingInteractor weatherLoadingInteractor);
     void inject(SettingsFragment settingsFragment);
     void inject(MainActivity mainActivity);
+    void inject(UpdateJob updateJob);
 }
