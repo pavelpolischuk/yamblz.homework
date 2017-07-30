@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
+import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.weather.WeatherService;
 import com.gcteam.yamblz.homework.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.weather.api.Weather;
@@ -39,7 +40,7 @@ public class UpdateJob extends Job {
             return Result.SUCCESS;
         }
 
-        Weather weather = WeatherService.get()
+        Weather weather = WeatherService.get(new PreferencesManager(getContext()))
                 .currentWeather(Locale.getDefault().getLanguage())
                 .doOnSuccess(new Consumer<Weather>() {
                     @Override

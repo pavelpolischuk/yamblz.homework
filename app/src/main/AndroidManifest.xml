@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:name=".main.WeatherApplication"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA0x--xPieNHJJ7NsWhTb4E-D9eoc_bH34"/>
+
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name"

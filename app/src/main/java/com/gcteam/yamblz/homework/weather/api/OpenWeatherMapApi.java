@@ -13,7 +13,15 @@ import com.gcteam.yamblz.homework.weather.api.dto.Weather;
 public interface OpenWeatherMapApi {
 
     @GET("2.5/weather")
-    Single<Weather> current(@Query("appid") String apiKey, @Query("id") int cityId,
-                            @Query("units") String unitsFormat,
-                            @Query("lang") String lang);
+    Single<Weather> weatherByCityId(@Query("appid") String apiKey,
+                                    @Query("id") int cityId,
+                                    @Query("units") String unitsFormat,
+                                    @Query("lang") String lang);
+
+    @GET("2.5/weather")
+    Single<Weather> weatherByLatLng(@Query("appid") String apiKey,
+                                    @Query("lat") String lat,
+                                    @Query("lon") String lon,
+                                    @Query("units") String units,
+                                    @Query("lang") String lang);
 }

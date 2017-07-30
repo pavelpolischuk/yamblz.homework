@@ -15,7 +15,7 @@ public class Weather implements Serializable {
     private String description;
 
     private float temperature;
-    private int pressure; // hPa
+    private double pressure; // hPa
     private int humidity; // %
 
     private float windSpeed;
@@ -25,7 +25,7 @@ public class Weather implements Serializable {
     private int windFormat;
 
     public Weather(String iconUri, String condition, String description,
-                   float temperature, int pressure, int humidity,
+                   float temperature, double pressure, int humidity,
                    float windSpeed, @StringRes int windFormat, Calendar updated) {
         this.iconUri = iconUri;
         this.condition = condition;
@@ -54,7 +54,7 @@ public class Weather implements Serializable {
         return temperature;
     }
 
-    public int getPressure() {
+    public double getPressure() {
         return pressure;
     }
 

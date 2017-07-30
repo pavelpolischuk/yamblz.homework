@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
+import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.utils.RxKnifeFragment;
 import com.gcteam.yamblz.homework.weather.api.Weather;
 import com.squareup.picasso.Picasso;
@@ -33,7 +34,7 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
     @BindView(R.id.wind) TextView wind;
     @BindView(R.id.updated) TextView updated;
 
-    private WeatherLoadingInteractor interactor = new WeatherLoadingInteractor();
+    private WeatherLoadingInteractor interactor;
 
     @Nullable
     @Override
@@ -45,7 +46,9 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        interactor = new WeatherLoadingInteractor(new PreferencesManager(getContext()));
     }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -58,6 +61,12 @@ public class WeatherFragment extends RxKnifeFragment implements WeatherLoadingVi
                 save(interactor.startRefresh());
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        save(interactor.startRefresh());
     }
 
     @Override

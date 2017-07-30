@@ -1,6 +1,11 @@
 package com.gcteam.yamblz.homework.weather;
 
+import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
+
+import com.gcteam.yamblz.homework.settings.PreferencesManager;
 import com.gcteam.yamblz.homework.weather.api.Weather;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Locale;
 
@@ -19,6 +24,11 @@ public class WeatherLoadingInteractor {
 
     private Disposable subscription;
     private Consumer<Throwable> errorHandler;
+    private PreferencesManager preferencesManager;
+
+    public WeatherLoadingInteractor(PreferencesManager preferencesManager) {
+        this.preferencesManager = preferencesManager;
+    }
 
     void bind(final WeatherLoadingView view) {
         this.errorHandler = new Consumer<Throwable>() {
@@ -65,7 +75,7 @@ public class WeatherLoadingInteractor {
     }
 
     Disposable startRefresh() {
-        Single<Weather> currentWeather = WeatherService.get()
+        Single<Weather> currentWeather = WeatherService.get(preferencesManager)
                 .currentWeather(Locale.getDefault().getLanguage());
 
         return currentWeather
