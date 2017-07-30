@@ -18,10 +18,10 @@ public class PreferencesManager {
 
 
     public double getLat() {
-        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LAT_KEY, ""));
+        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LAT_KEY, "0d"));
     }
 
     public double getLng() {
-        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LNG_KEY, ""));
+        return Double.valueOf(sharedPreferences.getString(SettingsInteractor.LNG_KEY, "0d"));
     }
 }
