@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
+
 /**
  * Created by Kim Michael on 27.07.17
  */
