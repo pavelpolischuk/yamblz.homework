@@ -34,12 +34,7 @@ public class WeatherStorage {
 
     @NonNull
     public Consumer<WeatherData> updateLastWeather() {
-        return new Consumer<WeatherData>() {
-            @Override
-            public void accept(@NonNull WeatherData weather) throws Exception {
-                updateLastWeather(weather);
-            }
-        };
+        return weather -> updateLastWeather(weather);
     }
 
     @NonNull

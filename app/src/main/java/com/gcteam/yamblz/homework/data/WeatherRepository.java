@@ -34,31 +34,16 @@ public class WeatherRepository {
     }
 
     public void bind(final WeatherLoadingView view) {
-        this.errorHandler = new Consumer<Throwable>() {
-            @Override
-            public void accept(@NonNull Throwable throwable) throws Exception {
-                view.loadingError();
-            }
-        };
+        this.errorHandler = throwable -> view.loadingError();
 
         Observable<WeatherData> lastWeather = weatherStorage.lastWeather();
         WeatherData fromStorage = weatherStorage.load();
         if(fromStorage != null) {
-            this.subscription = lastWeather.startWith(fromStorage).subscribe(new Consumer<WeatherData>() {
-                @Override
-                public void accept(@NonNull WeatherData weather) throws Exception {
-                    view.loaded(weather);
-                }
-            });
+            this.subscription = lastWeather.startWith(fromStorage).subscribe(weather -> view.loaded(weather));
             return;
         }
 
-        this.subscription = lastWeather.subscribe(new Consumer<WeatherData>() {
-            @Override
-            public void accept(@NonNull WeatherData weather) throws Exception {
-                view.loaded(weather);
-            }
-        });
+        this.subscription = lastWeather.subscribe(weather -> view.loaded(weather));
 
         startRefresh();
         view.loadingStart();
@@ -70,10 +55,7 @@ public class WeatherRepository {
             subscription = null;
         }
 
-        this.errorHandler = new Consumer<Throwable>() {
-            @Override
-            public void accept(@NonNull Throwable throwable) throws Exception {
-            }
+        this.errorHandler = throwable -> {
         };
     }
 

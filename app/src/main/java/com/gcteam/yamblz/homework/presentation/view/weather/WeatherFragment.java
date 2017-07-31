@@ -59,12 +59,7 @@ public class WeatherFragment extends BaseFragment implements WeatherLoadingView 
         super.onViewCreated(view, savedInstanceState);
 
         repository.bind(this);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                save(repository.startRefresh());
-            }
-        });
+        refreshLayout.setOnRefreshListener(() -> save(repository.startRefresh()));
     }
 
     @Override

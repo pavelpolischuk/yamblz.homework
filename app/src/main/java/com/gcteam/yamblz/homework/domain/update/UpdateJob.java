@@ -41,19 +41,9 @@ public class UpdateJob extends Job {
 
         WeatherData weather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage())
-                .doOnSuccess(new Consumer<WeatherData>() {
-                    @Override
-                    public void accept(@io.reactivex.annotations.NonNull WeatherData weather) throws Exception {
-                        Picasso.with(getContext()).load(weather.getIconUri()).fetch();
-                    }
-                })
+                .doOnSuccess(weather1 -> Picasso.with(getContext()).load(weather1.getIconUri()).fetch())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Function<Throwable, WeatherData>() {
-                    @Override
-                    public WeatherData apply(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-                        return null;
-                    }
-                })
+                .onErrorReturn(throwable -> null)
                 .blockingGet();
 
         if(weather == null) {
