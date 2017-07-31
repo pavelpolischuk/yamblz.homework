@@ -3,7 +3,7 @@ package com.gcteam.yamblz.homework;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.gcteam.yamblz.homework.main.MainActivity;
+import com.gcteam.yamblz.homework.presentation.main.MainActivity;
 import com.gcteam.yamblz.homework.pageobjects.AboutPage;
 import com.gcteam.yamblz.homework.pageobjects.MainPage;
 import com.gcteam.yamblz.homework.pageobjects.SettingsPage;

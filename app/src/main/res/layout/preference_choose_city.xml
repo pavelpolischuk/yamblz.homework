@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <com.gcteam.yamblz.homework.settings.preference.CityPreference
+    <com.gcteam.yamblz.homework.presentation.view.settings.preference.CityPreference
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/choose"/>

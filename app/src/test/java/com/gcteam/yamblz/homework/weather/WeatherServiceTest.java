@@ -1,21 +1,17 @@
 package com.gcteam.yamblz.homework.weather;
 
-import android.support.annotation.UiThread;
-
-import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.settings.PreferencesManager;
-import com.gcteam.yamblz.homework.weather.api.OpenWeatherMapApi;
-import com.gcteam.yamblz.homework.weather.api.WeatherData;
-import com.gcteam.yamblz.homework.weather.api.WeatherMapper;
-import com.gcteam.yamblz.homework.weather.api.dto.Weather;
+import com.gcteam.yamblz.homework.data.network.WeatherService;
+import com.gcteam.yamblz.homework.utils.PreferencesManager;
+import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
+import com.gcteam.yamblz.homework.data.WeatherData;
+import com.gcteam.yamblz.homework.data.WeatherMapper;
+import com.gcteam.yamblz.homework.data.api.dto.Weather;
 import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Calendar;
 
 import io.reactivex.Single;
 

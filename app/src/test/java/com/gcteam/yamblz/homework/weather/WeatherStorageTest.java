@@ -1,14 +1,13 @@
 package com.gcteam.yamblz.homework.weather;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.settings.PreferencesManager;
-import com.gcteam.yamblz.homework.weather.api.WeatherData;
-import com.gcteam.yamblz.homework.weather.api.dto.Weather;
+import com.gcteam.yamblz.homework.data.local.WeatherStorage;
+import com.gcteam.yamblz.homework.utils.PreferencesManager;
+import com.gcteam.yamblz.homework.data.WeatherData;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Calendar;

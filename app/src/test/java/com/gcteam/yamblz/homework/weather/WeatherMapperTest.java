@@ -1,17 +1,13 @@
 package com.gcteam.yamblz.homework.weather;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.weather.api.WeatherData;
-import com.gcteam.yamblz.homework.weather.api.WeatherMapper;
-import com.gcteam.yamblz.homework.weather.api.dto.Weather;
+import com.gcteam.yamblz.homework.data.WeatherData;
+import com.gcteam.yamblz.homework.data.WeatherMapper;
+import com.gcteam.yamblz.homework.data.api.dto.Weather;
 import com.google.gson.Gson;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static junit.framework.Assert.*;
 
 /**
  * Created by Kim Michael on 27.07.17

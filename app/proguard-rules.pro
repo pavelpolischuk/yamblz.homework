@@ -24,5 +24,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.gcteam.yamblz.homework.weather.api.dto.** { *; }
--keep class com.gcteam.yamblz.homework.weather.api.WeatherData { *; }
+-keep class com.gcteam.yamblz.homework.data.api.dto.** { *; }
+-keep class com.gcteam.yamblz.homework.data.WeatherData { *; }

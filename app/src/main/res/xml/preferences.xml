@@ -11,7 +11,7 @@
         android:entryValues="@array/update_intervals_values"
         android:dialogTitle="@string/update_interval" />
 
-    <com.gcteam.yamblz.homework.settings.preference.CityPreference
+    <com.gcteam.yamblz.homework.presentation.view.settings.preference.CityPreference
         android:defaultValue="@string/default_city"
         android:title="@string/change_city_title"
         android:key="city_key" />
