@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.presentation.main;
+package com.gcteam.yamblz.homework.presentation.presenter.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;

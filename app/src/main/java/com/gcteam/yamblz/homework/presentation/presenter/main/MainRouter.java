@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.presentation.main;
+package com.gcteam.yamblz.homework.presentation.presenter.main;
 
 /**
  * Created by turist on 14.07.2017.

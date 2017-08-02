@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.presentation.main;
+package com.gcteam.yamblz.homework.domain.update;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;

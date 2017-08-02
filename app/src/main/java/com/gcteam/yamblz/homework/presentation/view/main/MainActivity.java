@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.presentation.main;
+package com.gcteam.yamblz.homework.presentation.view.main;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
+import com.gcteam.yamblz.homework.presentation.presenter.main.MainActivityRouter;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.gcteam.yamblz.homework.domain.update.UpdateJob;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private MainActivityRouter router = new MainActivityRouter(this);
     @Inject
     PreferencesManager preferencesManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,12 @@ public class MainActivity extends AppCompatActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(TITLE_KEY, getTitle().toString());
+    }
+
+    @Override
+    protected void onDestroy() {
+        WeatherApplication.getComponentManager().releaseWeatherComponent();
+        super.onDestroy();
     }
 
     @Override
