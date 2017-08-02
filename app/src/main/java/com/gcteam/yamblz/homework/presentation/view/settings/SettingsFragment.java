@@ -43,7 +43,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        WeatherApplication.getInstance().getAppComponent().inject(this);
+        WeatherApplication.getComponentManager().getAppComponent().inject(this);
         interactor = new SettingsPresenter(this, preferencesManager);
         interactor.initView();
     }

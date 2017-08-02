@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
-import com.gcteam.yamblz.homework.data.WeatherRepository;
+import com.gcteam.yamblz.homework.presentation.presenter.weather.WeatherPresenter;
 import com.gcteam.yamblz.homework.presentation.view.BaseFragment;
 import com.gcteam.yamblz.homework.data.WeatherData;
 import com.squareup.picasso.Picasso;
@@ -26,7 +26,7 @@ import butterknife.BindView;
  * Created by turist on 15.07.2017.
  */
 
-public class WeatherFragment extends BaseFragment implements WeatherLoadingView {
+public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @BindView(R.id.swiperefresh) SwipeRefreshLayout refreshLayout;
     @BindView(R.id.icon) AppCompatImageView icon;
@@ -38,7 +38,7 @@ public class WeatherFragment extends BaseFragment implements WeatherLoadingView 
     @BindView(R.id.updated) TextView updated;
 
     @Inject
-    WeatherRepository repository;
+    WeatherPresenter weatherPresenter;
 
     @Nullable
     @Override
@@ -50,7 +50,6 @@ public class WeatherFragment extends BaseFragment implements WeatherLoadingView 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        WeatherApplication.getInstance().getAppComponent().inject(this);
     }
 
 
@@ -58,24 +57,29 @@ public class WeatherFragment extends BaseFragment implements WeatherLoadingView 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        repository.bind(this);
-        refreshLayout.setOnRefreshListener(() -> save(repository.startRefresh()));
+        WeatherApplication.getComponentManager().getWeatherScreenComponent().inject(this);
+
+        weatherPresenter.onAttach(this);
+        if (savedInstanceState == null) {
+            weatherPresenter.startRefresh();
+        }
+        refreshLayout.setOnRefreshListener(() -> weatherPresenter.startRefresh());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        save(repository.startRefresh());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        repository.unbind();
+        weatherPresenter.onDetach();
+        WeatherApplication.getComponentManager().releaseWeatherScreenComponent();
     }
 
     @Override
-    public void loaded(WeatherData weather) {
+    public void showWeatherData(WeatherData weather) {
         Picasso.with(getContext()).load(weather.getIconUri()).into(icon);
         description.setText(weather.getDescription());
         temperature.setText(String.format("%.1f°C", weather.getTemperature()));
@@ -87,12 +91,12 @@ public class WeatherFragment extends BaseFragment implements WeatherLoadingView 
     }
 
     @Override
-    public void loadingStart() {
+    public void showLoadingStarted() {
         refreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void loadingError() {
+    public void showErrorMessage() {
         Snackbar.make(refreshLayout, R.string.loading_error, BaseTransientBottomBar.LENGTH_LONG).show();
         refreshLayout.setRefreshing(false);
     }

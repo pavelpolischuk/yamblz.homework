@@ -3,6 +3,7 @@ package com.gcteam.yamblz.homework;
 import android.app.Application;
 
 import com.evernote.android.job.JobManager;
+import com.gcteam.yamblz.homework.presentation.di.ComponentManager;
 import com.gcteam.yamblz.homework.presentation.di.component.AppComponent;
 import com.gcteam.yamblz.homework.presentation.di.component.DaggerAppComponent;
 import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
@@ -14,29 +15,15 @@ import com.gcteam.yamblz.homework.presentation.main.WeatherJobCreator;
 
 public class WeatherApplication extends Application {
 
-    private static WeatherApplication instance;
-    private static AppComponent appComponent;
+    private static ComponentManager componentManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        setInstance(this);
+        componentManager = new ComponentManager(this);
         JobManager.create(this).addJobCreator(new WeatherJobCreator());
     }
 
-    private static void setInstance(WeatherApplication instance) {
-        WeatherApplication.instance = instance;
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(instance.getApplicationContext()))
-                .build();
+    public static ComponentManager getComponentManager() {return componentManager;}
 
-    }
-
-    public static WeatherApplication getInstance() {
-        return instance;
-    }
-
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
 }

@@ -5,7 +5,7 @@ import com.gcteam.yamblz.homework.data.WeatherData;
 import com.gcteam.yamblz.homework.data.local.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.WeatherService;
 import com.gcteam.yamblz.homework.data.WeatherRepository;
-import com.gcteam.yamblz.homework.presentation.view.weather.WeatherLoadingView;
+import com.gcteam.yamblz.homework.presentation.view.weather.WeatherView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class WeatherRepositoryTest {
 
     private WeatherRepository weatherRepository;
     @Mock
-    private WeatherLoadingView weatherLoadingView;
+    private WeatherView weatherView;
     @Mock
     private WeatherStorage weatherStorage;
     @Mock
@@ -60,14 +60,14 @@ public class WeatherRepositoryTest {
 
     @Test
     public void startLoadingWhenBound() {
-        weatherRepository.bind(weatherLoadingView);
-        verify(weatherLoadingView).loadingStart();
+        weatherRepository.bind(weatherView);
+        verify(weatherView).showLoadingStarted();
     }
 
     @Test
     public void showSpinnerOnBinding() throws Exception {
-        weatherRepository.bind(weatherLoadingView);
-        verify(weatherLoadingView).loadingStart();
+        weatherRepository.bind(weatherView);
+        verify(weatherView).showLoadingStarted();
     }
 
 

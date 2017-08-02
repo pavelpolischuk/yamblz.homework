@@ -42,58 +42,5 @@ public class AppModule {
         return context;
     }
 
-    @Provides
-    @Singleton
-    WeatherService provideWeatherService(PreferencesManager preferencesManager,
-                                         WeatherMapper weatherMapper,
-                                         OpenWeatherMapApi api) {
-        return new WeatherService(preferencesManager, weatherMapper, api);
-    }
-
-    @Provides
-    @Singleton
-    WeatherStorage provideWeatherStorage(PreferencesManager preferencesManager) {
-        return new WeatherStorage(preferencesManager);
-    }
-
-    @Provides
-    @Singleton
-    WeatherMapper provideWeatherMapper() {
-        return new WeatherMapper();
-    }
-
-    @Provides
-    @Singleton
-    PreferencesManager providePreferencesManager(SharedPreferences sharedPreferences, Gson gson) {
-        return new PreferencesManager(sharedPreferences, gson);
-    }
-
-    @Provides
-    @Singleton
-    SharedPreferences provideSharedPreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    @Provides
-    @Singleton
-    Gson provideGson() {
-        return new Gson();
-    }
-
-    @Provides
-    @Singleton
-    OpenWeatherMapApi provideOpenWeatherMapApi() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-        return new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
-                .create(OpenWeatherMapApi.class);
-    }
-
 
 }

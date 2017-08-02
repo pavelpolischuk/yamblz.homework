@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WeatherApplication.getInstance().getAppComponent().inject(this);
+        WeatherApplication.getComponentManager().getAppComponent().inject(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
