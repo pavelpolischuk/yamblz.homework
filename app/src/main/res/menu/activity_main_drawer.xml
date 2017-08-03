@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/nav_weather"
         android:icon="@drawable/ic_menu_weather"
         android:title="@string/action_weather" />
+
     <item
-        android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_menu_manage"
-        android:title="@string/action_settings" />
-    <item
-        android:id="@+id/nav_about"
-        android:icon="@drawable/ic_menu_info_details"
-        android:title="@string/action_about" />
+        android:id="@+id/city_chooser"
+        android:title="@string/city_list_title"
+        app:showAsAction="always"/>
+
+    <group
+        android:id="@+id/secondary_options">
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/action_settings" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_about"
+            android:title="@string/action_about" />
+
+    </group>
 
 </menu>

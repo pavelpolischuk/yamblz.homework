@@ -98,4 +98,6 @@ dependencies {
     }
     androidTestCompile libraries.espressoContrib
     androidTestCompile libraries.testRunner
+
+    compile libraries.cupboard
 }

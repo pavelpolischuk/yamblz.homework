@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.di.component;
 
+import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
 import com.gcteam.yamblz.homework.presentation.di.module.DataModule;
 import com.gcteam.yamblz.homework.presentation.di.module.NetworkModule;
@@ -7,7 +8,6 @@ import com.gcteam.yamblz.homework.presentation.di.module.SchedulersModule;
 import com.gcteam.yamblz.homework.presentation.di.module.WeatherModule;
 import com.gcteam.yamblz.homework.presentation.view.main.MainActivity;
 import com.gcteam.yamblz.homework.presentation.view.settings.SettingsFragment;
-import com.gcteam.yamblz.homework.domain.update.UpdateJob;
 
 import javax.inject.Singleton;
 
@@ -25,7 +25,7 @@ public interface AppComponent {
 
     WeatherComponent plus(WeatherModule weatherModule);
 
-    void inject(UpdateJob updateJob);
+    void inject(UpdateWeatherJob updateWeatherJob);
     void inject(MainActivity mainActivity);
     void inject(SettingsFragment settingsFragment);
 }

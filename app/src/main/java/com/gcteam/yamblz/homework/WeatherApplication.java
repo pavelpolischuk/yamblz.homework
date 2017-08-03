@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.evernote.android.job.JobManager;
 import com.gcteam.yamblz.homework.presentation.di.ComponentManager;
-import com.gcteam.yamblz.homework.domain.update.WeatherJobCreator;
+import com.gcteam.yamblz.homework.domain.update.weather.WeatherJobCreator;
 
 /**
  * Created by turist on 16.07.2017.

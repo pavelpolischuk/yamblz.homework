@@ -3,9 +3,9 @@ package com.gcteam.yamblz.homework.domain.settings;
 import android.content.SharedPreferences;
 import android.support.v7.preference.Preference;
 
+import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.view.settings.SettingsView;
 import com.gcteam.yamblz.homework.presentation.view.settings.preference.CityPreference;
-import com.gcteam.yamblz.homework.domain.update.UpdateJob;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.android.gms.location.places.Place;
 
@@ -44,9 +44,9 @@ public class SettingsPresenter implements SharedPreferences.OnSharedPreferenceCh
         view.updateSummary(key, value);
 
         if(UPDATE_INTERVAL_KEY.equals(key)) {
-            UpdateJob.startUpdate(Integer.decode(value));
+            UpdateWeatherJob.startUpdate(Integer.decode(value));
         } else if (CHOOSE_CITY_KEY.equals(key)) {
-            UpdateJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
+            UpdateWeatherJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
         }
 
     }

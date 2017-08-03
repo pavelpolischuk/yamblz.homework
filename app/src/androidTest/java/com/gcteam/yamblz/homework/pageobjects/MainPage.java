@@ -11,6 +11,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
 import static android.support.test.espresso.Espresso.*;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerMatchers.isOpen;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -41,19 +42,19 @@ public class MainPage extends PageObject {
 
     public MainPage moveToWeather() {
         openDrawer();
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_weather));
+        onView(withId(R.id.nav_weather)).perform(click());
         return this;
     }
 
     public MainPage moveToSettings() {
         openDrawer();
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
+        onView(withId(R.id.nav_settings)).perform(click());
         return this;
     }
 
     public MainPage moveToAbout() {
         openDrawer();
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_about));
+        onView(withId(R.id.nav_about)).perform(click());
         return this;
     }
 }

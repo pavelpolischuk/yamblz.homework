@@ -58,17 +58,4 @@ public class WeatherRepositoryTest {
         );
     }
 
-    @Test
-    public void startLoadingWhenBound() {
-        weatherRepository.bind(weatherView);
-        verify(weatherView).showLoadingStarted();
-    }
-
-    @Test
-    public void showSpinnerOnBinding() throws Exception {
-        weatherRepository.bind(weatherView);
-        verify(weatherView).showLoadingStarted();
-    }
-
-
 }

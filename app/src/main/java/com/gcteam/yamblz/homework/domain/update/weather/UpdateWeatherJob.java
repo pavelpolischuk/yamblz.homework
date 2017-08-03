@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.domain.update;
+package com.gcteam.yamblz.homework.domain.update.weather;
 
 import android.support.annotation.NonNull;
 
@@ -18,14 +18,12 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 
 /**
  * Created by turist on 16.07.2017.
  */
 
-public class UpdateJob extends Job {
+public class UpdateWeatherJob extends Job {
 
     public static final String TAG = "current_weather_update_job";
 
@@ -56,7 +54,7 @@ public class UpdateJob extends Job {
     }
 
     public static void startUpdate(int minutesInterval) {
-        new JobRequest.Builder(UpdateJob.TAG)
+        new JobRequest.Builder(UpdateWeatherJob.TAG)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(minutesInterval), TimeUnit.MINUTES.toMillis(15))
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .setRequirementsEnforced(true)
@@ -67,6 +65,6 @@ public class UpdateJob extends Job {
     }
 
     public static boolean checkStarted() {
-        return !JobManager.instance().getAllJobsForTag(UpdateJob.TAG).isEmpty();
+        return !JobManager.instance().getAllJobsForTag(UpdateWeatherJob.TAG).isEmpty();
     }
 }

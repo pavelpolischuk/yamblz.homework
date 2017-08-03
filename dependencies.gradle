@@ -26,6 +26,8 @@ ext.versions = [
 
     espresso : '3.0.0',
     testRunner : '1.0.0',
+
+    cupboard: '2.2.0',
 ]
 
 ext.libraries = [
@@ -71,6 +73,6 @@ ext.libraries = [
         espressoContrib : "com.android.support.test.espresso:espresso-contrib:$versions.espresso",
         testRunner : "com.android.support.test:runner:$versions.testRunner",
 
-
+        cupboard : "nl.qbusict:cupboard:$versions.cupboard",
 
 ]

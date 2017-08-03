@@ -11,19 +11,25 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
 import com.gcteam.yamblz.homework.presentation.presenter.main.MainActivityRouter;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
-import com.gcteam.yamblz.homework.domain.update.UpdateJob;
+import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends AppCompatActivity {
 
     private static final String TITLE_KEY = "title";
     private static final int PERMISSION_REQUEST_CODE = 123;
@@ -31,23 +37,25 @@ public class MainActivity extends AppCompatActivity
     @Inject
     PreferencesManager preferencesManager;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.city_chooser)
+    RecyclerView cityChooser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WeatherApplication.getComponentManager().getAppComponent().inject(this);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
@@ -58,8 +66,8 @@ public class MainActivity extends AppCompatActivity
         if(savedInstanceState == null) {
             router.showWeather();
 
-            if(!UpdateJob.checkStarted()) {
-                UpdateJob.startUpdate(preferencesManager.getUpdateInterval());
+            if(!UpdateWeatherJob.checkStarted()) {
+                UpdateWeatherJob.startUpdate(preferencesManager.getUpdateInterval());
             }
         }
     }
@@ -92,21 +100,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_weather) {
-            router.showWeather();
-        } else if (id == R.id.nav_settings) {
-            router.showSettings();
-        } else if (id == R.id.nav_about) {
-            router.showAbout();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    @OnClick(R.id.nav_weather)
+    public void onWeatherNavigationClick() {
+        router.showWeather();
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+    }
+
+    @OnClick(R.id.nav_settings)
+    public void onSettingsNavigationClick() {
+        router.showSettings();
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @OnClick(R.id.nav_about)
+    public void onAboutNavigationClick() {
+        router.showAbout();
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override

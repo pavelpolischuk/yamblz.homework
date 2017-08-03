@@ -24,20 +24,20 @@ public class MainActivityRouter implements MainRouter {
 
     @Override
     public void showWeather() {
-        activity.setTitle(R.string.weather);
-        replaceFragment(new WeatherFragment(), R.string.weather+"", true);
+        activity.setTitle(R.string.weather_title);
+        replaceFragment(new WeatherFragment(), R.string.weather_title +"", true);
     }
 
     @Override
     public void showSettings() {
-        activity.setTitle(R.string.settings);
-        replaceFragment(new SettingsFragment(), R.string.settings+"", true);
+        activity.setTitle(R.string.settings_title);
+        replaceFragment(new SettingsFragment(), R.string.settings_title +"", true);
     }
 
     @Override
     public void showAbout() {
-        activity.setTitle(R.string.about_app);
-        replaceFragment(new AboutFragment(), R.string.about_app+"", true);
+        activity.setTitle(R.string.about_title);
+        replaceFragment(new AboutFragment(), R.string.about_title +"", true);
     }
 
     protected void replaceFragment(Fragment fragmentToSet, String tag, boolean showOnTopOfBackStack) {
