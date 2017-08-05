@@ -5,11 +5,12 @@ import android.support.annotation.NonNull;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
+import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
+import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
+import com.gcteam.yamblz.homework.presentation.di.component.AppComponent;
 import com.gcteam.yamblz.homework.presentation.di.component.DaggerAppComponent;
 import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
-import com.gcteam.yamblz.homework.data.network.WeatherService;
-import com.gcteam.yamblz.homework.data.local.WeatherStorage;
-import com.gcteam.yamblz.homework.data.WeatherData;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -32,10 +33,15 @@ public class UpdateWeatherJob extends Job {
     @Inject
     WeatherStorage weatherStorage;
 
+    AppComponent appComponent;
+
     @Override
     @NonNull
     protected Result onRunJob(Params params) {
-        DaggerAppComponent.builder().appModule(new AppModule(getContext())).build().inject(this);
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(getContext()))
+                .build();
+        appComponent.inject(this);
 
         WeatherData weather = weatherService
                 .currentWeather(Locale.getDefault().getLanguage())

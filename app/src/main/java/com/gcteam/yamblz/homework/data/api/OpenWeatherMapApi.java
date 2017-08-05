@@ -1,10 +1,10 @@
 package com.gcteam.yamblz.homework.data.api;
 
+import com.gcteam.yamblz.homework.data.api.dto.weather.Weather;
+
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-
-import com.gcteam.yamblz.homework.data.api.dto.Weather;
 
 /**
  * Created by turist on 16.07.2017.

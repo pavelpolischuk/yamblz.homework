@@ -6,8 +6,8 @@ import android.support.v7.preference.PreferenceManager;
 
 import com.gcteam.yamblz.homework.data.WeatherMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
-import com.gcteam.yamblz.homework.data.local.WeatherStorage;
-import com.gcteam.yamblz.homework.data.network.WeatherService;
+import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
+import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.gson.Gson;
 

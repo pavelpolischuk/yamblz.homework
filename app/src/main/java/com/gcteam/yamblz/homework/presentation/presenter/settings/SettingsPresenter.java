@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.domain.settings;
+package com.gcteam.yamblz.homework.presentation.presenter.settings;
 
 import android.content.SharedPreferences;
 import android.support.v7.preference.Preference;

@@ -4,7 +4,6 @@ import com.gcteam.yamblz.homework.presentation.di.module.WeatherScreenModule;
 import com.gcteam.yamblz.homework.presentation.di.scope.WeatherScreenScope;
 import com.gcteam.yamblz.homework.presentation.view.weather.WeatherFragment;
 
-import dagger.Component;
 import dagger.Subcomponent;
 
 /**

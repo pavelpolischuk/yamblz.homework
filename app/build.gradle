@@ -81,7 +81,6 @@ dependencies {
 
     compile libraries.rxAndroid
     compile libraries.rxJava
-    compile libraries.rxBindingSupport
     compile libraries.rxBindingAppCompat
 
     compile libraries.butterknife
@@ -100,4 +99,5 @@ dependencies {
     androidTestCompile libraries.testRunner
 
     compile libraries.cupboard
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

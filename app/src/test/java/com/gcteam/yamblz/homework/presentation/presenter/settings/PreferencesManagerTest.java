@@ -1,10 +1,10 @@
-package com.gcteam.yamblz.homework.domain.settings;
+package com.gcteam.yamblz.homework.presentation.presenter.settings;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.data.WeatherData;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
@@ -22,7 +22,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 /**
  * Created by Kim Michael on 29.07.17

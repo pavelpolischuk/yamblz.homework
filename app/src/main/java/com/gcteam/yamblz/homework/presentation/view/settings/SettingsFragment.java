@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
+import com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
-import com.gcteam.yamblz.homework.domain.settings.SettingsPresenter;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;

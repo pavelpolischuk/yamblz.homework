@@ -1,11 +1,11 @@
 package com.gcteam.yamblz.homework.weather;
 
-import com.gcteam.yamblz.homework.data.network.WeatherService;
-import com.gcteam.yamblz.homework.utils.PreferencesManager;
-import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
-import com.gcteam.yamblz.homework.data.WeatherData;
 import com.gcteam.yamblz.homework.data.WeatherMapper;
-import com.gcteam.yamblz.homework.data.api.dto.Weather;
+import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
+import com.gcteam.yamblz.homework.data.api.dto.weather.Weather;
+import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
+import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.gson.Gson;
 
 import org.junit.Before;
@@ -15,8 +15,9 @@ import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Single;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Kim Michael on 27.07.17

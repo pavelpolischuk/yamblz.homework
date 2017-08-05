@@ -1,9 +1,9 @@
-package com.gcteam.yamblz.homework.data.network;
+package com.gcteam.yamblz.homework.data.network.weather;
 
-import com.gcteam.yamblz.homework.utils.PreferencesManager;
-import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
-import com.gcteam.yamblz.homework.data.WeatherData;
 import com.gcteam.yamblz.homework.data.WeatherMapper;
+import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
+import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
@@ -22,7 +22,6 @@ import static com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi.API_KEY;
 
 public class WeatherService {
 
-    private static final int MOSCOW_CITY_ID = 524901;
     private static final String METRIC_UNITS = "metric";
 
     private static final HashSet<String> units = new HashSet<>(Arrays.asList(

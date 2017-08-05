@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.data.api.dto;
+package com.gcteam.yamblz.homework.data.api.dto.weather;
 
 import com.google.gson.annotations.SerializedName;
 

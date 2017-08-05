@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.gcteam.yamblz.homework.presentation.view.about.AboutFragment;
 import com.gcteam.yamblz.homework.R;
+import com.gcteam.yamblz.homework.presentation.view.about.AboutFragment;
 import com.gcteam.yamblz.homework.presentation.view.settings.SettingsFragment;
 import com.gcteam.yamblz.homework.presentation.view.weather.WeatherFragment;
 

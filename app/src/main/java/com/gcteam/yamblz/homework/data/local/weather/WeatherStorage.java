@@ -1,9 +1,9 @@
-package com.gcteam.yamblz.homework.data.local;
+package com.gcteam.yamblz.homework.data.local.weather;
 
 import android.support.annotation.Nullable;
 
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
-import com.gcteam.yamblz.homework.data.WeatherData;
 
 import javax.inject.Inject;
 
@@ -34,7 +34,7 @@ public class WeatherStorage {
 
     @NonNull
     public Consumer<WeatherData> updateLastWeather() {
-        return weather -> updateLastWeather(weather);
+        return this::updateLastWeather;
     }
 
     @NonNull
@@ -43,7 +43,7 @@ public class WeatherStorage {
         weatherSubject.onNext(weather);
     }
 
-    public void save(WeatherData weather) {
+    public void save(@NonNull WeatherData weather) {
         preferencesManager.putCurrentWeather(weather);
     }
 

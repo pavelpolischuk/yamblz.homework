@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.data.api.dto;
+package com.gcteam.yamblz.homework.data.api.dto.weather;
 
 /**
  * Created by turist on 16.07.2017.

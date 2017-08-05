@@ -3,8 +3,9 @@ package com.gcteam.yamblz.homework.data;
 import android.support.annotation.StringRes;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.data.api.dto.Weather;
-import com.gcteam.yamblz.homework.data.api.dto.WeatherCondition;
+import com.gcteam.yamblz.homework.data.api.dto.weather.Weather;
+import com.gcteam.yamblz.homework.data.api.dto.weather.WeatherCondition;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 
 import java.util.Calendar;
 

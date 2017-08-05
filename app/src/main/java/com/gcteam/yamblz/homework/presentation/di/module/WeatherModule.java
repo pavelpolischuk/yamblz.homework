@@ -1,9 +1,8 @@
 package com.gcteam.yamblz.homework.presentation.di.module;
 
-import com.gcteam.yamblz.homework.data.WeatherRepository;
+import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
 import com.gcteam.yamblz.homework.domain.interactor.weather.WeatherInteractor;
 import com.gcteam.yamblz.homework.presentation.di.scope.WeatherScope;
-import com.gcteam.yamblz.homework.presentation.di.scope.WeatherScreenScope;
 
 import javax.inject.Named;
 

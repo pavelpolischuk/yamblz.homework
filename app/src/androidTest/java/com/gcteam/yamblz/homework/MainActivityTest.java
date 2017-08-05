@@ -3,11 +3,11 @@ package com.gcteam.yamblz.homework;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.gcteam.yamblz.homework.presentation.view.main.MainActivity;
 import com.gcteam.yamblz.homework.pageobjects.AboutPage;
 import com.gcteam.yamblz.homework.pageobjects.MainPage;
 import com.gcteam.yamblz.homework.pageobjects.SettingsPage;
 import com.gcteam.yamblz.homework.pageobjects.WeatherPage;
+import com.gcteam.yamblz.homework.presentation.view.main.MainActivity;
 
 import org.junit.Before;
 import org.junit.Rule;

@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.data;
+package com.gcteam.yamblz.homework.domain.object;
 
 import android.support.annotation.StringRes;
 

@@ -1,9 +1,9 @@
 package com.gcteam.yamblz.homework.weather;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.data.local.WeatherStorage;
+import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
-import com.gcteam.yamblz.homework.data.WeatherData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import java.util.Calendar;
 import io.reactivex.functions.Consumer;
 
 import static junit.framework.Assert.fail;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 /**
  * Created by Kim Michael on 27.07.17

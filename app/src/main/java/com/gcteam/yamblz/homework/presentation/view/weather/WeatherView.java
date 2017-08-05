@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.view.weather;
 
-import com.gcteam.yamblz.homework.data.WeatherData;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.presentation.BaseView;
 
 /**

@@ -25,4 +25,4 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class com.gcteam.yamblz.homework.data.api.dto.** { *; }
--keep class com.gcteam.yamblz.homework.data.WeatherData { *; }
+-keep class com.gcteam.yamblz.homework.domain.object.WeatherData { *; }

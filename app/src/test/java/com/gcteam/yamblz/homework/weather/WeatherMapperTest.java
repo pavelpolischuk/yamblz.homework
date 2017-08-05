@@ -1,9 +1,9 @@
 package com.gcteam.yamblz.homework.weather;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.data.WeatherData;
 import com.gcteam.yamblz.homework.data.WeatherMapper;
-import com.gcteam.yamblz.homework.data.api.dto.Weather;
+import com.gcteam.yamblz.homework.data.api.dto.weather.Weather;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.google.gson.Gson;
 
 import org.junit.Before;

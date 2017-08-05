@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.view.weather;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -13,9 +14,11 @@ import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
+import com.gcteam.yamblz.homework.presentation.di.component.WeatherScreenComponent;
 import com.gcteam.yamblz.homework.presentation.presenter.weather.WeatherPresenter;
 import com.gcteam.yamblz.homework.presentation.view.BaseFragment;
-import com.gcteam.yamblz.homework.data.WeatherData;
+import com.gcteam.yamblz.homework.presentation.view.main.TitlePicker;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -37,8 +40,12 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @BindView(R.id.wind) TextView wind;
     @BindView(R.id.updated) TextView updated;
 
+    TitlePicker titlePicker;
+
     @Inject
     WeatherPresenter weatherPresenter;
+
+    WeatherScreenComponent weatherScreenComponent;
 
     @Nullable
     @Override
@@ -52,12 +59,20 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         setRetainInstance(true);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.titlePicker = (TitlePicker) context;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        WeatherApplication.getComponentManager().getWeatherScreenComponent().inject(this);
+        weatherScreenComponent = WeatherApplication.getComponentManager().getAppComponent()
+                .getWeatherComponent()
+                .getWeatherScreenComponent();
+        weatherScreenComponent.inject(this);
 
         weatherPresenter.onAttach(this);
         if (savedInstanceState == null) {
@@ -75,7 +90,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void onDestroyView() {
         super.onDestroyView();
         weatherPresenter.onDetach();
-        WeatherApplication.getComponentManager().releaseWeatherScreenComponent();
     }
 
     @Override

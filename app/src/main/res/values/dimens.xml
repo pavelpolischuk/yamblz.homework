@@ -8,4 +8,5 @@
     <dimen name="nav_title_horizontal_padding">4dp</dimen>
     <dimen name="nav_title_vertical_padding">4dp</dimen>
     <dimen name="nav_item_height">52dp</dimen>
+    <dimen name="nav_drawer_size">320dp</dimen>
 </resources>

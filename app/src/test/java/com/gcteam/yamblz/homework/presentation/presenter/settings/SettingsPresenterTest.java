@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.domain.settings;
+package com.gcteam.yamblz.homework.presentation.presenter.settings;
 
 import com.gcteam.yamblz.homework.presentation.view.settings.SettingsView;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
@@ -8,9 +8,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static com.gcteam.yamblz.homework.domain.settings.SettingsPresenter.CHOOSE_CITY_KEY;
-import static com.gcteam.yamblz.homework.domain.settings.SettingsPresenter.UPDATE_INTERVAL_KEY;
-import static org.mockito.Mockito.*;
+import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.CHOOSE_CITY_KEY;
+import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.UPDATE_INTERVAL_KEY;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Kim Michael on 29.07.17

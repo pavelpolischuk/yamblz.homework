@@ -1,7 +1,7 @@
 package com.gcteam.yamblz.homework.domain.interactor.weather;
 
-import com.gcteam.yamblz.homework.data.WeatherData;
-import com.gcteam.yamblz.homework.data.WeatherRepository;
+import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 
 import javax.inject.Inject;
 

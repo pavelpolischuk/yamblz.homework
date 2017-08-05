@@ -2,14 +2,14 @@ package com.gcteam.yamblz.homework.utils;
 
 import android.content.SharedPreferences;
 
-import com.gcteam.yamblz.homework.data.WeatherData;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.google.android.gms.location.places.Place;
 import com.google.gson.Gson;
 
-import static com.gcteam.yamblz.homework.domain.settings.SettingsPresenter.CHOOSE_CITY_KEY;
-import static com.gcteam.yamblz.homework.domain.settings.SettingsPresenter.LAT_KEY;
-import static com.gcteam.yamblz.homework.domain.settings.SettingsPresenter.LNG_KEY;
-import static com.gcteam.yamblz.homework.domain.settings.SettingsPresenter.UPDATE_INTERVAL_KEY;
+import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.CHOOSE_CITY_KEY;
+import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.LAT_KEY;
+import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.LNG_KEY;
+import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.UPDATE_INTERVAL_KEY;
 
 /**
  * Created by Kim Michael on 26.07.17
