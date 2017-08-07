@@ -11,7 +11,6 @@ import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.presentation.di.component.AppComponent;
 import com.gcteam.yamblz.homework.presentation.di.component.DaggerAppComponent;
 import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
-import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -35,30 +34,6 @@ public class UpdateWeatherJob extends Job {
 
     AppComponent appComponent;
 
-    @Override
-    @NonNull
-    protected Result onRunJob(Params params) {
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(getContext()))
-                .build();
-        appComponent.inject(this);
-
-        WeatherData weather = weatherService
-                .currentWeather(Locale.getDefault().getLanguage())
-                .doOnSuccess(weather1 -> Picasso.with(getContext()).load(weather1.getIconUri()).fetch())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(throwable -> null)
-                .blockingGet();
-
-        if(weather == null) {
-            return Result.FAILURE;
-        }
-
-        weatherStorage.updateLastWeather(weather);
-
-        return Result.SUCCESS;
-    }
-
     public static void startUpdate(int minutesInterval) {
         new JobRequest.Builder(UpdateWeatherJob.TAG)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(minutesInterval), TimeUnit.MINUTES.toMillis(15))
@@ -72,5 +47,28 @@ public class UpdateWeatherJob extends Job {
 
     public static boolean checkStarted() {
         return !JobManager.instance().getAllJobsForTag(UpdateWeatherJob.TAG).isEmpty();
+    }
+
+    @Override
+    @NonNull
+    protected Result onRunJob(Params params) {
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(getContext()))
+                .build();
+        appComponent.inject(this);
+
+        WeatherData weather = weatherService
+                .getCurrentWeather(Locale.getDefault().getLanguage())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .onErrorReturn(throwable -> null)
+                .blockingGet();
+
+        if (weather == null) {
+            return Result.FAILURE;
+        }
+
+        weatherStorage.updateLastWeather(weather);
+
+        return Result.SUCCESS;
     }
 }

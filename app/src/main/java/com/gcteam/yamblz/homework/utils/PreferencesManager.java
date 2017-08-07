@@ -17,13 +17,11 @@ import static com.gcteam.yamblz.homework.presentation.presenter.settings.Setting
 public class PreferencesManager {
 
 
-    private SharedPreferences sharedPreferences;
-    private Gson gson;
-
     public static final String CURRENT_WEATHER_KEY = "current_weather_key";
-
     public static final String DEFAULT_UPDATE_INTERVAL = "3600";
     public static final String DEFAULT_CHOSEN_CITY = "Moscow";
+    private SharedPreferences sharedPreferences;
+    private Gson gson;
 
 
     public PreferencesManager(SharedPreferences sharedPreferences, Gson gson) {

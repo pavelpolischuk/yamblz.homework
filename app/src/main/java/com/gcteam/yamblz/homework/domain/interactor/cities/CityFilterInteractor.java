@@ -1,7 +1,9 @@
 package com.gcteam.yamblz.homework.domain.interactor.cities;
 
-import com.gcteam.yamblz.homework.data.CityMapper;
-import com.gcteam.yamblz.homework.data.repository.cities.CitiesRepository;
+import android.support.annotation.NonNull;
+
+import com.gcteam.yamblz.homework.data.CitiesResponseMapper;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
 import java.util.List;
@@ -16,26 +18,26 @@ import io.reactivex.Single;
  */
 public class CityFilterInteractor {
 
-    private CitiesRepository cityRepository;
-    private CityMapper cityMapper;
+    private CityRepository cityRepository;
+    private CitiesResponseMapper citiesResponseMapper;
     private Scheduler executionScheduler;
     private Scheduler postExecutionScheduler;
 
     @Inject
     public CityFilterInteractor(
-            CitiesRepository cityRepository,
-            CityMapper cityMapper,
+            CityRepository cityRepository,
+            CitiesResponseMapper citiesResponseMapper,
             Scheduler executionScheduler,
             Scheduler postExecutionScheduler) {
         this.cityRepository = cityRepository;
-        this.cityMapper = cityMapper;
+        this.citiesResponseMapper = citiesResponseMapper;
         this.executionScheduler = executionScheduler;
         this.postExecutionScheduler = postExecutionScheduler;
     }
 
-    public Single<List<FilteredCity>> getCitiesByFilter(String input) {
+    public Single<List<FilteredCity>> getCitiesByFilter(@NonNull String input) {
         return cityRepository.getCitiesByFilter(input)
-                .map(cityMapper)
+                .map(citiesResponseMapper)
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }

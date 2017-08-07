@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.data.repository.weather;
 
+import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
@@ -26,8 +27,13 @@ public class WeatherRepository {
         this.weatherService = weatherService;
     }
 
-    public Single<WeatherData> startRefresh() {
+    public Single<WeatherData> getCurrentWeather() {
         return weatherService
-                .currentWeather(Locale.getDefault().getLanguage());
+                .getCurrentWeather(Locale.getDefault().getLanguage());
+    }
+
+    public Single<ForecastResponse> getForecastResponse(String lat, String lon) {
+        return weatherService
+                .getForecast(lat, lon, Locale.getDefault().getLanguage());
     }
 }

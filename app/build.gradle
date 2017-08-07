@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply from: '../code_quality_tools/jacoco.gradle'
+apply plugin: 'com.vanniktech.code.quality.tools'
 
 def keystorePropertiesFile = project.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -99,5 +100,5 @@ dependencies {
     androidTestCompile libraries.testRunner
 
     compile libraries.cupboard
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile libraries.rxCupboard
 }

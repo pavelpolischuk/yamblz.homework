@@ -1,8 +1,8 @@
 package com.gcteam.yamblz.homework.weather;
 
-import com.gcteam.yamblz.homework.data.WeatherMapper;
+import com.gcteam.yamblz.homework.data.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
-import com.gcteam.yamblz.homework.data.api.dto.weather.Weather;
+import com.gcteam.yamblz.homework.data.api.dto.weather.current.WeatherResponse;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
@@ -25,12 +25,12 @@ import static org.mockito.Mockito.when;
 public class WeatherServiceTest {
 
     WeatherService weatherService;
-    WeatherMapper weatherMapper;
+    WeatherResponseMapper weatherResponseMapper;
     @Mock
     PreferencesManager preferencesManager;
     @Mock
     OpenWeatherMapApi api;
-    Weather testWeather;
+    WeatherResponse testWeatherResponse;
     WeatherData testWeatherMapped;
 
     @Before
@@ -38,27 +38,27 @@ public class WeatherServiceTest {
         MockitoAnnotations.initMocks(this);
 
 
-        weatherMapper = new WeatherMapper();
-        testWeather = new Gson().fromJson("{\"coord\":{\"lon\":30.52,\"lat\":50.45},\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}],\"base\":\"stations\",\"main\":{\"temp\":24.34,\"pressure\":1004,\"humidity\":78,\"temp_min\":23,\"temp_max\":26},\"visibility\":10000,\"wind\":{\"speed\":6,\"deg\":360},\"clouds\":{\"all\":75},\"dt\":1501250400,\"sys\":{\"type\":1,\"id\":7358,\"message\":0.0041,\"country\":\"UA\",\"sunrise\":1501208450,\"sunset\":1501264023},\"id\":696050,\"name\":\"Pushcha-Voditsa\",\"cod\":200}", Weather.class);
-        testWeatherMapped = weatherMapper.apply(testWeather);
+        weatherResponseMapper = new WeatherResponseMapper();
+        testWeatherResponse = new Gson().fromJson("{\"coord\":{\"lon\":30.52,\"lat\":50.45},\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}],\"base\":\"stations\",\"main\":{\"temp\":24.34,\"pressure\":1004,\"humidity\":78,\"temp_min\":23,\"temp_max\":26},\"visibility\":10000,\"wind\":{\"speed\":6,\"deg\":360},\"clouds\":{\"all\":75},\"dt\":1501250400,\"sys\":{\"type\":1,\"id\":7358,\"message\":0.0041,\"country\":\"UA\",\"sunrise\":1501208450,\"sunset\":1501264023},\"id\":696050,\"name\":\"Pushcha-Voditsa\",\"cod\":200}", WeatherResponse.class);
+        testWeatherMapped = weatherResponseMapper.apply(testWeatherResponse);
 
         when(api.weatherByLatLng(anyString(),
                 anyString(),
                 anyString(),
                 anyString(),
-                anyString())).thenReturn(Single.just(testWeather));
+                anyString())).thenReturn(Single.just(testWeatherResponse));
 
         double lat = 10d;
         double lng = 10d;
         when(preferencesManager.getLat()).thenReturn(lat);
         when(preferencesManager.getLng()).thenReturn(lng);
 
-        weatherService = new WeatherService(preferencesManager, weatherMapper, api);
+        weatherService = new WeatherService(preferencesManager, weatherResponseMapper, api);
     }
 
     @Test
     public void getCurrentWeatherFromAPI() {
-        WeatherData weatherData = weatherService.currentWeather("ru").blockingGet();
+        WeatherData weatherData = weatherService.getCurrentWeather("ru").blockingGet();
         assertTrue(weatherData.equals(testWeatherMapped));
     }
 

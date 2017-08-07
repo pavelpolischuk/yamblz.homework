@@ -25,36 +25,36 @@ public class MainActivityRouter implements MainRouter {
     @Override
     public void showWeather() {
         activity.setTitle(R.string.weather_title);
-        replaceFragment(new WeatherFragment(), R.string.weather_title +"", true);
+        replaceFragment(new WeatherFragment(), R.string.weather_title + "", true);
     }
 
     @Override
     public void showSettings() {
         activity.setTitle(R.string.settings_title);
-        replaceFragment(new SettingsFragment(), R.string.settings_title +"", true);
+        replaceFragment(new SettingsFragment(), R.string.settings_title + "", true);
     }
 
     @Override
     public void showAbout() {
         activity.setTitle(R.string.about_title);
-        replaceFragment(new AboutFragment(), R.string.about_title +"", true);
+        replaceFragment(new AboutFragment(), R.string.about_title + "", true);
     }
 
     protected void replaceFragment(Fragment fragmentToSet, String tag, boolean showOnTopOfBackStack) {
         FragmentManager manager = activity.getSupportFragmentManager();
-        if(showOnTopOfBackStack) {
+        if (showOnTopOfBackStack) {
             boolean removed = manager.popBackStackImmediate();
             while (removed) {
                 removed = manager.popBackStackImmediate();
             }
         }
 
-        if(manager.findFragmentByTag(tag) == null) {
+        if (manager.findFragmentByTag(tag) == null) {
             FragmentTransaction transaction = manager.beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     .replace(R.id.content_main, fragmentToSet, tag);
 
-            if(!showOnTopOfBackStack) {
+            if (!showOnTopOfBackStack) {
                 transaction.addToBackStack(null);
             }
 

@@ -28,6 +28,7 @@ ext.versions = [
     testRunner : '1.0.0',
 
     cupboard: '2.2.0',
+    rxCupboard: '2.0',
 ]
 
 ext.libraries = [
@@ -73,5 +74,7 @@ ext.libraries = [
         testRunner : "com.android.support.test:runner:$versions.testRunner",
 
         cupboard : "nl.qbusict:cupboard:$versions.cupboard",
+        rxCupboard : "nl.2312:rxcupboard2:$versions.rxCupboard"
+
 
 ]

@@ -13,10 +13,10 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Base fragment, containing utility functional for work with {@link io.reactivex} and {@link ButterKnife} frameworks
- *
+ * <p>
  * Save subscriptions on {@link io.reactivex.Observable} and unsubscribe its when fragment destroyed
  * Bind views on ids (set with annotation), save bindings and unbind its when view destroyed
- *
+ * <p>
  * Created by turist on 15.07.2017.
  */
 
@@ -44,7 +44,7 @@ public class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        if(!disposables.isDisposed()) {
+        if (!disposables.isDisposed()) {
             this.disposables.dispose();
         }
     }

@@ -1,6 +1,5 @@
 package com.gcteam.yamblz.homework.weather;
 
-import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
 import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
@@ -11,7 +10,6 @@ import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 import io.reactivex.Observable;
@@ -42,11 +40,11 @@ public class WeatherRepositoryTest {
         MockitoAnnotations.initMocks(this);
 
         testWeather = new WeatherData(
-                "", "", "desc", 100, 20d, 10, 12f, R.string.wind_nw, Calendar.getInstance());
+                100, "desc", 36.6d, 20.0d, 40.0d, 200.0d, 20, 5.5, 300);
 
         when(weatherStorage.lastWeather()).thenReturn(Observable.just(testWeather));
 
-        when(weatherService.currentWeather(Locale.getDefault().getLanguage()))
+        when(weatherService.getCurrentWeather(Locale.getDefault().getLanguage()))
                 .thenReturn(Single.just(testWeather));
 
         when(weatherStorage.updateLastWeather()).thenReturn(consumer);

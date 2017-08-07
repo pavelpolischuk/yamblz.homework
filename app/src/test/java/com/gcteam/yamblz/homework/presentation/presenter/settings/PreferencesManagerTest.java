@@ -3,7 +3,6 @@ package com.gcteam.yamblz.homework.presentation.presenter.settings;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
-import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.android.gms.location.places.Place;
@@ -18,7 +17,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -116,7 +114,7 @@ public class PreferencesManagerTest {
             }
         };
         testWeather = new WeatherData(
-                "", "", "desc", 100, 20d, 10, 12f, R.string.wind_nw, Calendar.getInstance());
+                100, "desc", 36.6d, 20.0d, 40.0d, 200.0d, 20, 5.5, 300);
         SharedPreferences sp = RuntimeEnvironment.application.getSharedPreferences("", 0);
         preferencesManager = new PreferencesManager(sp, new Gson());
         sp.edit().clear().commit();

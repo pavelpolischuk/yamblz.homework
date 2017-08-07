@@ -13,15 +13,15 @@ import com.gcteam.yamblz.homework.presentation.di.ComponentManager;
 public class WeatherApplication extends Application {
     private static ComponentManager componentManager;
 
+    public static ComponentManager getComponentManager() {
+        return componentManager;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         JobManager.create(this).addJobCreator(new WeatherJobCreator());
         componentManager = new ComponentManager(this);
-    }
-
-    public static ComponentManager getComponentManager() {
-        return componentManager;
     }
 
 }

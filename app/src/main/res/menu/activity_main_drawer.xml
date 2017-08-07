@@ -10,10 +10,9 @@
     <item
         android:id="@+id/city_chooser"
         android:title="@string/city_list_title"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
-    <group
-        android:id="@+id/secondary_options">
+    <group android:id="@+id/secondary_options">
 
         <item
             android:id="@+id/nav_settings"

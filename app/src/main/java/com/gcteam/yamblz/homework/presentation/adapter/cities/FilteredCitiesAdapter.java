@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,19 +23,31 @@ public class FilteredCitiesAdapter extends RecyclerView.Adapter<FilteredCitiesAd
 
     private List<FilteredCity> filteredCities;
     private LayoutInflater layoutInflater;
+    private OnCityClickListener listener;
 
-    public FilteredCitiesAdapter(@NonNull LayoutInflater layoutInflater) {
+    public FilteredCitiesAdapter(@NonNull LayoutInflater layoutInflater,
+                                 OnCityClickListener onCityClickListener) {
         this.layoutInflater = layoutInflater;
+        this.filteredCities = new ArrayList<>();
+        this.listener = onCityClickListener;
     }
 
     public void insertAll(List<FilteredCity> filteredCities) {
-        this.filteredCities = filteredCities;
+        this.filteredCities.clear();
+        this.filteredCities.addAll(filteredCities);
+        notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = layoutInflater.inflate(R.layout.item_filtered_city, parent, false);
-        return new ViewHolder(v);
+        final View v = layoutInflater.inflate(R.layout.item_filtered_city, parent, false);
+        final ViewHolder viewHolder = new ViewHolder(v);
+        v.setOnClickListener(v1 -> {
+            if (viewHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
+                listener.onCityClick(filteredCities.get(viewHolder.getAdapterPosition()));
+            }
+        });
+        return viewHolder;
     }
 
     @Override
@@ -48,6 +61,15 @@ public class FilteredCitiesAdapter extends RecyclerView.Adapter<FilteredCitiesAd
         return filteredCities.size();
     }
 
+    public void clear() {
+        filteredCities.clear();
+        notifyDataSetChanged();
+    }
+
+    public interface OnCityClickListener {
+        void onCityClick(FilteredCity filteredCity);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.city_name)
@@ -57,7 +79,7 @@ public class FilteredCitiesAdapter extends RecyclerView.Adapter<FilteredCitiesAd
 
         ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         void bind(FilteredCity filteredCity) {

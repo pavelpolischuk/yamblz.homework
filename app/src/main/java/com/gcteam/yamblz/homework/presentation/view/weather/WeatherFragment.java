@@ -6,11 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
@@ -19,7 +17,6 @@ import com.gcteam.yamblz.homework.presentation.di.component.WeatherScreenCompone
 import com.gcteam.yamblz.homework.presentation.presenter.weather.WeatherPresenter;
 import com.gcteam.yamblz.homework.presentation.view.BaseFragment;
 import com.gcteam.yamblz.homework.presentation.view.main.TitlePicker;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -31,14 +28,8 @@ import butterknife.BindView;
 
 public class WeatherFragment extends BaseFragment implements WeatherView {
 
-    @BindView(R.id.swiperefresh) SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.icon) AppCompatImageView icon;
-    @BindView(R.id.description) TextView description;
-    @BindView(R.id.temperature) TextView temperature;
-    @BindView(R.id.pressure) TextView pressure;
-    @BindView(R.id.humidity) TextView humidity;
-    @BindView(R.id.wind) TextView wind;
-    @BindView(R.id.updated) TextView updated;
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout refreshLayout;
 
     TitlePicker titlePicker;
 
@@ -94,14 +85,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void showWeatherData(WeatherData weather) {
-        Picasso.with(getContext()).load(weather.getIconUri()).into(icon);
-        description.setText(weather.getDescription());
-        temperature.setText(String.format("%.1f°C", weather.getTemperature()));
-        pressure.setText(String.format("%s hPa", weather.getPressure()));
-        humidity.setText(String.format("%s%%", weather.getHumidity()));
-        wind.setText(String.format(getString(weather.getWindFormat()), weather.getWindSpeed()));
+
         refreshLayout.setRefreshing(false);
-        updated.setText(weather.getUpdatingTime().getTime().toString());
     }
 
     @Override

@@ -7,5 +7,6 @@ package com.gcteam.yamblz.homework.presentation.view.settings;
 public interface SettingsView {
 
     void updateSummary(String key, String value);
+
     void showCityChooser();
 }

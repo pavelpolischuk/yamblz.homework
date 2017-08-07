@@ -1,74 +1,42 @@
 package com.gcteam.yamblz.homework.domain.object;
 
-import android.support.annotation.StringRes;
-
 import java.io.Serializable;
-import java.util.Calendar;
 
 /**
  * Created by turist on 16.07.2017.
  */
 
 public class WeatherData implements Serializable {
-    private String iconUri;
-    private String condition;
+    private int weatherId;
     private String description;
 
-    private float temperature;
+    private double dayTemp;
+    private double minTemp;
+    private double maxTemp;
     private double pressure; // hPa
     private int humidity; // %
 
-    private float windSpeed;
-    private long updated;
+    private double windSpeed;
+    private double windDeg;
 
-    @StringRes
-    private int windFormat;
-
-    public WeatherData(String iconUri, String condition, String description,
-                       float temperature, double pressure, int humidity,
-                       float windSpeed, @StringRes int windFormat, Calendar updated) {
-        this.iconUri = iconUri;
-        this.condition = condition;
+    public WeatherData(int weatherId,
+                       String description,
+                       double dayTemp,
+                       double minTemp,
+                       double maxTemp,
+                       double pressure,
+                       int humidity,
+                       double windSpeed,
+                       double windDeg) {
+        this.weatherId = weatherId;
         this.description = description;
-        this.temperature = temperature;
+        this.dayTemp = dayTemp;
+        this.minTemp = minTemp;
+        this.maxTemp = maxTemp;
         this.pressure = pressure;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
-        this.windFormat = windFormat;
-        this.updated = updated.getTimeInMillis();
-    }
-
-    public String getIconUri() {
-        return iconUri;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public float getTemperature() {
-        return temperature;
-    }
-
-    public double getPressure() {
-        return pressure;
-    }
-
-    public int getHumidity() {
-        return humidity;
-    }
-
-    public float getWindSpeed() {
-        return windSpeed;
-    }
-
-    @StringRes
-    public int getWindFormat() {
-        return windFormat;
+        this.windDeg = windDeg;
     }
 
     @Override
@@ -76,18 +44,17 @@ public class WeatherData implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        WeatherData weather = (WeatherData) o;
+        WeatherData that = (WeatherData) o;
 
-        if (Float.compare(weather.temperature, temperature) != 0) return false;
-        if (Double.compare(weather.pressure, pressure) != 0) return false;
-        if (humidity != weather.humidity) return false;
-        if (Float.compare(weather.windSpeed, windSpeed) != 0) return false;
-        if (windFormat != weather.windFormat) return false;
-        if (iconUri != null ? !iconUri.equals(weather.iconUri) : weather.iconUri != null)
-            return false;
-        if (condition != null ? !condition.equals(weather.condition) : weather.condition != null)
-            return false;
-        return description != null ? description.equals(weather.description) : weather.description == null;
+        if (weatherId != that.weatherId) return false;
+        if (Double.compare(that.dayTemp, dayTemp) != 0) return false;
+        if (Double.compare(that.minTemp, minTemp) != 0) return false;
+        if (Double.compare(that.maxTemp, maxTemp) != 0) return false;
+        if (Double.compare(that.pressure, pressure) != 0) return false;
+        if (humidity != that.humidity) return false;
+        if (Double.compare(that.windSpeed, windSpeed) != 0) return false;
+        if (Double.compare(that.windDeg, windDeg) != 0) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
 
     }
 
@@ -95,23 +62,94 @@ public class WeatherData implements Serializable {
     public int hashCode() {
         int result;
         long temp;
-        result = iconUri != null ? iconUri.hashCode() : 0;
-        result = 31 * result + (condition != null ? condition.hashCode() : 0);
+        result = weatherId;
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (temperature != +0.0f ? Float.floatToIntBits(temperature) : 0);
+        temp = Double.doubleToLongBits(dayTemp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(minTemp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(maxTemp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(pressure);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + humidity;
-        result = 31 * result + (windSpeed != +0.0f ? Float.floatToIntBits(windSpeed) : 0);
-        result = 31 * result + (int) (updated ^ (updated >>> 32));
-        result = 31 * result + windFormat;
+        temp = Double.doubleToLongBits(windSpeed);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(windDeg);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
-    public Calendar getUpdatingTime() {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(updated);
-        return c;
+    public int getWeatherId() {
 
+        return weatherId;
+    }
+
+    public void setWeatherId(int weatherId) {
+        this.weatherId = weatherId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getDayTemp() {
+        return dayTemp;
+    }
+
+    public void setDayTemp(double dayTemp) {
+        this.dayTemp = dayTemp;
+    }
+
+    public double getMinTemp() {
+        return minTemp;
+    }
+
+    public void setMinTemp(double minTemp) {
+        this.minTemp = minTemp;
+    }
+
+    public double getMaxTemp() {
+        return maxTemp;
+    }
+
+    public void setMaxTemp(double maxTemp) {
+        this.maxTemp = maxTemp;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(double pressure) {
+        this.pressure = pressure;
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
+
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(double windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public double getWindDeg() {
+        return windDeg;
+    }
+
+    public void setWindDeg(double windDeg) {
+        this.windDeg = windDeg;
     }
 }

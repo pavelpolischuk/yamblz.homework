@@ -1,12 +1,12 @@
 package com.gcteam.yamblz.homework.presentation.di.module;
 
-import com.gcteam.yamblz.homework.data.CityMapper;
+import com.gcteam.yamblz.homework.data.CitiesResponseMapper;
 import com.gcteam.yamblz.homework.data.api.GooglePlacesAPI;
-import com.gcteam.yamblz.homework.data.local.cities.CitiesStorage;
-import com.gcteam.yamblz.homework.data.network.cities.CitiesService;
-import com.gcteam.yamblz.homework.data.repository.cities.CitiesRepository;
+import com.gcteam.yamblz.homework.data.local.cities.CityStorage;
+import com.gcteam.yamblz.homework.data.network.cities.CityService;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityFilterInteractor;
-import com.gcteam.yamblz.homework.presentation.di.scope.CityChooserScope;
+import com.gcteam.yamblz.homework.presentation.di.scope.CityFilterScope;
 
 import javax.inject.Named;
 
@@ -21,43 +21,43 @@ import io.reactivex.Scheduler;
 public class CityModule {
 
     @Provides
-    @CityChooserScope
+    @CityFilterScope
     public CityFilterInteractor provideCityInteractor(
-            CitiesRepository citiesRepository,
-            CityMapper cityMapper,
+            CityRepository cityRepository,
+            CitiesResponseMapper citiesResponseMapper,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
         return new CityFilterInteractor(
-                citiesRepository,
-                cityMapper,
+                cityRepository,
+                citiesResponseMapper,
                 executionScheduler,
                 postExecutionScheduler
         );
     }
 
     @Provides
-    @CityChooserScope
-    public CitiesRepository provideCitiesRepository(
-            CitiesStorage citiesStorage,
-            CitiesService citiesService) {
-        return new CitiesRepository(citiesStorage, citiesService);
+    @CityFilterScope
+    public CityRepository provideCitiesRepository(
+            CityStorage cityStorage,
+            CityService cityService) {
+        return new CityRepository(cityStorage, cityService);
     }
 
     @Provides
-    @CityChooserScope
-    public CityMapper provideCityMapper() {
-        return new CityMapper();
+    @CityFilterScope
+    public CitiesResponseMapper provideCityMapper() {
+        return new CitiesResponseMapper();
     }
 
     @Provides
-    @CityChooserScope
-    public CitiesService provideCitiesService(GooglePlacesAPI googlePlacesAPI) {
-        return new CitiesService(googlePlacesAPI);
+    @CityFilterScope
+    public CityService provideCitiesService(GooglePlacesAPI googlePlacesAPI) {
+        return new CityService(googlePlacesAPI);
     }
 
     @Provides
-    @CityChooserScope
-    public CitiesStorage provideCitiesStorage() {
-        return new CitiesStorage();
+    @CityFilterScope
+    public CityStorage provideCitiesStorage() {
+        return new CityStorage();
     }
 }

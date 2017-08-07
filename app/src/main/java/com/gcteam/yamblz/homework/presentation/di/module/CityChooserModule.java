@@ -1,0 +1,34 @@
+package com.gcteam.yamblz.homework.presentation.di.module;
+
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
+import com.gcteam.yamblz.homework.domain.interactor.cities.CityPickerInteractor;
+import com.gcteam.yamblz.homework.presentation.di.scope.CityChooserScope;
+import com.gcteam.yamblz.homework.presentation.presenter.city.CityPickerPresenter;
+
+import javax.inject.Named;
+
+import dagger.Module;
+import dagger.Provides;
+import io.reactivex.Scheduler;
+
+/**
+ * Created by Kim Michael on 05.08.17
+ */
+@Module
+public class CityChooserModule {
+
+    @Provides
+    @CityChooserScope
+    public CityPickerPresenter provideCityPickerPresenter(CityPickerInteractor cityPickerInteractor) {
+        return new CityPickerPresenter(cityPickerInteractor);
+    }
+
+    @Provides
+    @CityChooserScope
+    public CityPickerInteractor provideCityPickerInteractor(
+            CityRepository cityRepository,
+            @Named(SchedulersModule.JOB) Scheduler executionScheduler,
+            @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
+        return new CityPickerInteractor(cityRepository, executionScheduler, postExecutionScheduler);
+    }
+}

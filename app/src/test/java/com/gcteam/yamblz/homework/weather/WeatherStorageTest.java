@@ -1,6 +1,5 @@
 package com.gcteam.yamblz.homework.weather;
 
-import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
@@ -9,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Calendar;
 
 import io.reactivex.functions.Consumer;
 
@@ -30,7 +27,8 @@ public class WeatherStorageTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        weatherData = new WeatherData("", "", "", 20.0f, 100d, 50, 1.0f, R.string.wind_n, Calendar.getInstance());
+        weatherData = new WeatherData(
+                100, "desc", 36.6d, 20.0d, 40.0d, 200.0d, 20, 5.5, 300);
         weatherStorage = new WeatherStorage(preferencesManager);
     }
 
@@ -52,7 +50,7 @@ public class WeatherStorageTest {
         try {
             consumer.accept(weatherData);
         } catch (Exception e) {
-            fail("Consumer failed to accept weather data");
+            fail("Consumer failed to accept weatherResponse data");
         }
     }
 }

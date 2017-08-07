@@ -6,6 +6,8 @@ package com.gcteam.yamblz.homework.presentation.presenter.main;
 
 public interface MainRouter {
     void showWeather();
+
     void showSettings();
+
     void showAbout();
 }

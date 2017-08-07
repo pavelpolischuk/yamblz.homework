@@ -1,7 +1,8 @@
 package com.gcteam.yamblz.homework.data.network.weather;
 
-import com.gcteam.yamblz.homework.data.WeatherMapper;
+import com.gcteam.yamblz.homework.data.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
+import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.android.gms.maps.model.LatLng;
@@ -32,38 +33,19 @@ public class WeatherService {
             "sl", "es", "tr", "ua", "vi", "zh_cn", "zh_tw"));
 
     private OpenWeatherMapApi api;
-    private WeatherMapper weatherMapper;
+    private WeatherResponseMapper weatherResponseMapper;
     private PreferencesManager preferencesManager;
 
     @Inject
-    public WeatherService(PreferencesManager preferencesManager, WeatherMapper weatherMapper, OpenWeatherMapApi api) {
+    public WeatherService(PreferencesManager preferencesManager, WeatherResponseMapper weatherResponseMapper, OpenWeatherMapApi api) {
 
-        this.weatherMapper = weatherMapper;
+        this.weatherResponseMapper = weatherResponseMapper;
         this.preferencesManager = preferencesManager;
         this.api = api;
     }
 
-
-    public Single<WeatherData> currentWeather(LatLng latLng, String units, String lang) {
-        return api.weatherByLatLng(API_KEY,
-                Double.toString(latLng.latitude),
-                Double.toString(latLng.longitude),
-                checkUnitsType(units),
-                checkLangCode(lang))
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
-                .map(weatherMapper);
-    }
-
-    public Single<WeatherData> currentWeather(String lang) {
-        return currentWeather(new LatLng(preferencesManager.getLat(),
-                                        preferencesManager.getLng()),
-                METRIC_UNITS,
-                lang);
-    }
-
     public static String checkUnitsType(String unitsType) {
-        if(units.contains(unitsType)) {
+        if (units.contains(unitsType)) {
             return unitsType;
         }
 
@@ -71,10 +53,35 @@ public class WeatherService {
     }
 
     public static String checkLangCode(String lang) {
-        if(codes.contains(lang)) {
+        if (codes.contains(lang)) {
             return lang;
         }
 
         return "en";
+    }
+
+    public Single<WeatherData> getCurrentWeather(LatLng latLng, String units, String lang) {
+        return api.weatherByLatLng(API_KEY,
+                Double.toString(latLng.latitude),
+                Double.toString(latLng.longitude),
+                checkUnitsType(units),
+                checkLangCode(lang))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .map(weatherResponseMapper);
+    }
+
+    public Single<WeatherData> getCurrentWeather(String lang) {
+        return getCurrentWeather(new LatLng(preferencesManager.getLat(),
+                        preferencesManager.getLng()),
+                METRIC_UNITS,
+                lang);
+    }
+
+    public Single<ForecastResponse> getForecast(String lat, String lon, String lang) {
+        return api.forecastByLatLng(API_KEY,
+                lat, lon,
+                METRIC_UNITS,
+                checkLangCode(lang));
     }
 }

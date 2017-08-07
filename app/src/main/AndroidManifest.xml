@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".presentation.view.main.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.view.cities.CityChooserActivity"
+            android:name=".presentation.view.city.CityFilterActivity"
             android:label="@string/title_activity_city_pick"
             android:parentActivityName=".presentation.view.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

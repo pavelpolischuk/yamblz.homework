@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
-import com.gcteam.yamblz.homework.data.WeatherMapper;
+import com.gcteam.yamblz.homework.data.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
@@ -25,9 +25,9 @@ public class DataModule {
     @Provides
     @Singleton
     WeatherService provideWeatherService(PreferencesManager preferencesManager,
-                                         WeatherMapper weatherMapper,
+                                         WeatherResponseMapper weatherResponseMapper,
                                          OpenWeatherMapApi api) {
-        return new WeatherService(preferencesManager, weatherMapper, api);
+        return new WeatherService(preferencesManager, weatherResponseMapper, api);
     }
 
     @Provides
@@ -38,8 +38,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    WeatherMapper provideWeatherMapper() {
-        return new WeatherMapper();
+    WeatherResponseMapper provideWeatherMapper() {
+        return new WeatherResponseMapper();
     }
 
     @Provides

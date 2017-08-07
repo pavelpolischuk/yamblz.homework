@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.presenter.weather;
 
-import com.gcteam.yamblz.homework.domain.interactor.weather.WeatherInteractor;
+import com.gcteam.yamblz.homework.domain.interactor.weather.current.CurrentWeatherInteractor;
 import com.gcteam.yamblz.homework.presentation.BasePresenter;
 import com.gcteam.yamblz.homework.presentation.view.weather.WeatherView;
 
@@ -11,18 +11,18 @@ import javax.inject.Inject;
  */
 public class WeatherPresenter extends BasePresenter<WeatherView> {
 
-    WeatherInteractor weatherInteractor;
+    CurrentWeatherInteractor currentWeatherInteractor;
 
     @Inject
-    public WeatherPresenter(WeatherInteractor weatherInteractor) {
-        this.weatherInteractor = weatherInteractor;
+    public WeatherPresenter(CurrentWeatherInteractor currentWeatherInteractor) {
+        this.currentWeatherInteractor = currentWeatherInteractor;
     }
 
     public void startRefresh() {
         if (getView() != null) {
             getView().showLoadingStarted();
         }
-        weatherInteractor.getWeather().subscribe(weatherData -> {
+        currentWeatherInteractor.getWeather().subscribe(weatherData -> {
             if (getView() != null) {
                 getView().showWeatherData(weatherData);
             }

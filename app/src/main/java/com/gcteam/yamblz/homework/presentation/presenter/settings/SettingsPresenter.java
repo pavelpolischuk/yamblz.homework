@@ -43,7 +43,7 @@ public class SettingsPresenter implements SharedPreferences.OnSharedPreferenceCh
         String value = sharedPreferences.getString(key, "");
         view.updateSummary(key, value);
 
-        if(UPDATE_INTERVAL_KEY.equals(key)) {
+        if (UPDATE_INTERVAL_KEY.equals(key)) {
             UpdateWeatherJob.startUpdate(Integer.decode(value));
         } else if (CHOOSE_CITY_KEY.equals(key)) {
             UpdateWeatherJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
