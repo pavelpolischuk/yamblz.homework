@@ -63,7 +63,8 @@ public class WeatherResponseMapper implements Function<WeatherResponse, WeatherD
                 weatherResponse.getMain().getPressure(),
                 weatherResponse.getMain().getHumidity(),
                 weatherResponse.getWind().getSpeed(),
-                weatherResponse.getWind().getDeg()
+                weatherResponse.getWind().getDeg(),
+                weatherResponse.getDt()
         );
     }
 }

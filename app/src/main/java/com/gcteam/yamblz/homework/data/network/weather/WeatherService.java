@@ -5,7 +5,6 @@ import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,7 +12,6 @@ import java.util.HashSet;
 import javax.inject.Inject;
 
 import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi.API_KEY;
 
@@ -60,25 +58,16 @@ public class WeatherService {
         return "en";
     }
 
-    public Single<WeatherData> getCurrentWeather(LatLng latLng, String units, String lang) {
+    public Single<WeatherData> getCurrentWeather(double lat, double lng, String lang) {
         return api.weatherByLatLng(API_KEY,
-                Double.toString(latLng.latitude),
-                Double.toString(latLng.longitude),
-                checkUnitsType(units),
+                lat,
+                lng,
+                METRIC_UNITS,
                 checkLangCode(lang))
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
                 .map(weatherResponseMapper);
     }
 
-    public Single<WeatherData> getCurrentWeather(String lang) {
-        return getCurrentWeather(new LatLng(preferencesManager.getLat(),
-                        preferencesManager.getLng()),
-                METRIC_UNITS,
-                lang);
-    }
-
-    public Single<ForecastResponse> getForecast(String lat, String lon, String lang) {
+    public Single<ForecastResponse> getForecast(double lat, double lon, String lang) {
         return api.forecastByLatLng(API_KEY,
                 lat, lon,
                 METRIC_UNITS,

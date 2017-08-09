@@ -2,7 +2,6 @@ package com.gcteam.yamblz.homework.domain.interactor.cities;
 
 import android.support.annotation.NonNull;
 
-import com.gcteam.yamblz.homework.data.CitiesResponseMapper;
 import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
@@ -19,25 +18,21 @@ import io.reactivex.Single;
 public class CityFilterInteractor {
 
     private CityRepository cityRepository;
-    private CitiesResponseMapper citiesResponseMapper;
     private Scheduler executionScheduler;
     private Scheduler postExecutionScheduler;
 
     @Inject
     public CityFilterInteractor(
             CityRepository cityRepository,
-            CitiesResponseMapper citiesResponseMapper,
             Scheduler executionScheduler,
             Scheduler postExecutionScheduler) {
         this.cityRepository = cityRepository;
-        this.citiesResponseMapper = citiesResponseMapper;
         this.executionScheduler = executionScheduler;
         this.postExecutionScheduler = postExecutionScheduler;
     }
 
     public Single<List<FilteredCity>> getCitiesByFilter(@NonNull String input) {
         return cityRepository.getCitiesByFilter(input)
-                .map(citiesResponseMapper)
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }

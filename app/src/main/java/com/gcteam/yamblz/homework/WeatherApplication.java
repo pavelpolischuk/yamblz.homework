@@ -3,6 +3,7 @@ package com.gcteam.yamblz.homework;
 import android.app.Application;
 
 import com.evernote.android.job.JobManager;
+import com.facebook.stetho.Stetho;
 import com.gcteam.yamblz.homework.domain.update.weather.WeatherJobCreator;
 import com.gcteam.yamblz.homework.presentation.di.ComponentManager;
 
@@ -22,6 +23,9 @@ public class WeatherApplication extends Application {
         super.onCreate();
         JobManager.create(this).addJobCreator(new WeatherJobCreator());
         componentManager = new ComponentManager(this);
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
     }
 
 }

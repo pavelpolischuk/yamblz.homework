@@ -29,6 +29,11 @@ ext.versions = [
 
     cupboard: '2.2.0',
     rxCupboard: '2.0',
+    cupboardGson: '0.3.1',
+
+    stetho: '1.5.0',
+
+    room: '1.0.0-alpha5',
 ]
 
 ext.libraries = [
@@ -73,8 +78,9 @@ ext.libraries = [
         espressoContrib : "com.android.support.test.espresso:espresso-contrib:$versions.espresso",
         testRunner : "com.android.support.test:runner:$versions.testRunner",
 
-        cupboard : "nl.qbusict:cupboard:$versions.cupboard",
-        rxCupboard : "nl.2312:rxcupboard2:$versions.rxCupboard"
+        stetho : "com.facebook.stetho:stetho:$versions.stetho",
 
-
+        room : "android.arch.persistence.room:runtime:$versions.room",
+        roomCompiler : "android.arch.persistence.room:compiler:$versions.room",
+        roomRx : "android.arch.persistence.room:rxjava2:$versions.room",
 ]

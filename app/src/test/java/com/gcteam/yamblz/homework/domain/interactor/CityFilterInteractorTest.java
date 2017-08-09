@@ -1,15 +1,18 @@
 package com.gcteam.yamblz.homework.domain.interactor;
 
-import com.gcteam.yamblz.homework.data.CitiesResponseMapper;
 import com.gcteam.yamblz.homework.data.api.dto.cities.autocomplete.CitiesResponse;
 import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityFilterInteractor;
+import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
@@ -34,7 +37,6 @@ public class CityFilterInteractorTest {
         TestScheduler postExecutionScheduler = new TestScheduler();
         cityFilterInteractor = new CityFilterInteractor(
                 cityRepository,
-                new CitiesResponseMapper(),
                 executionScheduler,
                 postExecutionScheduler
         );
@@ -43,7 +45,9 @@ public class CityFilterInteractorTest {
 
     @Test
     public void getsCitiesFromRepositoryByInput() {
-        when(cityRepository.getCitiesByFilter("input")).thenReturn(Single.just(citiesResponse));
+        List<FilteredCity> filteredCities = new ArrayList<>();
+        filteredCities.add(new FilteredCity("city", "country", "123", 1L));
+        when(cityRepository.getCitiesByFilter("input")).thenReturn(Single.just(filteredCities));
         cityFilterInteractor.getCitiesByFilter("input");
         verify(cityRepository).getCitiesByFilter("input");
     }

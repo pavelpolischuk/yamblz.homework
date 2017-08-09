@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
-import com.gcteam.yamblz.homework.domain.object.ChosenCity;
+import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import static java.util.Collections.emptyList;
  * Created by Kim Michael on 03.08.17
  */
 public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdapter.ViewHolder> {
-    private List<ChosenCity> citySummaries = emptyList();
+    private List<FilteredCity> citySummaries = emptyList();
     private LayoutInflater layoutInflater;
     private OnCityClickListener onCityClickListener;
     private int selectedPosition;
@@ -33,13 +33,21 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         this.onCityClickListener = onCityClickListener;
     }
 
-    public boolean insert(@NonNull ChosenCity chosenCity) {
-        if (!citySummaries.contains(chosenCity)) {
-            citySummaries.add(chosenCity);
-            notifyItemInserted(citySummaries.size() - 1);
-            return true;
+    // Returns inserted position
+    // -1 if not inserted
+    public Long insert(@NonNull FilteredCity filteredCity) {
+        if (!citySummaries.contains(filteredCity)) {
+            citySummaries.add(0, filteredCity);
+            notifyItemInserted(0);
+            return (long) (citySummaries.size());
         }
-        return false;
+        return -1L;
+    }
+
+    public void insertAll(List<FilteredCity> filteredCities) {
+        citySummaries.clear();
+        citySummaries.addAll(filteredCities);
+        notifyDataSetChanged();
     }
 
     public void remove(int position) {
@@ -69,8 +77,8 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setSelected(position == selectedPosition);
-        ChosenCity chosenCity = citySummaries.get(position);
-        holder.bind(chosenCity);
+        FilteredCity filteredCity = citySummaries.get(position);
+        holder.bind(filteredCity);
     }
 
     @Override
@@ -79,7 +87,7 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
     }
 
     public interface OnCityClickListener {
-        void onCityClick(ChosenCity chosenCity);
+        void onCityClick(FilteredCity filteredCity);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -92,8 +100,8 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(ChosenCity chosenCity) {
-            cityName.setText(chosenCity.getCityName());
+        public void bind(FilteredCity filteredCity) {
+            cityName.setText(filteredCity.getCityName());
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.gcteam.yamblz.homework.presentation.presenter.city;
 
+import android.support.annotation.NonNull;
+
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityPickerInteractor;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 import com.gcteam.yamblz.homework.presentation.BasePresenter;
@@ -7,7 +9,7 @@ import com.gcteam.yamblz.homework.presentation.view.main.CityChooserView;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Kim Michael on 05.08.17
@@ -15,21 +17,38 @@ import io.reactivex.disposables.Disposable;
 public class CityPickerPresenter extends BasePresenter<CityChooserView> {
 
     private CityPickerInteractor cityPickerInteractor;
-    private Disposable addCityDisposable;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public CityPickerPresenter(CityPickerInteractor cityPickerInteractor) {
         this.cityPickerInteractor = cityPickerInteractor;
+        compositeDisposable = new CompositeDisposable();
     }
 
     public void addCity(FilteredCity chosenCity) {
-        addCityDisposable = cityPickerInteractor.addCity(chosenCity)
-                .subscribe();
+        compositeDisposable.add(cityPickerInteractor.addCity(chosenCity)
+                .subscribe());
+    }
+
+    @Override
+    public void onAttach(@NonNull CityChooserView view) {
+        super.onAttach(view);
+        compositeDisposable.add(cityPickerInteractor.getChosenCities()
+                .subscribe(chosenCities -> {
+                    if (getView() != null) {
+                        getView().showChosenCities(chosenCities);
+                    }
+                }));
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        addCityDisposable.dispose();
+        compositeDisposable.clear();
+    }
+
+    public void chooseCity(FilteredCity filteredCity) {
+        compositeDisposable.add(cityPickerInteractor.chooseCity(filteredCity)
+                .subscribe());
     }
 }

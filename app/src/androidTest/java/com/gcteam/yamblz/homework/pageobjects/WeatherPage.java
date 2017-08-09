@@ -23,7 +23,7 @@ public class WeatherPage extends PageObject {
 
     @Override
     public WeatherPage assertOn() {
-        Espresso.onView(withId(R.id.icon)).check(matches(isDisplayed()));
+        Espresso.onView(withId(R.id.forecast)).check(matches(isDisplayed()));
         return instance;
     }
 }

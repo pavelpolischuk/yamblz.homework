@@ -99,6 +99,9 @@ dependencies {
     androidTestCompile libraries.espressoContrib
     androidTestCompile libraries.testRunner
 
-    compile libraries.cupboard
-    compile libraries.rxCupboard
+    compile libraries.stetho
+
+    compile libraries.room
+    annotationProcessor libraries.roomCompiler
+    compile libraries.roomRx
 }

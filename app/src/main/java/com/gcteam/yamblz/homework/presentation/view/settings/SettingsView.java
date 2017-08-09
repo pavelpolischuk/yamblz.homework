@@ -8,5 +8,4 @@ public interface SettingsView {
 
     void updateSummary(String key, String value);
 
-    void showCityChooser();
 }

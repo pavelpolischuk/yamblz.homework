@@ -8,6 +8,8 @@ import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
@@ -15,6 +17,11 @@ import io.reactivex.functions.Function;
  * Created by Kim Michael on 06.08.17
  */
 public class ForecastResponseMapper implements Function<ForecastResponse, ForecastData> {
+
+    @Inject
+    public ForecastResponseMapper() {
+    }
+
     @Override
     public ForecastData apply(@NonNull ForecastResponse forecastResponse) throws Exception {
         List<WeatherData> forecast = new ArrayList<>();
@@ -29,7 +36,8 @@ public class ForecastResponseMapper implements Function<ForecastResponse, Foreca
                     description.getPressure(),
                     description.getHumidity(),
                     description.getSpeed(),
-                    description.getDeg()
+                    description.getDeg(),
+                    description.getDt()
             );
             forecast.add(weatherData);
 

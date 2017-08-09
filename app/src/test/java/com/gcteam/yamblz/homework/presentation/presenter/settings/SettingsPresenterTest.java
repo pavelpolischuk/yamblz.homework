@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.CHOOSE_CITY_KEY;
-import static com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter.UPDATE_INTERVAL_KEY;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,8 +35,8 @@ public class SettingsPresenterTest {
         when(preferencesManager.getUpdateInterval()).thenReturn(interval);
         when(preferencesManager.getChosenCity()).thenReturn(city);
         settingsPresenter.initView();
-        verify(settingsView).updateSummary(UPDATE_INTERVAL_KEY, String.valueOf(interval));
-        verify(settingsView).updateSummary(CHOOSE_CITY_KEY, city);
+        verify(settingsView).updateSummary(PreferencesManager.UPDATE_INTERVAL_KEY, String.valueOf(interval));
+        verify(settingsView).updateSummary(PreferencesManager.CHOSEN_CITY_KEY, city);
     }
 
 }

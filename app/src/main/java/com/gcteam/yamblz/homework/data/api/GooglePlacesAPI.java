@@ -26,6 +26,7 @@ public interface GooglePlacesAPI {
     @GET("details/json")
     Single<CityDetailsResponse> getCityDetails(
             @Query("key") String APIKey,
-            @Query("placeid") String placeId
+            @Query("placeid") String placeId,
+            @Query("language") String language
     );
 }

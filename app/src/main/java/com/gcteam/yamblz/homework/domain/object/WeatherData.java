@@ -19,6 +19,8 @@ public class WeatherData implements Serializable {
     private double windSpeed;
     private double windDeg;
 
+    private long date;
+
     public WeatherData(int weatherId,
                        String description,
                        double dayTemp,
@@ -27,7 +29,8 @@ public class WeatherData implements Serializable {
                        double pressure,
                        int humidity,
                        double windSpeed,
-                       double windDeg) {
+                       double windDeg,
+                       long date) {
         this.weatherId = weatherId;
         this.description = description;
         this.dayTemp = dayTemp;
@@ -37,51 +40,10 @@ public class WeatherData implements Serializable {
         this.humidity = humidity;
         this.windSpeed = windSpeed;
         this.windDeg = windDeg;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        WeatherData that = (WeatherData) o;
-
-        if (weatherId != that.weatherId) return false;
-        if (Double.compare(that.dayTemp, dayTemp) != 0) return false;
-        if (Double.compare(that.minTemp, minTemp) != 0) return false;
-        if (Double.compare(that.maxTemp, maxTemp) != 0) return false;
-        if (Double.compare(that.pressure, pressure) != 0) return false;
-        if (humidity != that.humidity) return false;
-        if (Double.compare(that.windSpeed, windSpeed) != 0) return false;
-        if (Double.compare(that.windDeg, windDeg) != 0) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = weatherId;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        temp = Double.doubleToLongBits(dayTemp);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(minTemp);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(maxTemp);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(pressure);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + humidity;
-        temp = Double.doubleToLongBits(windSpeed);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(windDeg);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        this.date = date;
     }
 
     public int getWeatherId() {
-
         return weatherId;
     }
 
@@ -151,5 +113,57 @@ public class WeatherData implements Serializable {
 
     public void setWindDeg(double windDeg) {
         this.windDeg = windDeg;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WeatherData that = (WeatherData) o;
+
+        if (weatherId != that.weatherId) return false;
+        if (Double.compare(that.dayTemp, dayTemp) != 0) return false;
+        if (Double.compare(that.minTemp, minTemp) != 0) return false;
+        if (Double.compare(that.maxTemp, maxTemp) != 0) return false;
+        if (Double.compare(that.pressure, pressure) != 0) return false;
+        if (humidity != that.humidity) return false;
+        if (Double.compare(that.windSpeed, windSpeed) != 0) return false;
+        if (Double.compare(that.windDeg, windDeg) != 0) return false;
+        if (date != that.date) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = weatherId;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        temp = Double.doubleToLongBits(dayTemp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(minTemp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(maxTemp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(pressure);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + humidity;
+        temp = Double.doubleToLongBits(windSpeed);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(windDeg);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (date ^ (date >>> 32));
+        return result;
     }
 }

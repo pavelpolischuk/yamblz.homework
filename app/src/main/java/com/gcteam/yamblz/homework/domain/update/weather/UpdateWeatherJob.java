@@ -1,6 +1,8 @@
 package com.gcteam.yamblz.homework.domain.update.weather;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.v7.preference.PreferenceManager;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
@@ -11,6 +13,7 @@ import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.presentation.di.component.AppComponent;
 import com.gcteam.yamblz.homework.presentation.di.component.DaggerAppComponent;
 import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
+import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +34,8 @@ public class UpdateWeatherJob extends Job {
     WeatherService weatherService;
     @Inject
     WeatherStorage weatherStorage;
+    @Inject
+    PreferencesManager preferencesManager;
 
     AppComponent appComponent;
 
@@ -57,8 +62,13 @@ public class UpdateWeatherJob extends Job {
                 .build();
         appComponent.inject(this);
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         WeatherData weather = weatherService
-                .getCurrentWeather(Locale.getDefault().getLanguage())
+                .getCurrentWeather(
+                        preferencesManager.getLat(),
+                        preferencesManager.getLng(),
+                        Locale.getDefault().getLanguage())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .onErrorReturn(throwable -> null)
                 .blockingGet();
@@ -66,8 +76,6 @@ public class UpdateWeatherJob extends Job {
         if (weather == null) {
             return Result.FAILURE;
         }
-
-        weatherStorage.updateLastWeather(weather);
 
         return Result.SUCCESS;
     }

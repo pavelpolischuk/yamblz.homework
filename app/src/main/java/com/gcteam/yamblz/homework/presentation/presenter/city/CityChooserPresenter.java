@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Kim Michael on 03.08.17
@@ -21,17 +21,18 @@ public class CityChooserPresenter extends BasePresenter<CityFilterView> {
     private static final int SEARCH_LENGTH_LIMIT = 0;
 
     private CityFilterInteractor cityFilterInteractor;
-    private Disposable filterDisposable;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public CityChooserPresenter(CityFilterInteractor cityFilterInteractor) {
         this.cityFilterInteractor = cityFilterInteractor;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void onAttach(@NonNull CityFilterView view) {
         super.onAttach(view);
-        filterDisposable =
+        compositeDisposable.add(
                 view.getFilterObs()
                         .doOnNext(s -> {
                             if (getView() != null) {
@@ -55,13 +56,14 @@ public class CityChooserPresenter extends BasePresenter<CityFilterView> {
                                     if (getView() != null) {
                                         getView().showError();
                                     }
-                                }));
+                                }))
+        );
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        filterDisposable.dispose();
+        compositeDisposable.clear();
     }
 
 }

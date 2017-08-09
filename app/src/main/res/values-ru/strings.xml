@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
     <string name="app_name">Погода</string>
 
     <string name="action_weather">Погода</string>
@@ -37,5 +37,9 @@
     <string name="add_city_title">Добавить город</string>
     <string name="city_filter_hint">Введите название города</string>
     <string name="city_list_title">Города</string>
-    <string name="title_activity_city_pick"></string>
+    <string name="title_activity_city_pick">Выбрать город</string>
+    <string name="format_humidity">Влажность: %d %%</string>
+    <string name="format_pressure">Давление: %1.0f hPa</string>
+    <string name="format_wind_kmh">Ветер: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="format_wind_mph">Ветер: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
 </resources>

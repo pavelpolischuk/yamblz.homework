@@ -15,18 +15,20 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
-import com.gcteam.yamblz.homework.domain.object.ChosenCity;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.adapter.cities.CitySummariesAdapter;
 import com.gcteam.yamblz.homework.presentation.di.component.CityChooserComponent;
+import com.gcteam.yamblz.homework.presentation.navigation.main.MainActivityRouter;
 import com.gcteam.yamblz.homework.presentation.presenter.city.CityPickerPresenter;
-import com.gcteam.yamblz.homework.presentation.presenter.main.MainActivityRouter;
 import com.gcteam.yamblz.homework.presentation.view.city.CityFilterActivity;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -65,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
         citySummaries.setAdapter(citySummariesAdapter);
         citySummaries.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         citySummaries.setItemAnimator(new DefaultItemAnimator());
+
+        cityPickerPresenter.onAttach(this);
     }
 
     @Override
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
 
     @Override
     protected void onDestroy() {
+        cityPickerPresenter.onDetach();
         super.onDestroy();
     }
 
@@ -176,14 +180,17 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
     }
 
     @Override
-    public void addChosenCity(FilteredCity chosenCity) {
-        if (citySummariesAdapter.insert(ChosenCity.from(chosenCity))) {
-            cityPickerPresenter.addCity(chosenCity);
-        }
+    protected void onResume() {
+        super.onResume();
     }
 
-    public void chooseCity() {
-
+    @Override
+    public void addChosenCity(FilteredCity filteredCity) {
+        Long id = citySummariesAdapter.insert(filteredCity);
+        if (id > 0) {
+            filteredCity.setId(id);
+            cityPickerPresenter.addCity(filteredCity);
+        }
     }
 
     @Override
@@ -192,7 +199,15 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
     }
 
     @Override
-    public void onCityClick(ChosenCity chosenCity) {
+    public void showChosenCities(List<FilteredCity> filteredCities) {
+        citySummariesAdapter.insertAll(filteredCities);
+    }
 
+    @Override
+    public void onCityClick(FilteredCity filteredCity) {
+        router.showWeather();
+        drawer.closeDrawer(Gravity.START);
+        setToolbarTitle(filteredCity.getCityName());
+        cityPickerPresenter.chooseCity(filteredCity);
     }
 }

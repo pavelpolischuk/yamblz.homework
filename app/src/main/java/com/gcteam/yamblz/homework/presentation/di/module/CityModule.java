@@ -7,6 +7,7 @@ import com.gcteam.yamblz.homework.data.network.cities.CityService;
 import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityFilterInteractor;
 import com.gcteam.yamblz.homework.presentation.di.scope.CityFilterScope;
+import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
 import javax.inject.Named;
 
@@ -29,7 +30,6 @@ public class CityModule {
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
         return new CityFilterInteractor(
                 cityRepository,
-                citiesResponseMapper,
                 executionScheduler,
                 postExecutionScheduler
         );
@@ -39,8 +39,10 @@ public class CityModule {
     @CityFilterScope
     public CityRepository provideCitiesRepository(
             CityStorage cityStorage,
-            CityService cityService) {
-        return new CityRepository(cityStorage, cityService);
+            CityService cityService,
+            PreferencesManager preferencesManager,
+            CitiesResponseMapper citiesResponseMapper) {
+        return new CityRepository(cityStorage, cityService, preferencesManager, citiesResponseMapper);
     }
 
     @Provides
@@ -53,11 +55,5 @@ public class CityModule {
     @CityFilterScope
     public CityService provideCitiesService(GooglePlacesAPI googlePlacesAPI) {
         return new CityService(googlePlacesAPI);
-    }
-
-    @Provides
-    @CityFilterScope
-    public CityStorage provideCitiesStorage() {
-        return new CityStorage();
     }
 }

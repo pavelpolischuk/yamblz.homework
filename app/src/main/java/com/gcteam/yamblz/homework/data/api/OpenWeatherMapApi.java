@@ -24,16 +24,16 @@ public interface OpenWeatherMapApi {
 
     @GET("2.5/weather")
     Single<WeatherResponse> weatherByLatLng(@Query("appid") String apiKey,
-                                            @Query("lat") String lat,
-                                            @Query("lon") String lon,
+                                            @Query("lat") double lat,
+                                            @Query("lon") double lon,
                                             @Query("units") String units,
                                             @Query("lang") String lang);
 
     @GET("2.5/forecast/daily")
     Single<ForecastResponse> forecastByLatLng(
             @Query("appid") String apiKey,
-            @Query("lat") String lat,
-            @Query("lon") String lon,
+            @Query("lat") double lat,
+            @Query("lon") double lon,
             @Query("units") String units,
             @Query("lang") String lang
     );

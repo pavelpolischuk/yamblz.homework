@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.view.weather;
 
-import com.gcteam.yamblz.homework.domain.object.WeatherData;
+import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.presentation.BaseView;
 
 /**
@@ -8,9 +8,11 @@ import com.gcteam.yamblz.homework.presentation.BaseView;
  */
 
 public interface WeatherView extends BaseView {
-    void showWeatherData(WeatherData weather);
-
     void showErrorMessage();
 
     void showLoadingStarted();
+
+    void showFullWeather(FullWeatherReport fullWeatherReport);
+
+    void changeTitle(String title);
 }

@@ -1,17 +1,16 @@
 package com.gcteam.yamblz.homework.data.local.weather;
 
-import android.support.annotation.Nullable;
-
+import com.gcteam.yamblz.homework.data.local.AppDatabase;
+import com.gcteam.yamblz.homework.data.object.StoredFullWeatherReport;
+import com.gcteam.yamblz.homework.domain.object.ForecastData;
+import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.Single;
 
 /**
  * Created by turist on 16.07.2017.
@@ -19,36 +18,42 @@ import io.reactivex.subjects.Subject;
 
 public class WeatherStorage {
 
-    private final Subject<WeatherData> weatherSubject = PublishSubject.create();
-    private PreferencesManager preferencesManager;
+
+    private final AppDatabase appDatabase;
+    private final PreferencesManager preferencesManager;
+    private final Gson gson;
 
     @Inject
-    public WeatherStorage(PreferencesManager preferencesManager) {
+    public WeatherStorage(PreferencesManager preferencesManager,
+                          AppDatabase appDatabase,
+                          Gson gson) {
         this.preferencesManager = preferencesManager;
+        this.appDatabase = appDatabase;
+        this.gson = gson;
     }
 
-    @NonNull
-    public Observable<WeatherData> lastWeather() {
-        return weatherSubject;
+
+    public void saveWeather(FullWeatherReport fullWeatherReport) {
+        appDatabase.fullWeatherReportDAO().insert(new StoredFullWeatherReport(
+                fullWeatherReport.getLat(),
+                fullWeatherReport.getLng(),
+                gson.toJson(fullWeatherReport.getForecastData()),
+                gson.toJson(fullWeatherReport.getWeatherData())
+        ));
     }
 
-    @NonNull
-    public Consumer<WeatherData> updateLastWeather() {
-        return this::updateLastWeather;
+    public Single<ForecastData> getForecast(double lat, double lng) {
+        return appDatabase.fullWeatherReportDAO().get(lat, lng)
+                .map(storedFullWeatherReport ->
+                        gson.fromJson(storedFullWeatherReport.getForecastDataJson(),
+                                ForecastData.class));
     }
 
-    @NonNull
-    public void updateLastWeather(WeatherData weather) {
-        save(weather);
-        weatherSubject.onNext(weather);
+    public Single<WeatherData> getCurrentWeather(double lat, double lng) {
+        return appDatabase.fullWeatherReportDAO().get(lat, lng)
+                .map(storedFullWeatherReport ->
+                        gson.fromJson(storedFullWeatherReport.getWeatherDataJson(),
+                                WeatherData.class));
     }
 
-    public void save(@NonNull WeatherData weather) {
-        preferencesManager.putCurrentWeather(weather);
-    }
-
-    @Nullable
-    public WeatherData load() {
-        return preferencesManager.loadCachedWeather();
-    }
 }

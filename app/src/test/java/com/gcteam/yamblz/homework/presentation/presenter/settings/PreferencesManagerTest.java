@@ -3,6 +3,7 @@ package com.gcteam.yamblz.homework.presentation.presenter.settings;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
+import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.android.gms.location.places.Place;
@@ -29,16 +30,17 @@ import static junit.framework.Assert.assertNull;
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class PreferencesManagerTest {
-
-
     PreferencesManager preferencesManager;
+
+
     Place place;
     WeatherData testWeather;
-
     final String name = "Moscow";
+
     final String id = "123";
     final double lat = 10;
     final double lng = 15;
+    final CityDetailsResponse cityDetailsResponse = new CityDetailsResponse();
 
     @Before
     public void setup() {
@@ -113,18 +115,10 @@ public class PreferencesManagerTest {
                 return false;
             }
         };
-        testWeather = new WeatherData(
-                100, "desc", 36.6d, 20.0d, 40.0d, 200.0d, 20, 5.5, 300);
+        testWeather = new WeatherData(123, "123", 20.0d, 15.0d, 30.0d, 200d, 20, 2, 200, 38485837L);
         SharedPreferences sp = RuntimeEnvironment.application.getSharedPreferences("", 0);
         preferencesManager = new PreferencesManager(sp, new Gson());
         sp.edit().clear().commit();
-    }
-
-    @Test
-    public void savedPlaceCanBeLoaded() {
-        preferencesManager.savePlace(place);
-        assertEquals(lat, preferencesManager.getLat());
-        assertEquals(lng, preferencesManager.getLng());
     }
 
     @Test
@@ -137,4 +131,5 @@ public class PreferencesManagerTest {
     public void defaultWeatherDataIsNull() {
         assertNull(preferencesManager.loadCachedWeather());
     }
+
 }

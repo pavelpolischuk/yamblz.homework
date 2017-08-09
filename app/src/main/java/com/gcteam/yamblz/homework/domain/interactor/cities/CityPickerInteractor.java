@@ -1,8 +1,10 @@
 package com.gcteam.yamblz.homework.domain.interactor.cities;
 
-import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
+import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
 import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,9 +30,21 @@ public class CityPickerInteractor {
     }
 
 
-    public Single<CityDetailsResponse> addCity(FilteredCity chosenCity) {
+    public Single<StoredChosenCity> addCity(FilteredCity chosenCity) {
         return cityRepository.getCityDetails(chosenCity)
-                .doOnSuccess(cityDetailsResponse -> cityRepository.saveCityDetails(cityDetailsResponse))
+                .doOnSuccess(storedChosenCity -> cityRepository.saveCityDetails(storedChosenCity))
+                .subscribeOn(executionScheduler)
+                .observeOn(postExecutionScheduler);
+    }
+
+    public Single<List<FilteredCity>> getChosenCities() {
+        return cityRepository.getCities()
+                .subscribeOn(executionScheduler)
+                .observeOn(postExecutionScheduler);
+    }
+
+    public Single<StoredChosenCity> chooseCity(FilteredCity filteredCity) {
+        return cityRepository.getCityDetails(filteredCity)
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }

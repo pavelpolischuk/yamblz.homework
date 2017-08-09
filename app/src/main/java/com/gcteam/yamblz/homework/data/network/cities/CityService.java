@@ -32,7 +32,8 @@ public class CityService {
     public Single<CityDetailsResponse> getCityDetails(FilteredCity chosenCity) {
         return googlePlacesAPI.getCityDetails(
                 GooglePlacesAPI.API_KEY,
-                chosenCity.getPlaceId()
+                chosenCity.getPlaceId(),
+                Locale.getDefault().getLanguage()
         );
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class CityDetailsResponse {
 
+    public Long _id;
     @SerializedName("html_attributions")
     private List<Object> htmlAttributions = null;
     @SerializedName("result")
@@ -37,4 +38,7 @@ public class CityDetailsResponse {
         this.status = status;
     }
 
+    public void set_id(Long _id) {
+        this._id = _id;
+    }
 }

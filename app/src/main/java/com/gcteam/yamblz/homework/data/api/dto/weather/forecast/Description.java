@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Description {
 
     @SerializedName("dt")
-    private int dt;
+    private long dt;
     @SerializedName("temp")
     private Temp temp;
     @SerializedName("pressure")
@@ -23,11 +23,11 @@ public class Description {
     @SerializedName("rain")
     private double rain;
 
-    public int getDt() {
+    public long getDt() {
         return dt;
     }
 
-    public void setDt(int dt) {
+    public void setDt(long dt) {
         this.dt = dt;
     }
 

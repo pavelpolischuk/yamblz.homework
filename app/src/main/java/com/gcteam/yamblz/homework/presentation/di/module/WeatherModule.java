@@ -1,7 +1,7 @@
 package com.gcteam.yamblz.homework.presentation.di.module;
 
 import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
-import com.gcteam.yamblz.homework.domain.interactor.weather.current.CurrentWeatherInteractor;
+import com.gcteam.yamblz.homework.domain.interactor.weather.WeatherInteractor;
 import com.gcteam.yamblz.homework.presentation.di.scope.WeatherScope;
 
 import javax.inject.Named;
@@ -18,11 +18,11 @@ public class WeatherModule {
 
     @Provides
     @WeatherScope
-    public CurrentWeatherInteractor provideWeatherInteractor(
+    public WeatherInteractor provideWeatherInteractor(
             WeatherRepository weatherRepository,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
-        return new CurrentWeatherInteractor(
+        return new WeatherInteractor(
                 weatherRepository,
                 executionScheduler,
                 postExecutionScheduler);

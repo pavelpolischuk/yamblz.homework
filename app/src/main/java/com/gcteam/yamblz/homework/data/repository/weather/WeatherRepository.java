@@ -1,8 +1,10 @@
 package com.gcteam.yamblz.homework.data.repository.weather;
 
-import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
+import com.gcteam.yamblz.homework.data.ForecastResponseMapper;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
+import com.gcteam.yamblz.homework.domain.object.ForecastData;
+import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 
 import java.util.Locale;
@@ -17,23 +19,33 @@ import io.reactivex.Single;
 
 public class WeatherRepository {
 
-    private WeatherStorage weatherStorage;
-    private WeatherService weatherService;
+    private final WeatherStorage weatherStorage;
+    private final WeatherService weatherService;
+    private final ForecastResponseMapper forecastResponseMapper;
 
     @Inject
     public WeatherRepository(WeatherStorage weatherStorage,
-                             WeatherService weatherService) {
+                             WeatherService weatherService,
+                             ForecastResponseMapper forecastResponseMapper) {
         this.weatherStorage = weatherStorage;
         this.weatherService = weatherService;
+        this.forecastResponseMapper = forecastResponseMapper;
     }
 
-    public Single<WeatherData> getCurrentWeather() {
-        return weatherService
-                .getCurrentWeather(Locale.getDefault().getLanguage());
+    public Single<WeatherData> getWeather(double lat, double lng) {
+        return weatherStorage.getCurrentWeather(lat, lng).onErrorResumeNext(
+                weatherService.getCurrentWeather(lat, lng, Locale.getDefault().getLanguage()));
     }
 
-    public Single<ForecastResponse> getForecastResponse(String lat, String lon) {
-        return weatherService
-                .getForecast(lat, lon, Locale.getDefault().getLanguage());
+    public Single<ForecastData> getForecast(double lat, double lng) {
+        return weatherStorage.getForecast(lat, lng).onErrorResumeNext(
+                weatherService
+                        .getForecast(lat, lng, Locale.getDefault().getLanguage())
+                        .map(forecastResponseMapper)
+        );
+    }
+
+    public void saveWeather(FullWeatherReport fullWeatherReport) {
+        weatherStorage.saveWeather(fullWeatherReport);
     }
 }
