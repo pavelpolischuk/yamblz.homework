@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.di.component;
 
+import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.di.module.WeatherModule;
 import com.gcteam.yamblz.homework.presentation.di.scope.WeatherScope;
 
@@ -13,4 +14,6 @@ import dagger.Subcomponent;
 public interface WeatherComponent {
 
     WeatherScreenComponent getWeatherScreenComponent();
+
+    void inject(UpdateWeatherJob updateWeatherJob);
 }

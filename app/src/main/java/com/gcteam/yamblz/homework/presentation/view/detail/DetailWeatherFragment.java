@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
  */
 public class DetailWeatherFragment extends Fragment implements DetailWeatherViewer {
 
+    public static final String EXTRA_WEATHER_ARG = "weather_arg";
+
     @BindView(R.id.detail_day)
     TextView day;
     @BindView(R.id.detail_date)
@@ -58,18 +60,26 @@ public class DetailWeatherFragment extends Fragment implements DetailWeatherView
     @Override
     public void onResume() {
         super.onResume();
-        viewDetailWeather(detailWeatherOwner.getWeatherData());
+        if (getArguments() == null) {
+            viewDetailWeather(detailWeatherOwner.getWeatherData());
+        } else {
+            Bundle bundle = getArguments();
+            viewDetailWeather(bundle.getParcelable(EXTRA_WEATHER_ARG));
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        detailWeatherOwner = ((DetailWeatherOwner) context);
+        if (context instanceof DetailWeatherOwner) {
+            detailWeatherOwner = ((DetailWeatherOwner) context);
+        }
     }
 
     @Override
     public void viewDetailWeather(@NonNull WeatherData weatherData) {
-        date.setText(WeatherFormatUtils.getFormattedMonthDay(weatherData.getDate()));
+        day.setText(WeatherFormatUtils.getFormattedDay(weatherData.getDate()));
+        date.setText(WeatherFormatUtils.getFormattedDate(weatherData.getDate()));
         icon.setImageDrawable(ContextCompat.getDrawable(getContext(),
                 (WeatherFormatUtils.getArtResourceForWeatherCondition(
                         weatherData.getWeatherId()))));

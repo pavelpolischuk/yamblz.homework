@@ -15,7 +15,8 @@ import java.util.Locale;
  */
 public class WeatherFormatUtils {
 
-    public static final String DATE_FORMAT = "EEEE, dd MMMM";
+    public static final String DATE_FORMAT = "dd MMMM";
+    public static final String DAY_FORMAT = "EEEE";
 
     @DrawableRes
     public static int getArtResourceForWeatherCondition(int weatherId) {
@@ -47,6 +48,7 @@ public class WeatherFormatUtils {
         return -1;
     }
 
+    @DrawableRes
     public static int getIconResourceForWeatherCondition(int weatherId) {
         // Based on weather code data found at:
         // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
@@ -119,10 +121,20 @@ public class WeatherFormatUtils {
         return String.format(context.getString(windFormat), windSpeed, direction);
     }
 
-    public static String getFormattedMonthDay(long dateInMillis) {
+    public static String getFormattedDate(long dateInMillis) {
         SimpleDateFormat monthDayFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
         String monthDayString = monthDayFormat.format(dateInMillis * 1000);
         return monthDayString.substring(0, 1).toUpperCase() + monthDayString.substring(1);
+    }
+
+    public static String getFormattedDay(long dateInMillis) {
+        SimpleDateFormat monthDayFormat = new SimpleDateFormat(DAY_FORMAT, Locale.getDefault());
+        String monthDayString = monthDayFormat.format(dateInMillis * 1000);
+        return monthDayString.substring(0, 1).toUpperCase() + monthDayString.substring(1);
+    }
+
+    public static String getFormattedDayAndDate(long dateInMillis) {
+        return getFormattedDay(dateInMillis) + ", " + getFormattedDate(dateInMillis);
     }
 
     public static String formatDescription(String description) {

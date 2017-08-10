@@ -128,7 +128,7 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void bind(WeatherData weatherData) {
             weatherIcon.setImageDrawable(ContextCompat.getDrawable(context,
                     WeatherFormatUtils.getIconResourceForWeatherCondition(weatherData.getWeatherId())));
-            day.setText(WeatherFormatUtils.getFormattedMonthDay(weatherData.getDate()));
+            day.setText(WeatherFormatUtils.getFormattedDayAndDate(weatherData.getDate()));
             maxTemp.setText(WeatherFormatUtils.formatTemperature(context, weatherData.getMaxTemp()));
             minTemp.setText(WeatherFormatUtils.formatTemperature(context, weatherData.getMinTemp()));
         }

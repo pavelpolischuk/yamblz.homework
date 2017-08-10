@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.widget.FrameLayout;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
@@ -27,7 +29,6 @@ import com.gcteam.yamblz.homework.presentation.di.component.CityChooserComponent
 import com.gcteam.yamblz.homework.presentation.navigation.main.MainActivityRouter;
 import com.gcteam.yamblz.homework.presentation.presenter.city.CityPickerPresenter;
 import com.gcteam.yamblz.homework.presentation.view.city.CityFilterActivity;
-import com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherActivity;
 import com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherViewer;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
@@ -42,6 +43,8 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements TitlePicker,
         CityChooserView, CitySummariesAdapter.OnCityClickListener, DetailWeatherViewer {
 
+    private boolean isTwoPane;
+
     private static final String TITLE_KEY = "title";
     private static final int PERMISSION_REQUEST_CODE = 1;
     @Inject
@@ -55,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements TitlePicker,
     DrawerLayout drawer;
     @BindView(R.id.city_chooser)
     RecyclerView citySummaries;
+    @BindView(R.id.detail_container)
+    @Nullable
+    FrameLayout detailContainer;
     CityChooserComponent cityChooserComponent;
     private MainActivityRouter router = new MainActivityRouter(this);
 
@@ -106,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements TitlePicker,
         citySummaries.setItemAnimator(new DefaultItemAnimator());
 
         cityPickerPresenter.onAttach(this);
+
+        isTwoPane = detailContainer != null;
     }
 
     @Override
@@ -241,8 +249,6 @@ public class MainActivity extends AppCompatActivity implements TitlePicker,
 
     @Override
     public void viewDetailWeather(WeatherData weatherData) {
-        Intent weatherDetailIntent = new Intent(this, DetailWeatherActivity.class);
-        weatherDetailIntent.putExtra(DetailWeatherActivity.EXTRA_WEATHER_DATA, weatherData);
-        startActivity(weatherDetailIntent);
+        router.showDetailedWeather(weatherData, isTwoPane);
     }
 }

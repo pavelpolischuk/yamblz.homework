@@ -36,6 +36,7 @@ ext.versions = [
     room: '1.0.0-alpha5',
 
     timber : '4.5.1',
+
 ]
 
 ext.libraries = [
@@ -86,6 +87,6 @@ ext.libraries = [
         roomCompiler : "android.arch.persistence.room:compiler:$versions.room",
         roomRx : "android.arch.persistence.room:rxjava2:$versions.room",
 
-        timber : "com.jakewharton.timber:timber:$versions.timber"
+        timber : "com.jakewharton.timber:timber:$versions.timber",
 
 ]

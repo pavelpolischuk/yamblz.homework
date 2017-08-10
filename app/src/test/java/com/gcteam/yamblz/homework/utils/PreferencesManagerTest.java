@@ -1,15 +1,14 @@
-package com.gcteam.yamblz.homework.presentation.presenter.settings;
+package com.gcteam.yamblz.homework.utils;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
 
 import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
+import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Locale;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 
 /**
  * Created by Kim Michael on 29.07.17
@@ -30,6 +28,7 @@ import static junit.framework.Assert.assertNull;
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class PreferencesManagerTest {
+
     PreferencesManager preferencesManager;
 
 
@@ -41,6 +40,7 @@ public class PreferencesManagerTest {
     final double lat = 10;
     final double lng = 15;
     final CityDetailsResponse cityDetailsResponse = new CityDetailsResponse();
+    final StoredChosenCity storedChosenCity = new StoredChosenCity("city", "city", 1, 1.0d, 10.0d, "asdf", "country");
 
     @Before
     public void setup() {
@@ -117,19 +117,28 @@ public class PreferencesManagerTest {
         };
         testWeather = new WeatherData(123, "123", 20.0d, 15.0d, 30.0d, 200d, 20, 2, 200, 38485837L);
         SharedPreferences sp = RuntimeEnvironment.application.getSharedPreferences("", 0);
-        preferencesManager = new PreferencesManager(sp, new Gson());
+        preferencesManager = new PreferencesManager(sp);
         sp.edit().clear().commit();
     }
 
     @Test
-    public void savedWeatherCanBeLoaded() {
-        preferencesManager.putCurrentWeather(testWeather);
-        assertEquals(testWeather, preferencesManager.loadCachedWeather());
+    public void savedCityNameLatLngCanBeLoaded() {
+        preferencesManager.saveChosenCity(storedChosenCity);
+        assertEquals(storedChosenCity.getCityName(), preferencesManager.getChosenCity());
+        assertEquals(storedChosenCity.getLat(), preferencesManager.getLat());
+        assertEquals(storedChosenCity.getLng(), preferencesManager.getLng());
+        assertEquals((int) storedChosenCity.getPriority(), preferencesManager.getChosenCityId());
     }
 
     @Test
-    public void defaultWeatherDataIsNull() {
-        assertNull(preferencesManager.loadCachedWeather());
+    public void ifNoChosenCity_SpecialValueWillBeReturned() throws Exception {
+        preferencesManager.saveNoChosenCity();
+        assertEquals(PreferencesManager.NO_CHOSEN_CITY, preferencesManager.getChosenCity());
+    }
+
+    @Test
+    public void intervalNotSpecified_defaultUpdateIntervalIsReturned() {
+        assertEquals(preferencesManager.getUpdateInterval(), (int)(Integer.valueOf(PreferencesManager.DEFAULT_UPDATE_INTERVAL)));
     }
 
 }

@@ -1,26 +1,20 @@
 package com.gcteam.yamblz.homework.domain.update.weather;
 
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v7.preference.PreferenceManager;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
-import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
-import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
-import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.gcteam.yamblz.homework.presentation.di.component.AppComponent;
+import com.gcteam.yamblz.homework.domain.interactor.weather.WeatherInteractor;
+import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.presentation.di.component.DaggerAppComponent;
+import com.gcteam.yamblz.homework.presentation.di.component.WeatherComponent;
 import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by turist on 16.07.2017.
@@ -31,13 +25,11 @@ public class UpdateWeatherJob extends Job {
     public static final String TAG = "current_weather_update_job";
 
     @Inject
-    WeatherService weatherService;
-    @Inject
-    WeatherStorage weatherStorage;
+    WeatherInteractor weatherInteractor;
     @Inject
     PreferencesManager preferencesManager;
 
-    AppComponent appComponent;
+    WeatherComponent weatherComponent;
 
     public static void startUpdate(int minutesInterval) {
         new JobRequest.Builder(UpdateWeatherJob.TAG)
@@ -57,24 +49,21 @@ public class UpdateWeatherJob extends Job {
     @Override
     @NonNull
     protected Result onRunJob(Params params) {
-        appComponent = DaggerAppComponent.builder()
+        weatherComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(getContext()))
-                .build();
-        appComponent.inject(this);
+                .build()
+                .getWeatherComponent();
+        weatherComponent.inject(this);
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final Result result;
 
-        WeatherData weather = weatherService
-                .getCurrentWeather(
-                        preferencesManager.getLat(),
-                        preferencesManager.getLng(),
-                        Locale.getDefault().getLanguage())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(throwable -> null)
-                .blockingGet();
+        FullWeatherReport fullWeatherReport =
+                weatherInteractor
+                .getWeather(preferencesManager.getLat(), preferencesManager.getLng(),
+                true).onErrorReturn(throwable -> null).blockingGet();
 
-        if (weather == null) {
-            return Result.FAILURE;
+        if (fullWeatherReport == null) {
+            return Result.RESCHEDULE;
         }
 
         return Result.SUCCESS;

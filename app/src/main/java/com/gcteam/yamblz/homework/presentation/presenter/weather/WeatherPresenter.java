@@ -8,6 +8,7 @@ import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 /**
  * Created by Kim Michael on 02.08.17
@@ -42,6 +43,7 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         }
         double lat = preferencesManager.getLat();
         double lng = preferencesManager.getLng();
+        Timber.d("Subscribed on weather interactor");
         compositeDisposable.add(
                 weatherInteractor.getWeather(lat, lng, forceUpdate)
                         .subscribe(fullWeatherReport -> {

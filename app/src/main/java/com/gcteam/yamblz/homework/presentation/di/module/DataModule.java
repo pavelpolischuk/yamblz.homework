@@ -63,8 +63,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    PreferencesManager providePreferencesManager(SharedPreferences sharedPreferences, Gson gson) {
-        return new PreferencesManager(sharedPreferences, gson);
+    PreferencesManager providePreferencesManager(SharedPreferences sharedPreferences) {
+        return new PreferencesManager(sharedPreferences);
     }
 
     @Provides

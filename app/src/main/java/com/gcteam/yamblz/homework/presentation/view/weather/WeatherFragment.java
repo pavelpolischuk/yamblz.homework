@@ -91,8 +91,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
                 .getWeatherScreenComponent();
         weatherScreenComponent.inject(this);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        prefs.registerOnSharedPreferenceChangeListener(this);
 
         weatherPresenter.onAttach(this);
         refreshLayout.setOnRefreshListener(() -> weatherPresenter.refreshForecast(preferencesManager, true));
@@ -110,14 +108,21 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
     @Override
     public void onResume() {
         super.onResume();
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefs.registerOnSharedPreferenceChangeListener(this);
         weatherPresenter.refreshForecast(preferencesManager, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         weatherPresenter.onDetach();
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -156,7 +161,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        weatherPresenter.refreshForecast(preferencesManager, true);
+        if (key.equals(PreferencesManager.CHOSEN_CITY_KEY)) {
+            weatherPresenter.refreshForecast(preferencesManager, true);
+        }
     }
 
     @OnClick(R.id.empty_view_block)

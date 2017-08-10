@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:title="@string/detail_title"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"

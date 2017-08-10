@@ -46,7 +46,7 @@ public class CityFilterInteractorTest {
     @Test
     public void getsCitiesFromRepositoryByInput() {
         List<FilteredCity> filteredCities = new ArrayList<>();
-        filteredCities.add(new FilteredCity("city", "country", "123", 1L));
+        filteredCities.add(new FilteredCity("city", "country", "123", 1));
         when(cityRepository.getCitiesByFilter("input")).thenReturn(Single.just(filteredCities));
         cityFilterInteractor.getCitiesByFilter("input");
         verify(cityRepository).getCitiesByFilter("input");

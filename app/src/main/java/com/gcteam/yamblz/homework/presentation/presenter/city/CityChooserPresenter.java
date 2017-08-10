@@ -56,7 +56,7 @@ public class CityChooserPresenter extends BasePresenter<CityFilterView> {
                                     if (getView() != null) {
                                         getView().showError();
                                     }
-                                }))
+                                }), throwable -> {})
         );
     }
 

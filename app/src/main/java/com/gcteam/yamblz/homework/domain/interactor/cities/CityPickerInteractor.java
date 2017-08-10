@@ -4,6 +4,7 @@ import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
 import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -36,19 +37,26 @@ public class CityPickerInteractor {
 
     public Single<StoredChosenCity> addCity(FilteredCity chosenCity) {
         return cityRepository.getCityDetails(chosenCity)
-                .doOnSuccess(storedChosenCity -> cityRepository.saveCityDetails(storedChosenCity))
+                .doOnSuccess(cityRepository::saveCityDetails)
+                .cache()
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }
 
     public Single<List<FilteredCity>> getChosenCities() {
         return cityRepository.getCities()
+                .map(filteredCities -> {
+                    Collections.reverse(filteredCities);
+                    return filteredCities;
+                })
+                .cache()
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }
 
     public Single<StoredChosenCity> chooseCity(FilteredCity filteredCity) {
         return cityRepository.getCityDetails(filteredCity)
+                .cache()
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }

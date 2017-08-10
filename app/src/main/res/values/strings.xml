@@ -48,5 +48,5 @@
     <string name="title_activity_city_pick">Choose city</string>
     <string name="delete_city_title">Delete city</string>
     <string name="empty_weather_message">Choose your city</string>
-    <string name="title_activity_detail_weather">DetailWeatherActivity</string>
+    <string name="detail_title">Details</string>
 </resources>

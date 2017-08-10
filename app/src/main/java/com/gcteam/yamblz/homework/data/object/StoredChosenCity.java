@@ -10,21 +10,21 @@ import android.arch.persistence.room.PrimaryKey;
 public class StoredChosenCity {
 
     @PrimaryKey
+    private String placeId;
     private Integer priority;
     private String cityName;
     private String userCityName;
     private double lat;
-    private double lon;
-    private String placeId;
+    private double lng;
     private String countryName;
 
-    public StoredChosenCity(String cityName, String userCityName, Integer priority, double lat, double lon,
+    public StoredChosenCity(String cityName, String userCityName, Integer priority, double lat, double lng,
                             String placeId, String countryName) {
         this.cityName = cityName;
         this.userCityName = userCityName;
         this.priority = priority;
         this.lat = lat;
-        this.lon = lon;
+        this.lng = lng;
         this.placeId = placeId;
         this.countryName = countryName;
     }
@@ -61,12 +61,12 @@ public class StoredChosenCity {
         this.lat = lat;
     }
 
-    public double getLon() {
-        return lon;
+    public double getLng() {
+        return lng;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public String getPlaceId() {

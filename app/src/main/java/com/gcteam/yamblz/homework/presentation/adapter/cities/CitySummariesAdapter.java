@@ -65,6 +65,7 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
 
     private void remove(int position) {
         int initialSize = citySummaries.size();
+        FilteredCity deletedCity = citySummaries.get(position);
         citySummaries.remove(position);
         // If there is only one city left, delete it
         if (initialSize == 1) {
@@ -82,7 +83,7 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         } else {
             notifyDataSetChanged();
         }
-        onCityClickListener.onDeleteCityClick(citySummaries.get(selectedPosition));
+        onCityClickListener.onDeleteCityClick(deletedCity);
     }
 
     public void switchIsDeletedButtonShown() {
