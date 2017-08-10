@@ -42,4 +42,6 @@
     <string name="format_pressure">Давление: %1.0f hPa</string>
     <string name="format_wind_kmh">Ветер: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
     <string name="format_wind_mph">Ветер: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="delete_city_title">Удалить город</string>
+    <string name="empty_weather_message">Выберите ваш город</string>
 </resources>

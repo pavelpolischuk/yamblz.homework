@@ -32,6 +32,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gcteam.yamblz.homework.presentation.view.main.MainActivity" />
         </activity>
+        <activity
+            android:name=".presentation.view.detail.DetailWeatherActivity"
+            android:label="@string/title_activity_detail_weather"
+            android:parentActivityName=".presentation.view.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcteam.yamblz.homework.presentation.view.main.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -5,6 +5,9 @@ import com.gcteam.yamblz.homework.domain.interactor.cities.CityPickerInteractor;
 import com.gcteam.yamblz.homework.presentation.di.scope.CityChooserScope;
 import com.gcteam.yamblz.homework.presentation.presenter.city.CityPickerPresenter;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.inject.Named;
 
 import dagger.Module;
@@ -28,7 +31,14 @@ public class CityChooserModule {
     public CityPickerInteractor provideCityPickerInteractor(
             CityRepository cityRepository,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
-            @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
-        return new CityPickerInteractor(cityRepository, executionScheduler, postExecutionScheduler);
+            @Named(SchedulersModule.UI) Scheduler postExecutionScheduler,
+            ExecutorService executorService) {
+        return new CityPickerInteractor(cityRepository, executionScheduler, postExecutionScheduler, executorService);
+    }
+
+    @Provides
+    @CityChooserScope
+    public ExecutorService provideExecutorService() {
+        return Executors.newFixedThreadPool(2);
     }
 }

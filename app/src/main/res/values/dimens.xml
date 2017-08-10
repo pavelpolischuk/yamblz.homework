@@ -8,7 +8,7 @@
     <dimen name="nav_title_horizontal_padding">4dp</dimen>
     <dimen name="nav_title_vertical_padding">4dp</dimen>
     <dimen name="nav_item_height">52dp</dimen>
-    <dimen name="nav_drawer_size">320dp</dimen>
+    <dimen name="nav_drawer_size">300dp</dimen>
     <dimen name="filtered_cities_horizontal_margin">40dp</dimen>
     <dimen name="nav_title_text_size">16sp</dimen>
     <dimen name="forecast_max_temp_text_size">22sp</dimen>
@@ -18,5 +18,9 @@
     <dimen name="current_weather_height">340dp</dimen>
     <dimen name="day_margin_start">8dp</dimen>
     <dimen name="weather_desc_text_size">16sp</dimen>
-    <dimen name="forecast_icon_margin">12dp</dimen>
+    <dimen name="forecast_icon_margin">10dp</dimen>
+    <dimen name="find_icon_size">100dp</dimen>
+    <dimen name="empty_view_button_padding">16dp</dimen>
+    <dimen name="current_weather_description_text_size">32sp</dimen>
+    <dimen name="filter_edit_text_horizontal_margin">16dp</dimen>
 </resources>

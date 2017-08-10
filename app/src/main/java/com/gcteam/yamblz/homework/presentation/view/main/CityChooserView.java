@@ -12,7 +12,7 @@ public interface CityChooserView extends BaseView {
 
     void addChosenCity(FilteredCity filteredCity);
 
-    void deleteCity(String cityName);
-
     void showChosenCities(List<FilteredCity> filteredCities);
+
+    void pickCity();
 }

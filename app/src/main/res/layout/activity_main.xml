@@ -39,7 +39,13 @@
 
         <include layout="@layout/nav_header_main" />
 
-        <include layout="@layout/nav_body_main" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/nav_body_main" />
+
+        </ScrollView>
 
     </LinearLayout>
 

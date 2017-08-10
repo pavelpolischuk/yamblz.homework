@@ -2,7 +2,7 @@ package com.gcteam.yamblz.homework.utils;
 
 import android.content.SharedPreferences;
 
-import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
+import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.google.gson.Gson;
 
@@ -17,9 +17,10 @@ public class PreferencesManager {
     public static final String LNG_KEY = "lng_key";
     public static final String CURRENT_WEATHER_KEY = "current_weather_key";
     public static final String UNITS_KEY = "units_key";
+    public static final String CHOSEN_CITY_ID_KEY = "chosen_city_id_key";
 
     public static final String DEFAULT_UPDATE_INTERVAL = "3600";
-    public static final String DEFAULT_CHOSEN_CITY = "Moscow";
+    public static final String NO_CHOSEN_CITY = "no_chosen_city";
 
     private SharedPreferences sharedPreferences;
     private Gson gson;
@@ -54,17 +55,36 @@ public class PreferencesManager {
     }
 
     public String getChosenCity() {
-        return sharedPreferences.getString(CHOSEN_CITY_KEY, DEFAULT_CHOSEN_CITY);
+        return sharedPreferences.getString(CHOSEN_CITY_KEY, NO_CHOSEN_CITY);
     }
 
-    public void saveChosenCity(CityDetailsResponse cityDetailsResponse) {
+    public int getChosenCityId() {
+        return sharedPreferences.getInt(CHOSEN_CITY_ID_KEY, 0);
+    }
+
+    public void saveChosenCity(StoredChosenCity storedChosenCity) {
         sharedPreferences.edit()
                 .putString(LAT_KEY,
-                        Double.toString(cityDetailsResponse.getResult().getGeometry().getLocation().getLat()))
+                        Double.toString(storedChosenCity.getLat()))
                 .putString(LNG_KEY,
-                        Double.toString(cityDetailsResponse.getResult().getGeometry().getLocation().getLng()))
+                        Double.toString(storedChosenCity.getLon()))
                 .putString(CHOSEN_CITY_KEY,
-                        cityDetailsResponse.getResult().getName())
+                        storedChosenCity.getCityName())
+                .putInt(CHOSEN_CITY_ID_KEY,
+                        storedChosenCity.getPriority())
+                .apply();
+    }
+
+    public void saveNoChosenCity() {
+        sharedPreferences.edit()
+                .putString(LAT_KEY,
+                        Double.toString(-1L))
+                .putString(LNG_KEY,
+                        Double.toString(-1L))
+                .putString(CHOSEN_CITY_KEY,
+                        NO_CHOSEN_CITY)
+                .putInt(CHOSEN_CITY_ID_KEY,
+                        -1)
                 .apply();
     }
 }

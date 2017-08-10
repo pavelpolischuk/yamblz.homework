@@ -46,4 +46,7 @@
     <string name="format_humidity">Humidity: %d %%</string>
     <string name="format_pressure">Pressure: %1.0f hPa</string>
     <string name="title_activity_city_pick">Choose city</string>
+    <string name="delete_city_title">Delete city</string>
+    <string name="empty_weather_message">Choose your city</string>
+    <string name="title_activity_detail_weather">DetailWeatherActivity</string>
 </resources>

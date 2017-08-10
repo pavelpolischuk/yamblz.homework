@@ -6,6 +6,7 @@
     <color name="colorDark">#200d0d</color>
     <color name="white">#ffffff</color>
     <color name="darkGrey">#464c55</color>
+    <color name="lightGray">#cfd8dc</color>
     <color name="darkBlue">#1e2460</color>
     <color name="selected_nav_item">#eeeeee</color>
     <color name="black">#000000</color>

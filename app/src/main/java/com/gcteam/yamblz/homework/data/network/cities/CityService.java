@@ -26,7 +26,7 @@ public class CityService {
                 GooglePlacesAPI.API_KEY,
                 input,
                 TYPES_CITIES,
-                Locale.getDefault().getDisplayLanguage());
+                Locale.getDefault().getLanguage());
     }
 
     public Single<CityDetailsResponse> getCityDetails(FilteredCity chosenCity) {

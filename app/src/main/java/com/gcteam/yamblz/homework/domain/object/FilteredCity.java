@@ -9,27 +9,15 @@ import android.support.annotation.Nullable;
  * Created by Kim Michael on 03.08.17
  */
 public class FilteredCity implements Parcelable {
-    public static final Creator<FilteredCity> CREATOR = new Creator<FilteredCity>() {
-        @Override
-        public FilteredCity createFromParcel(Parcel source) {
-            return new FilteredCity(source);
-        }
-
-        @Override
-        public FilteredCity[] newArray(int size) {
-            return new FilteredCity[size];
-        }
-    };
     private final String cityName;
     private final String countryName;
     private final String placeId;
     @Nullable
-    private Long id;
-
+    private Integer id;
     public FilteredCity(@NonNull String cityName,
                         @NonNull String countryName,
                         @NonNull String placeId,
-                        @NonNull Long id) {
+                        @NonNull Integer id) {
         this.cityName = cityName;
         this.countryName = countryName;
         this.placeId = placeId;
@@ -40,14 +28,7 @@ public class FilteredCity implements Parcelable {
         this.cityName = cityName;
         this.countryName = countryName;
         this.placeId = placeId;
-        this.id = 0L;
-    }
-
-    public FilteredCity(Parcel in) {
-        this.cityName = in.readString();
-        this.countryName = in.readString();
-        this.placeId = in.readString();
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.id = 0;
     }
 
     public String getCityName() {
@@ -62,13 +43,15 @@ public class FilteredCity implements Parcelable {
         return placeId;
     }
 
-    public Long getId() {
+    @Nullable
+    public Integer getId() {
         return id;
     }
 
-    public void setId(@NonNull Long id) {
+    public void setId(@Nullable Integer id) {
         this.id = id;
     }
+
 
     @Override
     public int describeContents() {
@@ -81,5 +64,47 @@ public class FilteredCity implements Parcelable {
         dest.writeString(this.countryName);
         dest.writeString(this.placeId);
         dest.writeValue(this.id);
+    }
+
+    protected FilteredCity(Parcel in) {
+        this.cityName = in.readString();
+        this.countryName = in.readString();
+        this.placeId = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
+    public static final Creator<FilteredCity> CREATOR = new Creator<FilteredCity>() {
+        @Override
+        public FilteredCity createFromParcel(Parcel source) {
+            return new FilteredCity(source);
+        }
+
+        @Override
+        public FilteredCity[] newArray(int size) {
+            return new FilteredCity[size];
+        }
+    };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FilteredCity that = (FilteredCity) o;
+
+        if (cityName != null ? !cityName.equals(that.cityName) : that.cityName != null)
+            return false;
+        if (countryName != null ? !countryName.equals(that.countryName) : that.countryName != null)
+            return false;
+        return placeId != null ? placeId.equals(that.placeId) : that.placeId == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cityName != null ? cityName.hashCode() : 0;
+        result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
+        result = 31 * result + (placeId != null ? placeId.hashCode() : 0);
+        return result;
     }
 }

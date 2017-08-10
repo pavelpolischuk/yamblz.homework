@@ -86,9 +86,18 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
             }
         }
 
-        citySummariesAdapter = new CitySummariesAdapter(getLayoutInflater(), this);
+        citySummariesAdapter = new CitySummariesAdapter(getLayoutInflater(), this, preferencesManager.getChosenCityId());
         citySummaries.setAdapter(citySummariesAdapter);
-        citySummaries.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        // Disable recyclerview scrolling as it is wrapped into ScrollView
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        citySummaries.setLayoutManager(new LinearLayoutManager(getApplicationContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        citySummaries.setNestedScrollingEnabled(false);
+        citySummaries.setLayoutManager(linearLayoutManager);
         citySummaries.setItemAnimator(new DefaultItemAnimator());
 
         cityPickerPresenter.onAttach(this);
@@ -119,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CityFilterActivity.CITY_FILTER_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
@@ -158,10 +168,16 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
     }
 
     @OnClick(R.id.nav_city_picker)
-    public void onCityPickerClick() {
+    @Override
+    public void pickCity() {
         Intent intent = new Intent(getApplicationContext(), CityFilterActivity.class);
         startActivityForResult(intent, CityFilterActivity.CITY_FILTER_REQUEST_CODE);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    @OnClick(R.id.nav_delete_cities)
+    public void onDeleteCityButtonClick() {
+        citySummariesAdapter.switchIsDeletedButtonShown();
     }
 
     @Override
@@ -186,28 +202,33 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
 
     @Override
     public void addChosenCity(FilteredCity filteredCity) {
-        Long id = citySummariesAdapter.insert(filteredCity);
-        if (id > 0) {
-            filteredCity.setId(id);
+        int id = citySummariesAdapter.insert(filteredCity);
+        if (id >= 0) {
+            filteredCity.setId(0);
             cityPickerPresenter.addCity(filteredCity);
         }
     }
 
     @Override
-    public void deleteCity(String cityName) {
-
+    public void onDeleteCityClick(FilteredCity filteredCity) {
+        cityPickerPresenter.deleteCity(filteredCity);
+        if (citySummariesAdapter.isEmpty()) {
+            cityPickerPresenter.setNoChosenCity();
+        } else {
+            cityPickerPresenter.chooseCity(citySummariesAdapter.getSelectedCity());
+        }
     }
 
     @Override
     public void showChosenCities(List<FilteredCity> filteredCities) {
         citySummariesAdapter.insertAll(filteredCities);
+        citySummariesAdapter.setSelected(preferencesManager.getChosenCityId());
     }
 
     @Override
     public void onCityClick(FilteredCity filteredCity) {
         router.showWeather();
         drawer.closeDrawer(Gravity.START);
-        setToolbarTitle(filteredCity.getCityName());
         cityPickerPresenter.chooseCity(filteredCity);
     }
 }

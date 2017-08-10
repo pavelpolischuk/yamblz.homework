@@ -35,4 +35,8 @@ public class CityStorage {
     public Single<StoredChosenCity> getChosenCity(FilteredCity chosenCity) {
         return appDatabase.chosenCityDAO().get(chosenCity.getPlaceId());
     }
+
+    public void deleteCity(FilteredCity filteredCity) {
+        appDatabase.chosenCityDAO().deleteCity(filteredCity.getPlaceId());
+    }
 }

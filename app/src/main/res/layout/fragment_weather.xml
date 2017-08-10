@@ -4,10 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/forecast"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/forecast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/empty_view_block"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/find_icon_size"
+                android:layout_height="@dimen/find_icon_size"
+                android:src="@drawable/ic_add" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:padding="@dimen/empty_view_button_padding"
+                android:text="@string/empty_weather_message"
+                android:clickable="false" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 
 </android.support.v4.widget.SwipeRefreshLayout>

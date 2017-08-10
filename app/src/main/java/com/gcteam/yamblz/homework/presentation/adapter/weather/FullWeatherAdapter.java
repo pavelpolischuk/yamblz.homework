@@ -26,10 +26,11 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int FORECAST_VIEW_TYPE = 1;
 
     private FullWeatherReport fullWeatherReport;
+    private final OnForecastClickListener onForecastClickListener;
 
-    public FullWeatherAdapter() {
+    public FullWeatherAdapter(OnForecastClickListener onForecastClickListener) {
         this.fullWeatherReport = null;
-        setHasStableIds(true);
+        this.onForecastClickListener = onForecastClickListener;
     }
 
     @Override
@@ -60,6 +61,9 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case FORECAST_VIEW_TYPE:
             default:
                 v = layoutInflater.inflate(R.layout.item_forecast_entry, parent, false);
+                v.setOnClickListener(v1 -> {
+
+                });
                 viewHolder = new ForecastViewHolder(v);
         }
         return viewHolder;
@@ -138,6 +142,8 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView humidity;
         @BindView(R.id.pressure)
         TextView pressure;
+        @BindView(R.id.description)
+        TextView description;
         private Context context;
 
         public CurrentWeatherViewHolder(View itemView) {
@@ -155,6 +161,11 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             wind.setText(WeatherFormatUtils.getFormattedWind(context, weatherData.getWindSpeed(), weatherData.getWindDeg()));
             humidity.setText(String.format(context.getString(R.string.format_humidity), weatherData.getHumidity()));
             pressure.setText(String.format(context.getString(R.string.format_pressure), weatherData.getPressure()));
+            description.setText(WeatherFormatUtils.formatDescription(weatherData.getDescription()));
         }
+    }
+
+    public interface OnForecastClickListener {
+        void onForecastClick(WeatherData weatherData);
     }
 }

@@ -18,6 +18,9 @@ public class WeatherInteractor {
     private WeatherRepository weatherRepository;
     private Scheduler executionScheduler;
     private Scheduler postExecutionScheduler;
+    private FullWeatherReport cachedFullWeatherReport;
+    private double cachedLat;
+    private double cachedLng;
 
     @Inject
     public WeatherInteractor(
@@ -29,15 +32,22 @@ public class WeatherInteractor {
         this.postExecutionScheduler = postExecutionScheduler;
     }
 
-    public Single<FullWeatherReport> getWeather(double lat, double lng) {
+    public Single<FullWeatherReport> getWeather(double lat, double lng, boolean forceUpdate) {
+        if (!forceUpdate && cachedLat == lat && cachedLng == lng) {
+            return Single.just(cachedFullWeatherReport);
+        }
         return Single.zip(weatherRepository.getForecast(lat, lng)
                         .subscribeOn(executionScheduler),
                 weatherRepository.getWeather(lat, lng)
                         .subscribeOn(executionScheduler),
                 (forecastData, weatherData) ->
                         new FullWeatherReport(lat, lng, forecastData, weatherData))
-                .doOnSuccess(fullWeatherReport ->
-                        weatherRepository.saveWeather(fullWeatherReport))
+                .doOnSuccess(fullWeatherReport -> {
+                    cachedFullWeatherReport = fullWeatherReport;
+                    cachedLat = lat;
+                    cachedLng = lng;
+                    weatherRepository.saveWeather(fullWeatherReport);
+                })
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }

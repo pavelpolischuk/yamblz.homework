@@ -30,11 +30,20 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     }
 
 
-    public void refreshForecast(PreferencesManager preferencesManager) {
+    public void refreshForecast(PreferencesManager preferencesManager, boolean forceUpdate) {
+        if (preferencesManager.getChosenCity().equals(PreferencesManager.NO_CHOSEN_CITY)) {
+            if (getView() != null) {
+                getView().showEmpty();
+            }
+            return;
+        }
+        if (getView() != null) {
+            getView().showLoadingStarted();
+        }
         double lat = preferencesManager.getLat();
         double lng = preferencesManager.getLng();
         compositeDisposable.add(
-                weatherInteractor.getWeather(lat, lng)
+                weatherInteractor.getWeather(lat, lng, forceUpdate)
                         .subscribe(fullWeatherReport -> {
                             if (getView() != null) {
                                 getView().showFullWeather(fullWeatherReport);

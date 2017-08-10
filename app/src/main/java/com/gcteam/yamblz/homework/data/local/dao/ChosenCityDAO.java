@@ -17,7 +17,7 @@ import io.reactivex.Single;
 @Dao
 public interface ChosenCityDAO {
 
-    @Query("SELECT * FROM StoredChosenCity ORDER BY _id")
+    @Query("SELECT * FROM StoredChosenCity ORDER BY priority")
     Single<List<StoredChosenCity>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -25,4 +25,7 @@ public interface ChosenCityDAO {
 
     @Query("SELECT * FROM StoredChosenCity WHERE placeId = :placeId")
     Single<StoredChosenCity> get(String placeId);
+
+    @Query("DELETE FROM StoredChosenCity WHERE placeId = :placeId")
+    int deleteCity(String placeId);
 }

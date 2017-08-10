@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherActivityFragment"
+    tools:showIn="@layout/activity_detail_weather">
+
+
+</android.support.constraint.ConstraintLayout>

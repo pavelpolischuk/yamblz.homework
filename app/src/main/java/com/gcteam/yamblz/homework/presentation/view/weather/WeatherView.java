@@ -15,4 +15,6 @@ public interface WeatherView extends BaseView {
     void showFullWeather(FullWeatherReport fullWeatherReport);
 
     void changeTitle(String title);
+
+    void showEmpty();
 }

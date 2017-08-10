@@ -104,4 +104,5 @@ dependencies {
     compile libraries.room
     annotationProcessor libraries.roomCompiler
     compile libraries.roomRx
+    compile libraries.timber
 }

@@ -12,6 +12,7 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import timber.log.Timber;
 
 /**
  * Created by turist on 16.07.2017.
@@ -46,6 +47,8 @@ public class WeatherRepository {
     }
 
     public void saveWeather(FullWeatherReport fullWeatherReport) {
+        Timber.d("Full weather report is being saved for %1.0f lat and %1.0f lng",
+                fullWeatherReport.getLat(), fullWeatherReport.getLng());
         weatherStorage.saveWeather(fullWeatherReport);
     }
 }

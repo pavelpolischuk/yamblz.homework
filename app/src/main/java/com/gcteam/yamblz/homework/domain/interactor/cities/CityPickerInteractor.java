@@ -5,6 +5,7 @@ import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 
@@ -16,17 +17,20 @@ import io.reactivex.Single;
  */
 public class CityPickerInteractor {
 
-    private CityRepository cityRepository;
-    private Scheduler executionScheduler;
-    private Scheduler postExecutionScheduler;
+    private final CityRepository cityRepository;
+    private final Scheduler executionScheduler;
+    private final Scheduler postExecutionScheduler;
+    private final ExecutorService executorService;
 
     @Inject
     public CityPickerInteractor(CityRepository cityRepository,
                                 Scheduler executionScheduler,
-                                Scheduler postExecutionScheduler) {
+                                Scheduler postExecutionScheduler,
+                                ExecutorService executorService) {
         this.cityRepository = cityRepository;
         this.executionScheduler = executionScheduler;
         this.postExecutionScheduler = postExecutionScheduler;
+        this.executorService = executorService;
     }
 
 
@@ -47,5 +51,13 @@ public class CityPickerInteractor {
         return cityRepository.getCityDetails(filteredCity)
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
+    }
+
+    public void deleteCity(FilteredCity filteredCity) {
+        executorService.execute(() -> cityRepository.deleteCity(filteredCity));
+    }
+
+    public void setNoChosenCity() {
+        cityRepository.setNoChosenCity();
     }
 }

@@ -51,4 +51,12 @@ public class CityPickerPresenter extends BasePresenter<CityChooserView> {
         compositeDisposable.add(cityPickerInteractor.chooseCity(filteredCity)
                 .subscribe());
     }
+
+    public void deleteCity(FilteredCity filteredCity) {
+        cityPickerInteractor.deleteCity(filteredCity);
+    }
+
+    public void setNoChosenCity() {
+        cityPickerInteractor.setNoChosenCity();
+    }
 }

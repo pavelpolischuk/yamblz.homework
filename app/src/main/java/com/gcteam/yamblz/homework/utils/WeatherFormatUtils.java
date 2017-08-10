@@ -124,4 +124,8 @@ public class WeatherFormatUtils {
         String monthDayString = monthDayFormat.format(dateInMillis * 1000);
         return monthDayString.substring(0, 1).toUpperCase() + monthDayString.substring(1);
     }
+
+    public static String formatDescription(String description) {
+        return description.substring(0, 1).toUpperCase() + description.substring(1);
+    }
 }
