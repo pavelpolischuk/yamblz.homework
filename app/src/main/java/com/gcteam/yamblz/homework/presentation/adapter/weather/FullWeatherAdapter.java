@@ -61,10 +61,16 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case FORECAST_VIEW_TYPE:
             default:
                 v = layoutInflater.inflate(R.layout.item_forecast_entry, parent, false);
-                v.setOnClickListener(v1 -> {
-
-                });
                 viewHolder = new ForecastViewHolder(v);
+                v.setOnClickListener(v1 -> {
+                    int position = viewHolder.getAdapterPosition() - 1;
+                    if (position != RecyclerView.NO_POSITION) {
+                        onForecastClickListener.onForecastClick(fullWeatherReport
+                                .getForecastData()
+                                .getForecast()
+                                .get(position));
+                    }
+                });
         }
         return viewHolder;
     }

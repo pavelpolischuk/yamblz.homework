@@ -1,7 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.view.weather;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +25,7 @@ import com.gcteam.yamblz.homework.presentation.adapter.weather.FullWeatherAdapte
 import com.gcteam.yamblz.homework.presentation.di.component.WeatherScreenComponent;
 import com.gcteam.yamblz.homework.presentation.presenter.weather.WeatherPresenter;
 import com.gcteam.yamblz.homework.presentation.view.BaseFragment;
+import com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherViewer;
 import com.gcteam.yamblz.homework.presentation.view.main.CityChooserView;
 import com.gcteam.yamblz.homework.presentation.view.main.TitlePicker;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
@@ -54,9 +54,11 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
     @Inject
     PreferencesManager preferencesManager;
 
-    SharedPreferences prefs;
     TitlePicker titlePicker;
     CityChooserView cityChooserView;
+    DetailWeatherViewer detailWeatherViewer;
+
+    SharedPreferences prefs;
     WeatherScreenComponent weatherScreenComponent;
     FullWeatherAdapter fullWeatherAdapter;
 
@@ -77,12 +79,12 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
         super.onAttach(context);
         this.titlePicker = (TitlePicker) context;
         this.cityChooserView = (CityChooserView) context;
+        this.detailWeatherViewer = (DetailWeatherViewer) context;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         weatherScreenComponent = WeatherApplication.getComponentManager().getAppComponent()
                 .getWeatherComponent()
@@ -165,6 +167,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
 
     @Override
     public void onForecastClick(WeatherData weatherData) {
-        Intent intent = new Intent();
+        detailWeatherViewer.viewDetailWeather(weatherData);
     }
 }

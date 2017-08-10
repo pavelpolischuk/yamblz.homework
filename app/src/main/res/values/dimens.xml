@@ -23,4 +23,8 @@
     <dimen name="empty_view_button_padding">16dp</dimen>
     <dimen name="current_weather_description_text_size">32sp</dimen>
     <dimen name="filter_edit_text_horizontal_margin">16dp</dimen>
+    <dimen name="detail_day_text_size">24sp</dimen>
+    <dimen name="detail_date_text_size">16sp</dimen>
+    <dimen name="detail_max_temp_text_size">96sp</dimen>
+    <dimen name="detail_min_temp_text_size">48sp</dimen>
 </resources>

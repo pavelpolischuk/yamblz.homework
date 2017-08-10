@@ -20,12 +20,15 @@ import android.view.Gravity;
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.adapter.cities.CitySummariesAdapter;
 import com.gcteam.yamblz.homework.presentation.di.component.CityChooserComponent;
 import com.gcteam.yamblz.homework.presentation.navigation.main.MainActivityRouter;
 import com.gcteam.yamblz.homework.presentation.presenter.city.CityPickerPresenter;
 import com.gcteam.yamblz.homework.presentation.view.city.CityFilterActivity;
+import com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherActivity;
+import com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherViewer;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
 import java.util.List;
@@ -36,7 +39,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements TitlePicker, CityChooserView, CitySummariesAdapter.OnCityClickListener {
+public class MainActivity extends AppCompatActivity implements TitlePicker,
+        CityChooserView, CitySummariesAdapter.OnCityClickListener, DetailWeatherViewer {
 
     private static final String TITLE_KEY = "title";
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -86,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
             }
         }
 
-        citySummariesAdapter = new CitySummariesAdapter(getLayoutInflater(), this, preferencesManager.getChosenCityId());
+        citySummariesAdapter = new CitySummariesAdapter(getLayoutInflater(),
+                this, preferencesManager.getChosenCityId());
         citySummaries.setAdapter(citySummariesAdapter);
         // Disable recyclerview scrolling as it is wrapped into ScrollView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -181,7 +186,9 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
@@ -230,5 +237,12 @@ public class MainActivity extends AppCompatActivity implements TitlePicker, City
         router.showWeather();
         drawer.closeDrawer(Gravity.START);
         cityPickerPresenter.chooseCity(filteredCity);
+    }
+
+    @Override
+    public void viewDetailWeather(WeatherData weatherData) {
+        Intent weatherDetailIntent = new Intent(this, DetailWeatherActivity.class);
+        weatherDetailIntent.putExtra(DetailWeatherActivity.EXTRA_WEATHER_DATA, weatherData);
+        startActivity(weatherDetailIntent);
     }
 }

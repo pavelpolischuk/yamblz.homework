@@ -1,12 +1,13 @@
 package com.gcteam.yamblz.homework.domain.object;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by turist on 16.07.2017.
  */
 
-public class WeatherData implements Serializable {
+public class WeatherData implements Parcelable {
     private int weatherId;
     private String description;
 
@@ -166,4 +167,48 @@ public class WeatherData implements Serializable {
         result = 31 * result + (int) (date ^ (date >>> 32));
         return result;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.weatherId);
+        dest.writeString(this.description);
+        dest.writeDouble(this.dayTemp);
+        dest.writeDouble(this.minTemp);
+        dest.writeDouble(this.maxTemp);
+        dest.writeDouble(this.pressure);
+        dest.writeInt(this.humidity);
+        dest.writeDouble(this.windSpeed);
+        dest.writeDouble(this.windDeg);
+        dest.writeLong(this.date);
+    }
+
+    protected WeatherData(Parcel in) {
+        this.weatherId = in.readInt();
+        this.description = in.readString();
+        this.dayTemp = in.readDouble();
+        this.minTemp = in.readDouble();
+        this.maxTemp = in.readDouble();
+        this.pressure = in.readDouble();
+        this.humidity = in.readInt();
+        this.windSpeed = in.readDouble();
+        this.windDeg = in.readDouble();
+        this.date = in.readLong();
+    }
+
+    public static final Parcelable.Creator<WeatherData> CREATOR = new Parcelable.Creator<WeatherData>() {
+        @Override
+        public WeatherData createFromParcel(Parcel source) {
+            return new WeatherData(source);
+        }
+
+        @Override
+        public WeatherData[] newArray(int size) {
+            return new WeatherData[size];
+        }
+    };
 }

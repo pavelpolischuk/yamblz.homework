@@ -12,8 +12,6 @@ import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
 import javax.inject.Inject;
 
-import static com.gcteam.yamblz.homework.utils.PreferencesManager.CHOSEN_CITY_KEY;
-
 /**
  * Created by turist on 07.07.2017.
  */
@@ -42,7 +40,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         super.onResume();
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(interactor);
-        Preference cityPreference = findPreference(CHOSEN_CITY_KEY);
     }
 
     @Override
