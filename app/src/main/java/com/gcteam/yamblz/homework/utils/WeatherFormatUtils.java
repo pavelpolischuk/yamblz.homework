@@ -124,14 +124,14 @@ public class WeatherFormatUtils {
     }
 
     public static String getFormattedDate(long dateInMillis) {
-        SimpleDateFormat monthDayFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-        String monthDayString = monthDayFormat.format(dateInMillis * 1000);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+        String monthDayString = dateFormat.format(dateInMillis * 1000);
         return monthDayString.substring(0, 1).toUpperCase() + monthDayString.substring(1);
     }
 
     public static String getFormattedDay(long dateInMillis) {
-        SimpleDateFormat monthDayFormat = new SimpleDateFormat(DAY_FORMAT, Locale.getDefault());
-        String monthDayString = monthDayFormat.format(dateInMillis * 1000);
+        SimpleDateFormat dayFormat = new SimpleDateFormat(DAY_FORMAT, Locale.getDefault());
+        String monthDayString = dayFormat.format(dateInMillis * 1000);
         return monthDayString.substring(0, 1).toUpperCase() + monthDayString.substring(1);
     }
 

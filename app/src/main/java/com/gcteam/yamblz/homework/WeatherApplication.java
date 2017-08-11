@@ -1,6 +1,7 @@
 package com.gcteam.yamblz.homework;
 
 import android.app.Application;
+import android.os.Build;
 
 import com.evernote.android.job.JobManager;
 import com.facebook.stetho.Stetho;
@@ -26,6 +27,10 @@ public class WeatherApplication extends Application {
         JobManager.create(this).addJobCreator(new WeatherJobCreator());
         componentManager = new ComponentManager(this);
         if (BuildConfig.DEBUG) {
+            Timber.d("Config = " + BuildConfig.BUILD_TYPE);
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                JobManager.instance().getConfig().setAllowSmallerIntervalsForMarshmallow(true);
+            }
             Stetho.initializeWithDefaults(this);
             Timber.plant(new Timber.DebugTree());
         }

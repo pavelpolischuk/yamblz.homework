@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.data.api;
 
+import com.gcteam.yamblz.homework.BuildConfig;
 import com.gcteam.yamblz.homework.data.api.dto.cities.autocomplete.CitiesResponse;
 import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
 
@@ -13,7 +14,7 @@ import retrofit2.http.Query;
 public interface GooglePlacesAPI {
 
     String API_BASE_URL = "https://maps.googleapis.com/maps/api/place/";
-    String API_KEY = "AIzaSyA0x--xPieNHJJ7NsWhTb4E-D9eoc_bH34";
+    String API_KEY = BuildConfig.GOOGLE_PLACES_API_KEY;
 
     @GET("autocomplete/json")
     Single<CitiesResponse> getSuggestionsByInput(

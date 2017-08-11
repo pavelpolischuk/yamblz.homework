@@ -10,13 +10,13 @@ import android.arch.persistence.room.PrimaryKey;
 public class StoredCity {
 
     @PrimaryKey
-    private String placeId;
-    private Integer priority;
-    private String cityName;
-    private String userCityName;
-    private double lat;
-    private double lng;
-    private String countryName;
+    private final String placeId;
+    private final Integer priority;
+    private final String cityName;
+    private final String userCityName;
+    private final double lat;
+    private final double lng;
+    private final String countryName;
 
     public StoredCity(String cityName, String userCityName, Integer priority, double lat, double lng,
                       String placeId, String countryName) {
@@ -33,56 +33,28 @@ public class StoredCity {
         return cityName;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
     public String getUserCityName() {
         return userCityName;
-    }
-
-    public void setUserCityName(String userCityName) {
-        this.userCityName = userCityName;
     }
 
     public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
-
     public double getLat() {
         return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
     }
 
     public double getLng() {
         return lng;
     }
 
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-
     public String getPlaceId() {
         return placeId;
     }
 
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
-    }
-
     public String getCountryName() {
         return countryName;
-    }
-
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
     }
 
     @Override

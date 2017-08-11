@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
+import com.gcteam.yamblz.homework.BuildConfig;
 import com.gcteam.yamblz.homework.domain.interactor.weather.WeatherInteractor;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.presentation.di.component.DaggerAppComponent;
@@ -32,14 +33,24 @@ public class UpdateWeatherJob extends Job {
     WeatherComponent weatherComponent;
 
     public void startUpdate(int minutesInterval) {
-        new JobRequest.Builder(UpdateWeatherJob.TAG)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(minutesInterval), TimeUnit.MINUTES.toMillis(15))
-                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
-                .setRequirementsEnforced(true)
-                .setPersisted(true)
-                .setUpdateCurrent(true)
-                .build()
-                .schedule();
+        if (BuildConfig.DEBUG) {
+            new JobRequest.Builder(TAG)
+                    .setPeriodic(TimeUnit.MILLISECONDS.toMillis(61000)
+                            , TimeUnit.MILLISECONDS.toMillis(35000))
+                    .setUpdateCurrent(true)
+                    .setPersisted(true)
+                    .build()
+                    .schedule();
+        } else {
+            new JobRequest.Builder(UpdateWeatherJob.TAG)
+                    .setPeriodic(TimeUnit.MINUTES.toMillis(minutesInterval), TimeUnit.MINUTES.toMillis(15))
+                    .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                    .setRequirementsEnforced(true)
+                    .setPersisted(true)
+                    .setUpdateCurrent(true)
+                    .build()
+                    .schedule();
+        }
     }
 
     public static boolean checkStarted() {

@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply from: '../code_quality_tools/jacoco.gradle'
-apply plugin: 'com.vanniktech.code.quality.tools'
 
 def keystorePropertiesFile = project.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -41,6 +40,11 @@ android {
             signingConfig signingConfigs.temp
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles fileTree('proguard').asList().toArray()
+        }
+
+        buildTypes.each {
+            it.buildConfigField "String", "OPEN_WEATHER_MAP_API_KEY", keystoreProperties["OPEN_WEATHER_MAP_API_KEY"]
+            it.buildConfigField "String", "GOOGLE_PLACES_API_KEY", keystoreProperties["GOOGLE_PLACES_API_KEY"]
         }
     }
 

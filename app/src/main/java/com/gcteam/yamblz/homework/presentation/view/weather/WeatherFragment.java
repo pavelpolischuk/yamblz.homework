@@ -94,6 +94,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
 
         weatherPresenter.onAttach(this);
         refreshLayout.setOnRefreshListener(() -> weatherPresenter.refreshForecast(preferencesManager, true));
+        refreshLayout.setColorSchemeResources(R.color.red);
 
         fullWeatherAdapter = new FullWeatherAdapter(this);
         forecast.setAdapter(fullWeatherAdapter);

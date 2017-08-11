@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.data.api;
 
+import com.gcteam.yamblz.homework.BuildConfig;
 import com.gcteam.yamblz.homework.data.api.dto.weather.current.WeatherResponse;
 import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
 
@@ -14,7 +15,7 @@ import retrofit2.http.Query;
 public interface OpenWeatherMapApi {
 
     String API_BASE_URL = "http://api.openweathermap.org/data/";
-    String API_KEY = "8fd5656437393710869297fbf372df49";
+    String API_KEY = BuildConfig.OPEN_WEATHER_MAP_API_KEY;
 
     @GET("2.5/weather")
     Single<WeatherResponse> weatherByCityId(@Query("appid") String apiKey,
