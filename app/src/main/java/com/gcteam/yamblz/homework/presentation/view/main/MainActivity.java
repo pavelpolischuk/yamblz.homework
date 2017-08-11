@@ -23,7 +23,6 @@ import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.adapter.cities.CitySummariesAdapter;
 import com.gcteam.yamblz.homework.presentation.di.component.CityChooserComponent;
 import com.gcteam.yamblz.homework.presentation.navigation.main.MainActivityRouter;
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements TitlePicker,
 
     private static final String TITLE_KEY = "title";
     private static final int PERMISSION_REQUEST_CODE = 1;
+
     @Inject
     CityPickerPresenter cityPickerPresenter;
     @Inject
@@ -90,10 +90,6 @@ public class MainActivity extends AppCompatActivity implements TitlePicker,
 
         if (savedInstanceState == null) {
             router.showWeather();
-
-            if (!UpdateWeatherJob.checkStarted()) {
-                UpdateWeatherJob.startUpdate(preferencesManager.getUpdateInterval());
-            }
         }
 
         citySummariesAdapter = new CitySummariesAdapter(getLayoutInflater(),

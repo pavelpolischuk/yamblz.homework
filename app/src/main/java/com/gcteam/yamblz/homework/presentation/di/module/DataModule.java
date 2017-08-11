@@ -5,13 +5,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
-import com.gcteam.yamblz.homework.data.ForecastResponseMapper;
-import com.gcteam.yamblz.homework.data.WeatherResponseMapper;
+import com.gcteam.yamblz.homework.data.mapper.ForecastResponseMapper;
+import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.local.AppDatabase;
 import com.gcteam.yamblz.homework.data.local.cities.CityStorage;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
+import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
+import com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.gson.Gson;
 
@@ -28,9 +30,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CityStorage provideCityStorage(PreferencesManager preferencesManager,
-                                   AppDatabase appDatabase) {
-        return new CityStorage(preferencesManager, appDatabase);
+    CityStorage provideCityStorage(AppDatabase appDatabase) {
+        return new CityStorage(appDatabase);
     }
 
     @Provides
@@ -43,10 +44,9 @@ public class DataModule {
 
     @Provides
     @Singleton
-    WeatherStorage provideWeatherStorage(PreferencesManager preferencesManager,
-                                         AppDatabase appDatabase,
+    WeatherStorage provideWeatherStorage(AppDatabase appDatabase,
                                          Gson gson) {
-        return new WeatherStorage(preferencesManager, appDatabase, gson);
+        return new WeatherStorage(appDatabase, gson);
     }
 
     @Provides
@@ -84,6 +84,19 @@ public class DataModule {
     AppDatabase provideAppDataBase(Context context) {
         return Room.databaseBuilder(context,
                 AppDatabase.class, "weather").build();
+    }
+
+    @Provides
+    @Singleton
+    SettingsPresenter provideSettingsPresenter(PreferencesManager preferencesManager,
+                                               UpdateWeatherJob updateWeatherJob) {
+        return new SettingsPresenter(preferencesManager, updateWeatherJob);
+    }
+
+    @Provides
+    @Singleton
+    UpdateWeatherJob provideUpdateWeatherJob() {
+        return new UpdateWeatherJob();
     }
 
 }

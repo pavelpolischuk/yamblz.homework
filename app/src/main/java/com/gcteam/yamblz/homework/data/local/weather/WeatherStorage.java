@@ -5,7 +5,6 @@ import com.gcteam.yamblz.homework.data.object.StoredFullWeatherReport;
 import com.gcteam.yamblz.homework.domain.object.ForecastData;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
@@ -20,14 +19,11 @@ public class WeatherStorage {
 
 
     private final AppDatabase appDatabase;
-    private final PreferencesManager preferencesManager;
     private final Gson gson;
 
     @Inject
-    public WeatherStorage(PreferencesManager preferencesManager,
-                          AppDatabase appDatabase,
+    public WeatherStorage(AppDatabase appDatabase,
                           Gson gson) {
-        this.preferencesManager = preferencesManager;
         this.appDatabase = appDatabase;
         this.gson = gson;
     }

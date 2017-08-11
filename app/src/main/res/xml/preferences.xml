@@ -11,9 +11,11 @@
         android:summary="@string/update_interval_default"
         android:title="@string/update_interval" />
 
-    <com.gcteam.yamblz.homework.presentation.view.settings.preference.CityPreference
-        android:defaultValue="@string/default_city"
-        android:key="city_key"
-        android:title="@string/change_city_title" />
+    <ListPreference
+        android:defaultValue="@string/units_metric_value"
+        android:entries="@array/pref_units"
+        android:entryValues="@array/pref_units_values"
+        android:key="@string/pref_units_key"
+        android:title="@string/pref_units_label" />
 
 </PreferenceScreen>

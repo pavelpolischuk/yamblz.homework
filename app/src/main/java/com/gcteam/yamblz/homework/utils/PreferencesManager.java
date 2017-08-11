@@ -2,7 +2,7 @@ package com.gcteam.yamblz.homework.utils;
 
 import android.content.SharedPreferences;
 
-import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
+import com.gcteam.yamblz.homework.data.object.StoredCity;
 
 import timber.log.Timber;
 
@@ -48,18 +48,18 @@ public class PreferencesManager {
         return sharedPreferences.getInt(CHOSEN_CITY_ID_KEY, 0);
     }
 
-    public void saveChosenCity(StoredChosenCity storedChosenCity) {
-        Timber.d("Chosen city is %s with %d id", storedChosenCity.getCityName(), storedChosenCity.getPriority());
+    public void saveChosenCity(StoredCity storedCity) {
+        Timber.d("Chosen city is %s with %d id", storedCity.getCityName(), storedCity.getPriority());
         sharedPreferences.edit()
                 .putString(LAT_KEY,
-                        Double.toString(storedChosenCity.getLat()))
+                        Double.toString(storedCity.getLat()))
                 .putString(LNG_KEY,
-                        Double.toString(storedChosenCity.getLng()))
+                        Double.toString(storedCity.getLng()))
                 .putString(CHOSEN_CITY_KEY,
-                        storedChosenCity.getCityName())
+                        storedCity.getCityName())
                 .putInt(CHOSEN_CITY_ID_KEY,
-                        storedChosenCity.getPriority())
-                .commit();
+                        storedCity.getPriority())
+                .apply();
     }
 
     public void saveNoChosenCity() {

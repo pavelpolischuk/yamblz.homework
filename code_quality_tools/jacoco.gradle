@@ -45,7 +45,9 @@ project.afterEvaluate {
                                    '**/*Module.*', // Modules for Dagger.
                                    '**/*Dagger*.*', // Dagger auto-generated code.
                                    '**/*MembersInjector*.*', // Dagger auto-generated code.
-                                   '**/*_Provide*Factory*.*'] // Dagger auto-generated code.
+                                   '**/*_Provide*Factory*.*',//Dagger auto-generated code.
+                                    '**/*_Factory*.*',
+                        '**/*_Impl*.*'] // Dagger auto-generated code.
                 )
 
                 def coverageSourceDirs = [

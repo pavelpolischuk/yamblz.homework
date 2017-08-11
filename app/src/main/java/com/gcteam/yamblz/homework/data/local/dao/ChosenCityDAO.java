@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
+import com.gcteam.yamblz.homework.data.object.StoredCity;
 
 import java.util.List;
 
@@ -17,15 +17,15 @@ import io.reactivex.Single;
 @Dao
 public interface ChosenCityDAO {
 
-    @Query("SELECT * FROM StoredChosenCity ORDER BY priority")
-    Single<List<StoredChosenCity>> getAll();
+    @Query("SELECT * FROM StoredCity ORDER BY priority")
+    Single<List<StoredCity>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(StoredChosenCity storedChosenCity);
+    void insert(StoredCity storedCity);
 
-    @Query("SELECT * FROM StoredChosenCity WHERE placeId = :placeId")
-    Single<StoredChosenCity> get(String placeId);
+    @Query("SELECT * FROM StoredCity WHERE placeId = :placeId")
+    Single<StoredCity> get(String placeId);
 
-    @Query("DELETE FROM StoredChosenCity WHERE placeId = :placeId")
+    @Query("DELETE FROM StoredCity WHERE placeId = :placeId")
     int deleteCity(String placeId);
 }

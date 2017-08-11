@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.domain.interactor.cities;
 
-import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
+import com.gcteam.yamblz.homework.data.object.StoredCity;
 import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
@@ -35,10 +35,9 @@ public class CityPickerInteractor {
     }
 
 
-    public Single<StoredChosenCity> addCity(FilteredCity chosenCity) {
+    public Single<StoredCity> addCity(FilteredCity chosenCity) {
         return cityRepository.getCityDetails(chosenCity)
                 .doOnSuccess(cityRepository::saveCityDetails)
-                .cache()
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }
@@ -49,14 +48,12 @@ public class CityPickerInteractor {
                     Collections.reverse(filteredCities);
                     return filteredCities;
                 })
-                .cache()
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }
 
-    public Single<StoredChosenCity> chooseCity(FilteredCity filteredCity) {
+    public Single<StoredCity> chooseCity(FilteredCity filteredCity) {
         return cityRepository.getCityDetails(filteredCity)
-                .cache()
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }

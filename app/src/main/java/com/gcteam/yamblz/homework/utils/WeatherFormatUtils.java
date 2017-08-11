@@ -88,7 +88,9 @@ public class WeatherFormatUtils {
 
     public static boolean isMetric(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(PreferencesManager.UNITS_KEY, "Celcius").equals("Celcius");
+        return prefs.getString(PreferencesManager.UNITS_KEY,
+                context.getString(R.string.units_metric_value))
+                .equals(context.getString(R.string.units_metric_value));
     }
 
     public static String getFormattedWind(Context context, double windSpeed, double degrees) {

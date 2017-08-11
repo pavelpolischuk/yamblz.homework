@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.data;
+package com.gcteam.yamblz.homework.data.mapper;
 
 import com.gcteam.yamblz.homework.data.api.dto.cities.autocomplete.CitiesResponse;
 import com.gcteam.yamblz.homework.data.api.dto.cities.autocomplete.Prediction;

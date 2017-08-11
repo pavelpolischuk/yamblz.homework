@@ -152,7 +152,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
     }
 
     @Override
-    public void showEmpty() {
+    public void showEmptyView() {
         refreshLayout.setRefreshing(false);
         forecast.setVisibility(View.INVISIBLE);
         emptyViewBlock.setVisibility(View.VISIBLE);

@@ -53,23 +53,20 @@ public class MainActivityRouter implements MainRouter {
     @Override
     public void showSettings() {
         activity.setTitle(R.string.settings_title);
-        replaceFragment(new SettingsFragment(), Integer.toString(R.string.settings_title), true);
+        replaceFragment(new SettingsFragment(), Integer.toString(R.string.settings_title), false);
     }
 
     @Override
     public void showAbout() {
         activity.setTitle(R.string.about_title);
-        replaceFragment(new AboutFragment(), Integer.toString(R.string.about_title), true);
+        replaceFragment(new AboutFragment(), Integer.toString(R.string.about_title), false);
     }
 
     protected void replaceFragment(Fragment fragmentToSet, String tag, boolean showOnTopOfBackStack) {
         removeDetailedView();
         FragmentManager manager = activity.getSupportFragmentManager();
         if (showOnTopOfBackStack) {
-            boolean removed = manager.popBackStackImmediate();
-            while (removed) {
-                removed = manager.popBackStackImmediate();
-            }
+            manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         if (manager.findFragmentByTag(tag) == null) {

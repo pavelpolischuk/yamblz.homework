@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.data.network.weather;
 
-import com.gcteam.yamblz.homework.data.WeatherResponseMapper;
+import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
@@ -42,13 +42,6 @@ public class WeatherService {
         this.api = api;
     }
 
-    public static String checkUnitsType(String unitsType) {
-        if (units.contains(unitsType)) {
-            return unitsType;
-        }
-
-        return "standard";
-    }
 
     public static String checkLangCode(String lang) {
         if (codes.contains(lang)) {

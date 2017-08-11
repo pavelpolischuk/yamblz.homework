@@ -20,7 +20,7 @@ public interface GooglePlacesAPI {
             @Query("key") String APIKey,
             @Query("input") String input,
             @Query("types") String types,
-            @Query("language") String languageCode
+            @Query("language") String language
     );
 
     @GET("details/json")

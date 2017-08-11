@@ -10,6 +10,8 @@ import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Observable;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +36,17 @@ public class CityChooserPresenterTest {
     public void onAttach_bindsToEditText_showsFilteredCities() {
         when(cityFilterView.getFilterObs()).thenReturn(Observable.just("input"));
         cityChooserPresenter.onAttach(cityFilterView);
+        verify(cityFilterView).showLoadingSpinner();
         verify(cityFilterView).getFilterObs();
         verify(cityFilterInteractor).getCitiesByFilter("input");
+    }
+
+    @Test
+    public void whenTypedNothing_dontGoToNetwork_hideUI() {
+        when(cityFilterView.getFilterObs()).thenReturn(Observable.just(""));
+        cityChooserPresenter.onAttach(cityFilterView);
+        verify(cityFilterView).hideLoadingSpinner();
+        verify(cityFilterView).hideChosenCities();
+        verify(cityFilterInteractor, never()).getCitiesByFilter(anyString());
     }
 }

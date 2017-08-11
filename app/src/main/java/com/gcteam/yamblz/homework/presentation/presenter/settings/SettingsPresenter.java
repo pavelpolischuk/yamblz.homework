@@ -15,28 +15,31 @@ import static com.gcteam.yamblz.homework.utils.PreferencesManager.UPDATE_INTERVA
 
 public class SettingsPresenter implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private SettingsView view;
+    private SettingsView settingsView;
     private PreferencesManager preferencesManager;
+    private UpdateWeatherJob updateWeatherJob;
 
-    public SettingsPresenter(SettingsView view, PreferencesManager preferencesManager) {
-        this.view = view;
+    public SettingsPresenter(PreferencesManager preferencesManager,
+                             UpdateWeatherJob updateWeatherJob) {
         this.preferencesManager = preferencesManager;
+        this.updateWeatherJob = updateWeatherJob;
     }
 
-    public void initView() {
-        view.updateSummary(UPDATE_INTERVAL_KEY, String.valueOf(preferencesManager.getUpdateInterval()));
-        view.updateSummary(CHOSEN_CITY_KEY, preferencesManager.getChosenCity());
+    public void initView(SettingsView settingsView) {
+        this.settingsView = settingsView;
+        this.settingsView.updateSummary(UPDATE_INTERVAL_KEY, String.valueOf(preferencesManager.getUpdateInterval()));
+        this.settingsView.updateSummary(CHOSEN_CITY_KEY, preferencesManager.getChosenCity());
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         String value = sharedPreferences.getString(key, "");
-        view.updateSummary(key, value);
+        settingsView.updateSummary(key, value);
 
         if (UPDATE_INTERVAL_KEY.equals(key)) {
-            UpdateWeatherJob.startUpdate(Integer.decode(value));
+            updateWeatherJob.startUpdate(Integer.decode(value));
         } else if (CHOSEN_CITY_KEY.equals(key)) {
-            UpdateWeatherJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
+            updateWeatherJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
         }
 
     }

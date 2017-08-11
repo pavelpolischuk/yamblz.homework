@@ -1,9 +1,8 @@
-package com.gcteam.yamblz.homework.weather;
+package com.gcteam.yamblz.homework.data.network.weather;
 
-import com.gcteam.yamblz.homework.data.WeatherResponseMapper;
+import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.api.dto.weather.current.WeatherResponse;
-import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.gson.Gson;

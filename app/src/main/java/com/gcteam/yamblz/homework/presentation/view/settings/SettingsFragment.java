@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SettingsView {
 
+    @Inject
     SettingsPresenter interactor;
     @Inject
     PreferencesManager preferencesManager;
@@ -31,8 +32,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
         WeatherApplication.getComponentManager().getAppComponent().inject(this);
-        interactor = new SettingsPresenter(this, preferencesManager);
-        interactor.initView();
+        interactor.initView(this);
     }
 
     @Override

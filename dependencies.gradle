@@ -14,7 +14,7 @@ ext.versions = [
 
     rxbinding : '2.0.0',
     rxandroid : '2.0.1',
-    rxjava : '2.1.1',
+    rxjava : '2.1.2',
 
     junit : '4.12',
     mockito : '2.8.47',
@@ -36,6 +36,10 @@ ext.versions = [
     room: '1.0.0-alpha5',
 
     timber : '4.5.1',
+
+    assertJ: '3.8.0',
+
+    randomBeans: '3.7.0',
 
 ]
 
@@ -89,4 +93,7 @@ ext.libraries = [
 
         timber : "com.jakewharton.timber:timber:$versions.timber",
 
+        assertJ : "org.assertj:assertj-core:$versions.assertJ",
+
+        randomBeans : "io.github.benas:random-beans:$versions.randomBeans",
 ]

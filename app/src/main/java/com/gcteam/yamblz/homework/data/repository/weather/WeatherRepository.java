@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.data.repository.weather;
 
-import com.gcteam.yamblz.homework.data.ForecastResponseMapper;
+import com.gcteam.yamblz.homework.data.mapper.ForecastResponseMapper;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
 import com.gcteam.yamblz.homework.domain.object.ForecastData;

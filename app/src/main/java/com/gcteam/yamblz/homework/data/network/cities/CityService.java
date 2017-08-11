@@ -14,7 +14,7 @@ import io.reactivex.Single;
  */
 public class CityService {
 
-    private static final String TYPES_CITIES = "(cities)";
+    static final String TYPES_CITIES = "(cities)";
     private GooglePlacesAPI googlePlacesAPI;
 
     public CityService(GooglePlacesAPI googlePlacesAPI) {

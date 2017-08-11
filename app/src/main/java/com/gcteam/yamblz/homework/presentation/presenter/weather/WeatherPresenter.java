@@ -34,7 +34,7 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     public void refreshForecast(PreferencesManager preferencesManager, boolean forceUpdate) {
         if (preferencesManager.getChosenCity().equals(PreferencesManager.NO_CHOSEN_CITY)) {
             if (getView() != null) {
-                getView().showEmpty();
+                getView().showEmptyView();
             }
             return;
         }

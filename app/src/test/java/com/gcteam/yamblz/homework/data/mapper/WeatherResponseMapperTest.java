@@ -1,6 +1,5 @@
-package com.gcteam.yamblz.homework.weather;
+package com.gcteam.yamblz.homework.data.mapper;
 
-import com.gcteam.yamblz.homework.data.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.dto.weather.current.WeatherResponse;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.google.gson.Gson;
@@ -13,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Kim Michael on 27.07.17
  */
-public class WeatherMapperTest {
+public class WeatherResponseMapperTest {
 
     WeatherResponseMapper weatherResponseMapper;
     WeatherResponse weatherResponse;

@@ -105,4 +105,8 @@ dependencies {
     annotationProcessor libraries.roomCompiler
     compile libraries.roomRx
     compile libraries.timber
+
+    testCompile libraries.assertJ
+
+    testCompile libraries.randomBeans
 }

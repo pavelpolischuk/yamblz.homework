@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 
 import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
-import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
+import com.gcteam.yamblz.homework.data.object.StoredCity;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,7 +40,7 @@ public class PreferencesManagerTest {
     final double lat = 10;
     final double lng = 15;
     final CityDetailsResponse cityDetailsResponse = new CityDetailsResponse();
-    final StoredChosenCity storedChosenCity = new StoredChosenCity("city", "city", 1, 1.0d, 10.0d, "asdf", "country");
+    final StoredCity storedCity = new StoredCity("city", "city", 1, 1.0d, 10.0d, "asdf", "country");
 
     @Before
     public void setup() {
@@ -118,16 +118,16 @@ public class PreferencesManagerTest {
         testWeather = new WeatherData(123, "123", 20.0d, 15.0d, 30.0d, 200d, 20, 2, 200, 38485837L);
         SharedPreferences sp = RuntimeEnvironment.application.getSharedPreferences("", 0);
         preferencesManager = new PreferencesManager(sp);
-        sp.edit().clear().commit();
+        sp.edit().clear().apply();
     }
 
     @Test
     public void savedCityNameLatLngCanBeLoaded() {
-        preferencesManager.saveChosenCity(storedChosenCity);
-        assertEquals(storedChosenCity.getCityName(), preferencesManager.getChosenCity());
-        assertEquals(storedChosenCity.getLat(), preferencesManager.getLat());
-        assertEquals(storedChosenCity.getLng(), preferencesManager.getLng());
-        assertEquals((int) storedChosenCity.getPriority(), preferencesManager.getChosenCityId());
+        preferencesManager.saveChosenCity(storedCity);
+        assertEquals(storedCity.getCityName(), preferencesManager.getChosenCity());
+        assertEquals(storedCity.getLat(), preferencesManager.getLat());
+        assertEquals(storedCity.getLng(), preferencesManager.getLng());
+        assertEquals((int) storedCity.getPriority(), preferencesManager.getChosenCityId());
     }
 
     @Test

@@ -16,5 +16,5 @@ public interface WeatherView extends BaseView {
 
     void changeTitle(String title);
 
-    void showEmpty();
+    void showEmptyView();
 }

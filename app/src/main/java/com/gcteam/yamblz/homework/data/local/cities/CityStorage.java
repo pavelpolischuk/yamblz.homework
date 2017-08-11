@@ -1,9 +1,8 @@
 package com.gcteam.yamblz.homework.data.local.cities;
 
 import com.gcteam.yamblz.homework.data.local.AppDatabase;
-import com.gcteam.yamblz.homework.data.object.StoredChosenCity;
+import com.gcteam.yamblz.homework.data.object.StoredCity;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
-import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
 import java.util.List;
 
@@ -16,23 +15,20 @@ import io.reactivex.Single;
 public class CityStorage {
 
     private final AppDatabase appDatabase;
-    private final PreferencesManager preferencesManager;
 
-    public CityStorage(PreferencesManager preferencesManager,
-                       AppDatabase appDatabase) {
-        this.preferencesManager = preferencesManager;
+    public CityStorage(AppDatabase appDatabase) {
         this.appDatabase = appDatabase;
     }
 
-    public void saveCityDetails(StoredChosenCity storedChosenCity) {
-        appDatabase.chosenCityDAO().insert(storedChosenCity);
+    public void saveCityDetails(StoredCity storedCity) {
+        appDatabase.chosenCityDAO().insert(storedCity);
     }
 
-    public Single<List<StoredChosenCity>> getChosenCities() {
+    public Single<List<StoredCity>> getChosenCities() {
         return appDatabase.chosenCityDAO().getAll();
     }
 
-    public Single<StoredChosenCity> getChosenCity(FilteredCity chosenCity) {
+    public Single<StoredCity> getChosenCity(FilteredCity chosenCity) {
         return appDatabase.chosenCityDAO().get(chosenCity.getPlaceId());
     }
 

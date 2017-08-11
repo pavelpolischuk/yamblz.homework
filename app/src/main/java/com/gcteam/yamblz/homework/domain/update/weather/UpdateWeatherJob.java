@@ -31,7 +31,7 @@ public class UpdateWeatherJob extends Job {
 
     WeatherComponent weatherComponent;
 
-    public static void startUpdate(int minutesInterval) {
+    public void startUpdate(int minutesInterval) {
         new JobRequest.Builder(UpdateWeatherJob.TAG)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(minutesInterval), TimeUnit.MINUTES.toMillis(15))
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
@@ -54,8 +54,6 @@ public class UpdateWeatherJob extends Job {
                 .build()
                 .getWeatherComponent();
         weatherComponent.inject(this);
-
-        final Result result;
 
         FullWeatherReport fullWeatherReport =
                 weatherInteractor

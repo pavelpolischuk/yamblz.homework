@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.presenter.settings;
 
+import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.view.settings.SettingsView;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
@@ -21,11 +22,13 @@ public class SettingsPresenterTest {
     SettingsView settingsView;
     @Mock
     PreferencesManager preferencesManager;
+    @Mock
+    UpdateWeatherJob updateWeatherJob;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        settingsPresenter = new SettingsPresenter(settingsView, preferencesManager);
+        settingsPresenter = new SettingsPresenter(preferencesManager, updateWeatherJob);
     }
 
     @Test
@@ -34,7 +37,7 @@ public class SettingsPresenterTest {
         String city = "Moscow";
         when(preferencesManager.getUpdateInterval()).thenReturn(interval);
         when(preferencesManager.getChosenCity()).thenReturn(city);
-        settingsPresenter.initView();
+        settingsPresenter.initView(settingsView);
         verify(settingsView).updateSummary(PreferencesManager.UPDATE_INTERVAL_KEY, String.valueOf(interval));
         verify(settingsView).updateSummary(PreferencesManager.CHOSEN_CITY_KEY, city);
     }
