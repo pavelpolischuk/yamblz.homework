@@ -17,8 +17,10 @@ public class PreferencesManager {
     public static final String LNG_KEY = "lng_key";
     public static final String UNITS_KEY = "units_key";
     public static final String CHOSEN_CITY_ID_KEY = "chosen_city_id_key";
+    public static final String LAST_SYNC_TIME_KEY = "last_sync_time";
 
     public static final String DEFAULT_UPDATE_INTERVAL = "3600";
+    public static final String DEFAULT_UNITS = "Celcius";
     public static final String NO_CHOSEN_CITY = "no_chosen_city";
 
     private SharedPreferences sharedPreferences;
@@ -48,6 +50,10 @@ public class PreferencesManager {
         return sharedPreferences.getInt(CHOSEN_CITY_ID_KEY, 0);
     }
 
+    public Long getLastSyncTime() {
+        return sharedPreferences.getLong(LAST_SYNC_TIME_KEY, -1L);
+    }
+
     public void saveChosenCity(StoredCity storedCity) {
         Timber.d("Chosen city is %s with %d id", storedCity.getCityName(), storedCity.getPriority());
         sharedPreferences.edit()
@@ -58,7 +64,8 @@ public class PreferencesManager {
                 .putString(CHOSEN_CITY_KEY,
                         storedCity.getCityName())
                 .putInt(CHOSEN_CITY_ID_KEY,
-                        storedCity.getPriority())
+                        storedCity.getPriority() == null ?
+                            0 : storedCity.getPriority())
                 .apply();
     }
 
@@ -72,6 +79,12 @@ public class PreferencesManager {
                         NO_CHOSEN_CITY)
                 .putInt(CHOSEN_CITY_ID_KEY,
                         -1)
+                .apply();
+    }
+
+    public void saveLastSyncTime(long currentTimeMillis) {
+        sharedPreferences.edit()
+                .putLong(LAST_SYNC_TIME_KEY, currentTimeMillis / 1000)
                 .apply();
     }
 }

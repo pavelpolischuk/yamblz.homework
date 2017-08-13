@@ -57,14 +57,10 @@ ext.libraries = [
         evernoteJob : "com.evernote:android-job:$versions.evernote",
 
         gcm : "com.google.android.gms:play-services-gcm:$versions.play_services",
-        playServicesLocation : "com.google.android.gms:play-services-location:$versions.play_services",
-        playServicesMaps : "com.google.android.gms:play-services-maps:$versions.play_services",
 
         retrofit : "com.squareup.retrofit2:retrofit:$versions.retrofit",
         retrofitGsonConverter : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
         retrofitRx2Adapter : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
-
-        picasso : "com.squareup.picasso:picasso:$versions.picasso",
 
         okHttpLoggingInterceptor : "com.squareup.okhttp3:logging-interceptor:$versions.okhttp",
 

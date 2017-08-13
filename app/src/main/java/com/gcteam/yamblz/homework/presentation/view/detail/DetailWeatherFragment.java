@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.gcteam.yamblz.homework.utils.WeatherFormatUtils;
+import com.gcteam.yamblz.homework.utils.FormatUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,16 +78,16 @@ public class DetailWeatherFragment extends Fragment implements DetailWeatherView
 
     @Override
     public void viewDetailWeather(@NonNull WeatherData weatherData) {
-        day.setText(WeatherFormatUtils.getFormattedDay(weatherData.getDate()));
-        date.setText(WeatherFormatUtils.getFormattedDate(weatherData.getDate()));
+        day.setText(FormatUtils.getFormattedDay(weatherData.getDate()));
+        date.setText(FormatUtils.getFormattedDate(weatherData.getDate()));
         icon.setImageDrawable(ContextCompat.getDrawable(getContext(),
-                (WeatherFormatUtils.getArtResourceForWeatherCondition(
+                (FormatUtils.getArtResourceForWeatherCondition(
                         weatherData.getWeatherId()))));
-        maxTemp.setText(WeatherFormatUtils.formatTemperature(getContext(), weatherData.getMaxTemp()));
-        minTemp.setText(WeatherFormatUtils.formatTemperature(getContext(), weatherData.getMinTemp()));
-        wind.setText(WeatherFormatUtils.getFormattedWind(getContext(), weatherData.getWindSpeed(), weatherData.getWindDeg()));
+        maxTemp.setText(FormatUtils.formatTemperature(getContext(), weatherData.getMaxTemp()));
+        minTemp.setText(FormatUtils.formatTemperature(getContext(), weatherData.getMinTemp()));
+        wind.setText(FormatUtils.getFormattedWind(getContext(), weatherData.getWindSpeed(), weatherData.getWindDeg()));
         humidity.setText(String.format(getContext().getString(R.string.format_humidity), weatherData.getHumidity()));
         pressure.setText(String.format(getContext().getString(R.string.format_pressure), weatherData.getPressure()));
-        description.setText(WeatherFormatUtils.formatDescription(weatherData.getDescription()));
+        description.setText(FormatUtils.formatDescription(weatherData.getDescription()));
     }
 }

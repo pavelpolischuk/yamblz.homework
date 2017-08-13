@@ -1,14 +1,10 @@
 package com.gcteam.yamblz.homework.utils;
 
 import android.content.SharedPreferences;
-import android.net.Uri;
 
 import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
 import com.gcteam.yamblz.homework.data.object.StoredCity;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +12,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-
-import java.util.List;
-import java.util.Locale;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -32,7 +25,6 @@ public class PreferencesManagerTest {
     PreferencesManager preferencesManager;
 
 
-    Place place;
     WeatherData testWeather;
     final String name = "Moscow";
 
@@ -44,77 +36,6 @@ public class PreferencesManagerTest {
 
     @Before
     public void setup() {
-        place = new Place() {
-            @Override
-            public String getId() {
-                return id;
-            }
-
-            @Override
-            public List<Integer> getPlaceTypes() {
-                return null;
-            }
-
-            @Override
-            public CharSequence getAddress() {
-                return null;
-            }
-
-            @Override
-            public Locale getLocale() {
-                return Locale.US;
-            }
-
-            @Override
-            public CharSequence getName() {
-                return name;
-            }
-
-            @Override
-            public LatLng getLatLng() {
-                return new LatLng(lat, lng);
-            }
-
-            @Override
-            public LatLngBounds getViewport() {
-                return null;
-            }
-
-            @Override
-            public Uri getWebsiteUri() {
-                return null;
-            }
-
-            @Override
-            public CharSequence getPhoneNumber() {
-                return null;
-            }
-
-            @Override
-            public float getRating() {
-                return 0;
-            }
-
-            @Override
-            public int getPriceLevel() {
-                return 0;
-            }
-
-            @Override
-            public CharSequence getAttributions() {
-                return null;
-            }
-
-            @Override
-            public Place freeze() {
-                return null;
-            }
-
-            @Override
-            public boolean isDataValid() {
-                return false;
-            }
-        };
         testWeather = new WeatherData(123, "123", 20.0d, 15.0d, 30.0d, 200d, 20, 2, 200, 38485837L);
         SharedPreferences sp = RuntimeEnvironment.application.getSharedPreferences("", 0);
         preferencesManager = new PreferencesManager(sp);

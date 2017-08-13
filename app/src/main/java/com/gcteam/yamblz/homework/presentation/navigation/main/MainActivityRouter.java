@@ -2,6 +2,7 @@ package com.gcteam.yamblz.homework.presentation.navigation.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -28,11 +29,13 @@ public class MainActivityRouter implements MainRouter {
     }
 
     @Override
+    @MainThread
     public void showWeather() {
         replaceFragment(new WeatherFragment(), Integer.toString(R.string.weather_title), true);
     }
 
     @Override
+    @MainThread
     public void showDetailedWeather(WeatherData weatherData, boolean isTwoPane) {
         if (isTwoPane) {
             DetailWeatherFragment fragment = new DetailWeatherFragment();
@@ -51,18 +54,21 @@ public class MainActivityRouter implements MainRouter {
     }
 
     @Override
+    @MainThread
     public void showSettings() {
         activity.setTitle(R.string.settings_title);
         replaceFragment(new SettingsFragment(), Integer.toString(R.string.settings_title), false);
     }
 
     @Override
+    @MainThread
     public void showAbout() {
         activity.setTitle(R.string.about_title);
         replaceFragment(new AboutFragment(), Integer.toString(R.string.about_title), false);
     }
 
-    protected void replaceFragment(Fragment fragmentToSet, String tag, boolean showOnTopOfBackStack) {
+    @MainThread
+    private void replaceFragment(Fragment fragmentToSet, String tag, boolean showOnTopOfBackStack) {
         removeDetailedView();
         FragmentManager manager = activity.getSupportFragmentManager();
         if (showOnTopOfBackStack) {
@@ -82,7 +88,8 @@ public class MainActivityRouter implements MainRouter {
         }
     }
 
-    protected void removeDetailedView() {
+    @MainThread
+    private void removeDetailedView() {
         FragmentManager fm = activity.getSupportFragmentManager();
         if (fm.findFragmentByTag(Integer.toString(R.string.detail_title)) != null) {
             fm.beginTransaction().remove(fm.findFragmentById(R.id.detail_container)).commit();

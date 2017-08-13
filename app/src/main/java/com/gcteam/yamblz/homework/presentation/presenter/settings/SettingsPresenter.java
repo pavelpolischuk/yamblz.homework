@@ -6,7 +6,11 @@ import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.view.settings.SettingsView;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
+import static com.gcteam.yamblz.homework.utils.PreferencesManager.CHOSEN_CITY_ID_KEY;
 import static com.gcteam.yamblz.homework.utils.PreferencesManager.CHOSEN_CITY_KEY;
+import static com.gcteam.yamblz.homework.utils.PreferencesManager.DEFAULT_UNITS;
+import static com.gcteam.yamblz.homework.utils.PreferencesManager.NO_CHOSEN_CITY;
+import static com.gcteam.yamblz.homework.utils.PreferencesManager.UNITS_KEY;
 import static com.gcteam.yamblz.homework.utils.PreferencesManager.UPDATE_INTERVAL_KEY;
 
 /**
@@ -33,13 +37,23 @@ public class SettingsPresenter implements SharedPreferences.OnSharedPreferenceCh
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        String value = sharedPreferences.getString(key, "");
-        settingsView.updateSummary(key, value);
-
-        if (UPDATE_INTERVAL_KEY.equals(key)) {
-            updateWeatherJob.startUpdate(Integer.decode(value));
-        } else if (CHOSEN_CITY_KEY.equals(key)) {
-            updateWeatherJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
+        String value;
+        switch  (key) {
+            case UPDATE_INTERVAL_KEY:
+                value = sharedPreferences.getString(key, "");
+                updateWeatherJob.startUpdate(Integer.decode(value));
+                settingsView.updateSummary(key, value);
+                break;
+            case CHOSEN_CITY_KEY:
+                value = sharedPreferences.getString(key, NO_CHOSEN_CITY);
+                updateWeatherJob.startUpdate(Integer.decode(sharedPreferences.getString(UPDATE_INTERVAL_KEY, "")));
+                settingsView.updateSummary(key, value);
+                break;
+            case UNITS_KEY:
+                value = sharedPreferences.getString(key, DEFAULT_UNITS);
+                settingsView.updateSummary(key, value);
+            case CHOSEN_CITY_ID_KEY:
+            default:
         }
 
     }

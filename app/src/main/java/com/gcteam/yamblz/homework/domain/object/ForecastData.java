@@ -1,34 +1,32 @@
 package com.gcteam.yamblz.homework.domain.object;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 /**
  * Created by Kim Michael on 06.08.17
  */
 public class ForecastData {
-    private String cityName;
+    @NonNull
+    private final String cityName;
+    @NonNull
+    private final List<WeatherData> forecast;
 
-    private List<WeatherData> forecast;
-
-    public ForecastData(String cityName,
-                        List<WeatherData> forecast) {
+    public ForecastData(@NonNull String cityName,
+                        @NonNull List<WeatherData> forecast) {
         this.cityName = cityName;
         this.forecast = forecast;
     }
 
+    @NonNull
     public String getCityName() {
         return cityName;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
+    @NonNull
     public List<WeatherData> getForecast() {
         return forecast;
     }
 
-    public void setForecast(List<WeatherData> forecast) {
-        this.forecast = forecast;
-    }
 }

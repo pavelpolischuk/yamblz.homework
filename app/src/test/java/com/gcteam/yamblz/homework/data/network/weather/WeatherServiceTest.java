@@ -38,7 +38,7 @@ public class WeatherServiceTest {
 
         weatherResponseMapper = new WeatherResponseMapper();
         testWeatherResponse = new Gson().fromJson("{\"coord\":{\"lon\":30.52,\"lat\":50.45},\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}],\"base\":\"stations\",\"main\":{\"temp\":24.34,\"pressure\":1004,\"humidity\":78,\"temp_min\":23,\"temp_max\":26},\"visibility\":10000,\"wind\":{\"speed\":6,\"deg\":360},\"clouds\":{\"all\":75},\"dt\":1501250400,\"sys\":{\"type\":1,\"id\":7358,\"message\":0.0041,\"country\":\"UA\",\"sunrise\":1501208450,\"sunset\":1501264023},\"id\":696050,\"name\":\"Pushcha-Voditsa\",\"cod\":200}", WeatherResponse.class);
-        testWeatherMapped = weatherResponseMapper.apply(testWeatherResponse);
+        testWeatherMapped = WeatherResponseMapper.toWeatherData(testWeatherResponse);
 
         when(api.weatherByLatLng(OpenWeatherMapApi.API_KEY, 20d, 20d, "metric", "ru")).thenReturn(Single.just(testWeatherResponse));
 
@@ -47,7 +47,7 @@ public class WeatherServiceTest {
         when(preferencesManager.getLat()).thenReturn(lat);
         when(preferencesManager.getLng()).thenReturn(lng);
 
-        weatherService = new WeatherService(preferencesManager, weatherResponseMapper, api);
+        weatherService = new WeatherService(preferencesManager, api);
     }
 
     @Test

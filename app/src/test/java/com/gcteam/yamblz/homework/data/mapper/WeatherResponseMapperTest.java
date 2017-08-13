@@ -14,7 +14,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class WeatherResponseMapperTest {
 
-    WeatherResponseMapper weatherResponseMapper;
     WeatherResponse weatherResponse;
     Gson gson;
 
@@ -22,12 +21,11 @@ public class WeatherResponseMapperTest {
     public void setup() {
         gson = new Gson();
         weatherResponse = gson.fromJson("{\"coord\":{\"lon\":30.52,\"lat\":50.45},\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}],\"base\":\"stations\",\"main\":{\"temp\":24.34,\"pressure\":1004,\"humidity\":78,\"temp_min\":23,\"temp_max\":26},\"visibility\":10000,\"wind\":{\"speed\":6,\"deg\":360},\"clouds\":{\"all\":75},\"dt\":1501250400,\"sys\":{\"type\":1,\"id\":7358,\"message\":0.0041,\"country\":\"UA\",\"sunrise\":1501208450,\"sunset\":1501264023},\"id\":696050,\"name\":\"Pushcha-Voditsa\",\"cod\":200}", WeatherResponse.class);
-        weatherResponseMapper = new WeatherResponseMapper();
     }
 
     @Test
     public void mapsWeatherToWeatherData() throws Exception {
-        WeatherData weatherData = weatherResponseMapper.apply(weatherResponse);
+        WeatherData weatherData = WeatherResponseMapper.toWeatherData(weatherResponse);
         assertEquals("broken clouds", weatherData.getDescription());
         assertEquals(78, weatherData.getHumidity());
         assertEquals(1004.0, weatherData.getPressure(), 1.0);

@@ -8,22 +8,14 @@ import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 /**
  * Created by Kim Michael on 06.08.17
  */
-public class ForecastResponseMapper implements Function<ForecastResponse, ForecastData> {
+public class ForecastResponseMapper {
 
-    @Inject
-    public ForecastResponseMapper() {
-    }
-
-    @Override
-    public ForecastData apply(@NonNull ForecastResponse forecastResponse) throws Exception {
+    public static ForecastData toForecastData(@NonNull ForecastResponse forecastResponse) {
         List<WeatherData> forecast = new ArrayList<>();
         WeatherData weatherData;
         for (Description description : forecastResponse.getDescriptions()) {

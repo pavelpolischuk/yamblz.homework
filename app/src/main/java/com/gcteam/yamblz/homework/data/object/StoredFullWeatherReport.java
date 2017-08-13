@@ -11,12 +11,18 @@ public class StoredFullWeatherReport {
     private final double lng;
     private final String forecastDataJson;
     private final String weatherDataJson;
+    private final long lastSyncTime;
 
-    public StoredFullWeatherReport(double lat, double lng, String forecastDataJson, String weatherDataJson) {
+    public StoredFullWeatherReport(double lat,
+                                   double lng,
+                                   String forecastDataJson,
+                                   String weatherDataJson,
+                                   long lastSyncTime) {
         this.lat = lat;
         this.lng = lng;
         this.forecastDataJson = forecastDataJson;
         this.weatherDataJson = weatherDataJson;
+        this.lastSyncTime = lastSyncTime;
     }
 
     public double getLat() {

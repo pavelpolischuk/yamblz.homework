@@ -9,47 +9,57 @@ import android.support.annotation.Nullable;
  * Created by Kim Michael on 03.08.17
  */
 public class FilteredCity implements Parcelable {
+
+    @NonNull
     private final String cityName;
+    @NonNull
     private final String countryName;
+    @NonNull
     private final String placeId;
     @Nullable
-    private Integer id;
+    private Integer priority;
+
     public FilteredCity(@NonNull String cityName,
                         @NonNull String countryName,
                         @NonNull String placeId,
-                        @NonNull Integer id) {
+                        @Nullable Integer priority) {
         this.cityName = cityName;
         this.countryName = countryName;
         this.placeId = placeId;
-        this.id = id;
+        this.priority = priority;
     }
 
-    public FilteredCity(String cityName, String countryName, String placeId) {
+    public FilteredCity(@NonNull String cityName,
+                        @NonNull String countryName,
+                        @NonNull String placeId) {
         this.cityName = cityName;
         this.countryName = countryName;
         this.placeId = placeId;
-        this.id = 0;
+        this.priority = 0;
     }
 
+    @NonNull
     public String getCityName() {
         return cityName;
     }
 
+    @NonNull
     public String getCountryName() {
         return countryName;
     }
 
+    @NonNull
     public String getPlaceId() {
         return placeId;
     }
 
     @Nullable
-    public Integer getId() {
-        return id;
+    public Integer getPriority() {
+        return priority;
     }
 
-    public void setId(@Nullable Integer id) {
-        this.id = id;
+    public void setPriority(@Nullable Integer priority) {
+        this.priority = priority;
     }
 
 
@@ -63,14 +73,14 @@ public class FilteredCity implements Parcelable {
         dest.writeString(this.cityName);
         dest.writeString(this.countryName);
         dest.writeString(this.placeId);
-        dest.writeValue(this.id);
+        dest.writeValue(this.priority);
     }
 
     protected FilteredCity(Parcel in) {
         this.cityName = in.readString();
         this.countryName = in.readString();
         this.placeId = in.readString();
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.priority = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Creator<FilteredCity> CREATOR = new Creator<FilteredCity>() {
@@ -92,19 +102,19 @@ public class FilteredCity implements Parcelable {
 
         FilteredCity that = (FilteredCity) o;
 
-        if (cityName != null ? !cityName.equals(that.cityName) : that.cityName != null)
-            return false;
-        if (countryName != null ? !countryName.equals(that.countryName) : that.countryName != null)
-            return false;
-        return placeId != null ? placeId.equals(that.placeId) : that.placeId == null;
+        if (!cityName.equals(that.cityName)) return false;
+        if (!countryName.equals(that.countryName)) return false;
+        return placeId.equals(that.placeId)
+                && (priority != null ? priority.equals(that.priority) : that.priority == null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = cityName != null ? cityName.hashCode() : 0;
-        result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
-        result = 31 * result + (placeId != null ? placeId.hashCode() : 0);
+        int result = cityName.hashCode();
+        result = 31 * result + countryName.hashCode();
+        result = 31 * result + placeId.hashCode();
+        result = 31 * result + (priority != null ? priority.hashCode() : 0);
         return result;
     }
 }

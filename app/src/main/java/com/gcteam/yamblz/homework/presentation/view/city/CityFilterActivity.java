@@ -73,7 +73,8 @@ public class CityFilterActivity extends AppCompatActivity implements CityFilterV
         cityScreenComponent.inject(this);
 
 
-        filteredCitiesAdapter = new FilteredCitiesAdapter(getLayoutInflater(), this);
+        filteredCitiesAdapter = new FilteredCitiesAdapter(getLayoutInflater(), this,
+                getApplicationContext());
         filteredCities.setAdapter(filteredCitiesAdapter);
         filteredCities.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         filteredCities.setItemAnimator(new DefaultItemAnimator());

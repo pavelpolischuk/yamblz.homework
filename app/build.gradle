@@ -73,14 +73,10 @@ dependencies {
     compile libraries.evernoteJob
 
     compile libraries.gcm
-    compile libraries.playServicesLocation
-    compile libraries.playServicesMaps
 
     compile libraries.retrofit
     compile libraries.retrofitRx2Adapter
     compile libraries.retrofitGsonConverter
-
-    compile libraries.picasso
 
     compile libraries.okHttpLoggingInterceptor
 

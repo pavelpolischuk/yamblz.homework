@@ -8,19 +8,19 @@ import android.os.Parcelable;
  */
 
 public class WeatherData implements Parcelable {
-    private int weatherId;
-    private String description;
+    private final int weatherId;
+    private final String description;
 
-    private double dayTemp;
-    private double minTemp;
-    private double maxTemp;
-    private double pressure; // hPa
-    private int humidity; // %
+    private final double dayTemp;
+    private final double minTemp;
+    private final double maxTemp;
+    private final double pressure; // hPa
+    private final int humidity; // %
 
-    private double windSpeed;
-    private double windDeg;
+    private final double windSpeed;
+    private final double windDeg;
 
-    private long date;
+    private final long date;
 
     public WeatherData(int weatherId,
                        String description,
@@ -48,80 +48,40 @@ public class WeatherData implements Parcelable {
         return weatherId;
     }
 
-    public void setWeatherId(int weatherId) {
-        this.weatherId = weatherId;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public double getDayTemp() {
         return dayTemp;
     }
 
-    public void setDayTemp(double dayTemp) {
-        this.dayTemp = dayTemp;
-    }
-
     public double getMinTemp() {
         return minTemp;
-    }
-
-    public void setMinTemp(double minTemp) {
-        this.minTemp = minTemp;
     }
 
     public double getMaxTemp() {
         return maxTemp;
     }
 
-    public void setMaxTemp(double maxTemp) {
-        this.maxTemp = maxTemp;
-    }
-
     public double getPressure() {
         return pressure;
-    }
-
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
     }
 
     public int getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(int humidity) {
-        this.humidity = humidity;
-    }
-
     public double getWindSpeed() {
         return windSpeed;
-    }
-
-    public void setWindSpeed(double windSpeed) {
-        this.windSpeed = windSpeed;
     }
 
     public double getWindDeg() {
         return windDeg;
     }
 
-    public void setWindDeg(double windDeg) {
-        this.windDeg = windDeg;
-    }
-
     public long getDate() {
         return date;
-    }
-
-    public void setDate(long date) {
-        this.date = date;
     }
 
     @Override

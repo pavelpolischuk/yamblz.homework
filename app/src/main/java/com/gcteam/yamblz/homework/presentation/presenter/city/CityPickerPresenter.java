@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.presenter.city;
 
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityPickerInteractor;
@@ -20,11 +21,13 @@ public class CityPickerPresenter extends BasePresenter<CityChooserView> {
     private CompositeDisposable compositeDisposable;
 
     @Inject
+    @MainThread
     public CityPickerPresenter(CityPickerInteractor cityPickerInteractor) {
         this.cityPickerInteractor = cityPickerInteractor;
         compositeDisposable = new CompositeDisposable();
     }
 
+    @MainThread
     public void addCity(FilteredCity chosenCity) {
         compositeDisposable.add(cityPickerInteractor.addCity(chosenCity)
                 .subscribe());

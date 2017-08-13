@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements TitlePicker,
     public void addChosenCity(FilteredCity filteredCity) {
         int id = citySummariesAdapter.insert(filteredCity);
         if (id >= 0) {
-            filteredCity.setId(0);
+            filteredCity.setPriority(id);
             cityPickerPresenter.addCity(filteredCity);
         }
     }

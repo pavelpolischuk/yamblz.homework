@@ -2,6 +2,8 @@ package com.gcteam.yamblz.homework.data.object;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Created by Kim Michael on 07.08.17
@@ -11,15 +13,23 @@ public class StoredCity {
 
     @PrimaryKey
     private final String placeId;
-    private final Integer priority;
+    @Nullable
+    private Integer priority;
+    @NonNull
     private final String cityName;
+    @NonNull
     private final String userCityName;
     private final double lat;
     private final double lng;
+    @NonNull
     private final String countryName;
 
-    public StoredCity(String cityName, String userCityName, Integer priority, double lat, double lng,
-                      String placeId, String countryName) {
+    public StoredCity(@NonNull String cityName,
+                      @NonNull String userCityName,
+                      @Nullable Integer priority,
+                      double lat, double lng,
+                      @NonNull String placeId,
+                      @NonNull String countryName) {
         this.cityName = cityName;
         this.userCityName = userCityName;
         this.priority = priority;
@@ -29,14 +39,17 @@ public class StoredCity {
         this.countryName = countryName;
     }
 
+    @NonNull
     public String getCityName() {
         return cityName;
     }
 
+    @NonNull
     public String getUserCityName() {
         return userCityName;
     }
 
+    @Nullable
     public Integer getPriority() {
         return priority;
     }
@@ -49,12 +62,18 @@ public class StoredCity {
         return lng;
     }
 
+    @NonNull
     public String getPlaceId() {
         return placeId;
     }
 
+    @NonNull
     public String getCountryName() {
         return countryName;
+    }
+
+    public void setPriority(@Nullable Integer priority) {
+        this.priority = priority;
     }
 
     @Override
@@ -69,11 +88,9 @@ public class StoredCity {
         if (placeId != null ? !placeId.equals(that.placeId) : that.placeId != null) return false;
         if (priority != null ? !priority.equals(that.priority) : that.priority != null)
             return false;
-        if (cityName != null ? !cityName.equals(that.cityName) : that.cityName != null)
-            return false;
-        if (userCityName != null ? !userCityName.equals(that.userCityName) : that.userCityName != null)
-            return false;
-        return countryName != null ? countryName.equals(that.countryName) : that.countryName == null;
+        if (!cityName.equals(that.cityName)) return false;
+        if (!userCityName.equals(that.userCityName)) return false;
+        return countryName.equals(that.countryName);
 
     }
 
@@ -83,13 +100,13 @@ public class StoredCity {
         long temp;
         result = placeId != null ? placeId.hashCode() : 0;
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
-        result = 31 * result + (cityName != null ? cityName.hashCode() : 0);
-        result = 31 * result + (userCityName != null ? userCityName.hashCode() : 0);
+        result = 31 * result + cityName.hashCode();
+        result = 31 * result + userCityName.hashCode();
         temp = Double.doubleToLongBits(lat);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(lng);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
+        result = 31 * result + countryName.hashCode();
         return result;
     }
 

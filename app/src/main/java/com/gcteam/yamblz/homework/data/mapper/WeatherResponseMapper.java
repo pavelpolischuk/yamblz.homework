@@ -4,16 +4,15 @@ import com.gcteam.yamblz.homework.data.api.dto.weather.current.WeatherResponse;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 /**
  * Created by turist on 16.07.2017.
  */
 
-public class WeatherResponseMapper implements Function<WeatherResponse, WeatherData> {
+public class WeatherResponseMapper {
 
-    @Override
-    public WeatherData apply(@NonNull WeatherResponse weatherResponse) {
+    @NonNull
+    public static WeatherData toWeatherData(@NonNull WeatherResponse weatherResponse) {
 
         return new WeatherData(
                 weatherResponse.getWeather().get(0).getId(),

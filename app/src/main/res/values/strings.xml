@@ -42,9 +42,9 @@
     <string name="city_filter_hint">Enter city name</string>
 
     <!-- Strings for formatting weather -->
-    <string name="format_temperature" translatable="false"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
-    <string name="format_wind_mph">Wind: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
-    <string name="format_wind_kmh">Wind: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="format_temperature" translatable="false"><xliff:g priority="temp">%1.0f</xliff:g>\u00B0</string>
+    <string name="format_wind_mph">Wind: <xliff:g priority="speed">%1$1.0f</xliff:g> mph <xliff:g priority="direction">%2$s</xliff:g></string>
+    <string name="format_wind_kmh">Wind: <xliff:g priority="speed">%1$1.0f</xliff:g> km/h <xliff:g priority="direction">%2$s</xliff:g></string>
     <string name="format_humidity">Humidity: %d %%</string>
     <string name="format_pressure">Pressure: %1.0f hPa</string>
 
@@ -57,5 +57,6 @@
     <string name="units_imperial">Fahrenheit</string>
     <string name="units_metric_value" translatable="false">metric</string>
     <string name="units_imperial_value" translatable="false">imperial</string>
+    <string name="last_sync_format">Last refresh: %s</string>
 
 </resources>

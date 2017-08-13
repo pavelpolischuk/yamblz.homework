@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.WeatherApplication;
@@ -29,6 +30,7 @@ import com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherViewer;
 import com.gcteam.yamblz.homework.presentation.view.main.CityChooserView;
 import com.gcteam.yamblz.homework.presentation.view.main.TitlePicker;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
+import com.gcteam.yamblz.homework.utils.FormatUtils;
 
 import javax.inject.Inject;
 
@@ -48,6 +50,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
     RecyclerView forecast;
     @BindView(R.id.empty_view_block)
     LinearLayout emptyViewBlock;
+    @BindView(R.id.last_sync_time)
+    TextView lastSyncTime;
 
     @Inject
     WeatherPresenter weatherPresenter;
@@ -158,12 +162,21 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
         forecast.setVisibility(View.INVISIBLE);
         emptyViewBlock.setVisibility(View.VISIBLE);
         titlePicker.setToolbarTitle("");
+        lastSyncTime.setText("");
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(PreferencesManager.CHOSEN_CITY_KEY)) {
-            weatherPresenter.refreshForecast(preferencesManager, true);
+        switch (key) {
+            case PreferencesManager.CHOSEN_CITY_KEY:
+                weatherPresenter.refreshForecast(preferencesManager, true);
+                break;
+            case PreferencesManager.LAST_SYNC_TIME_KEY:
+                lastSyncTime.setText(FormatUtils
+                        .getFormattedLastSyncTime(
+                                preferencesManager.getLastSyncTime(),
+                                getContext()));
+                break;
         }
     }
 

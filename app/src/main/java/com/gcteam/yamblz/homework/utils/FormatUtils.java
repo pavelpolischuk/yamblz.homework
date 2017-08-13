@@ -13,9 +13,9 @@ import java.util.Locale;
 /**
  * Created by Kim Michael on 08.08.17
  */
-public class WeatherFormatUtils {
+public class FormatUtils {
 
-    public static final String DATE_FORMAT = "dd MMMM";
+    public static final String DATE_FORMAT = "d MMMM";
     public static final String DAY_FORMAT = "EEEE";
 
     @DrawableRes
@@ -125,14 +125,19 @@ public class WeatherFormatUtils {
 
     public static String getFormattedDate(long dateInMillis) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-        String monthDayString = dateFormat.format(dateInMillis * 1000);
-        return monthDayString.substring(0, 1).toUpperCase() + monthDayString.substring(1);
+        String dateString = dateFormat.format(dateInMillis * 1000);
+        return dateString.substring(0, 1).toUpperCase() + dateString.substring(1);
     }
 
     public static String getFormattedDay(long dateInMillis) {
         SimpleDateFormat dayFormat = new SimpleDateFormat(DAY_FORMAT, Locale.getDefault());
-        String monthDayString = dayFormat.format(dateInMillis * 1000);
-        return monthDayString.substring(0, 1).toUpperCase() + monthDayString.substring(1);
+        String dayString = dayFormat.format(dateInMillis * 1000);
+        return dayString.substring(0, 1).toUpperCase() + dayString.substring(1);
+    }
+
+    public static String getFormattedLastSyncTime(long dateInMillis, Context context) {
+        return context.getString(R.string.last_sync_format,
+                getFormattedDayAndDate(dateInMillis));
     }
 
     public static String getFormattedDayAndDate(long dateInMillis) {

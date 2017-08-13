@@ -4,7 +4,6 @@ import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsRespons
 import com.gcteam.yamblz.homework.data.object.StoredCity;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
@@ -15,18 +14,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class StoredCityMapperTest {
 
-    StoredCityMapper storedCityMapper;
-
-    @Before
-    public void setup() {
-        storedCityMapper = new StoredCityMapper();
-    }
-
     @Test
     public void mapsCityDetailsResponseAndFilteredCity_toStoredCity() throws Exception {
         CityDetailsResponse cityDetailsResponse = random(CityDetailsResponse.class);
         FilteredCity filteredCity = random(FilteredCity.class);
-        StoredCity storedCity = storedCityMapper.apply(cityDetailsResponse, filteredCity);
+        StoredCity storedCity = StoredCityMapper.toStoredCity(cityDetailsResponse, filteredCity);
         assertThat(storedCity.getCityName())
                 .isEqualTo(cityDetailsResponse.getResult().getName());
         assertThat(storedCity.getPlaceId())

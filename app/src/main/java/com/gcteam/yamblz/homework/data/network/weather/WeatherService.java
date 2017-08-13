@@ -1,10 +1,12 @@
 package com.gcteam.yamblz.homework.data.network.weather;
 
-import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
+
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
+import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,6 +14,7 @@ import java.util.HashSet;
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import timber.log.Timber;
 
 import static com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi.API_KEY;
 
@@ -31,14 +34,9 @@ public class WeatherService {
             "sl", "es", "tr", "ua", "vi", "zh_cn", "zh_tw"));
 
     private OpenWeatherMapApi api;
-    private WeatherResponseMapper weatherResponseMapper;
-    private PreferencesManager preferencesManager;
 
     @Inject
-    public WeatherService(PreferencesManager preferencesManager, WeatherResponseMapper weatherResponseMapper, OpenWeatherMapApi api) {
-
-        this.weatherResponseMapper = weatherResponseMapper;
-        this.preferencesManager = preferencesManager;
+    public WeatherService(OpenWeatherMapApi api) {
         this.api = api;
     }
 
@@ -51,18 +49,24 @@ public class WeatherService {
         return "en";
     }
 
+    @WorkerThread
+    @NonNull
     public Single<WeatherData> getCurrentWeather(double lat, double lng, String lang) {
+        Timber.d("Getting current weather for %1.0f lat and %1.0f lng", lat, lng);
         return api.weatherByLatLng(API_KEY,
                 lat,
                 lng,
                 METRIC_UNITS,
                 checkLangCode(lang))
-                .map(weatherResponseMapper);
+                .map(WeatherResponseMapper::toWeatherData);
     }
 
-    public Single<ForecastResponse> getForecast(double lat, double lon, String lang) {
+    @WorkerThread
+    @NonNull
+    public Single<ForecastResponse> getForecast(double lat, double lng, String lang) {
+        Timber.d("Getting forecast for %1.0f lat and %1.0f lng", lat, lng);
         return api.forecastByLatLng(API_KEY,
-                lat, lon,
+                lat, lng,
                 METRIC_UNITS,
                 checkLangCode(lang));
     }

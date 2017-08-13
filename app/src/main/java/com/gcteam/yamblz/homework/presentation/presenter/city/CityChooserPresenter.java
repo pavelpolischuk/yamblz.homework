@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.presenter.city;
 
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityFilterInteractor;
@@ -30,6 +31,7 @@ public class CityChooserPresenter extends BasePresenter<CityFilterView> {
     }
 
     @Override
+    @MainThread
     public void onAttach(@NonNull CityFilterView view) {
         super.onAttach(view);
         compositeDisposable.add(
@@ -61,6 +63,7 @@ public class CityChooserPresenter extends BasePresenter<CityFilterView> {
     }
 
     @Override
+    @MainThread
     public void onDetach() {
         super.onDetach();
         compositeDisposable.clear();

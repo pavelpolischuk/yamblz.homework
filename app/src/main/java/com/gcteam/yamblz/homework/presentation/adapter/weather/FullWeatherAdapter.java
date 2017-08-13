@@ -1,6 +1,7 @@
 package com.gcteam.yamblz.homework.presentation.adapter.weather;
 
 import android.content.Context;
+import android.support.annotation.MainThread;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import com.gcteam.yamblz.homework.R;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
-import com.gcteam.yamblz.homework.utils.WeatherFormatUtils;
+import com.gcteam.yamblz.homework.utils.FormatUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +29,14 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private FullWeatherReport fullWeatherReport;
     private final OnForecastClickListener onForecastClickListener;
 
+    @MainThread
     public FullWeatherAdapter(OnForecastClickListener onForecastClickListener) {
         this.fullWeatherReport = null;
         this.onForecastClickListener = onForecastClickListener;
     }
 
     @Override
+    @MainThread
     public long getItemId(int position) {
         switch (position) {
             case 0:
@@ -43,12 +46,14 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    @MainThread
     public void insertFullWeather(FullWeatherReport fullWeatherReport) {
         this.fullWeatherReport = fullWeatherReport;
         this.notifyDataSetChanged();
     }
 
     @Override
+    @MainThread
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View v;
@@ -76,6 +81,7 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
+    @MainThread
     public int getItemViewType(int position) {
         switch (position) {
             case 0:
@@ -86,6 +92,7 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
+    @MainThread
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case CURRENT_WEATHER_VIEW_TYPE:
@@ -100,13 +107,14 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
+    @MainThread
     public int getItemCount() {
         if (fullWeatherReport == null)
             return 0;
         return fullWeatherReport.getForecastData().getForecast().size() + 1;
     }
 
-    public static class ForecastViewHolder extends RecyclerView.ViewHolder {
+    static class ForecastViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.weather_icon)
         ImageView weatherIcon;
@@ -119,22 +127,24 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         private Context context;
 
-        public ForecastViewHolder(View itemView) {
+        @MainThread
+        ForecastViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.context = itemView.getContext();
         }
 
+        @MainThread
         void bind(WeatherData weatherData) {
             weatherIcon.setImageDrawable(ContextCompat.getDrawable(context,
-                    WeatherFormatUtils.getIconResourceForWeatherCondition(weatherData.getWeatherId())));
-            day.setText(WeatherFormatUtils.getFormattedDayAndDate(weatherData.getDate()));
-            maxTemp.setText(WeatherFormatUtils.formatTemperature(context, weatherData.getMaxTemp()));
-            minTemp.setText(WeatherFormatUtils.formatTemperature(context, weatherData.getMinTemp()));
+                    FormatUtils.getIconResourceForWeatherCondition(weatherData.getWeatherId())));
+            day.setText(FormatUtils.getFormattedDayAndDate(weatherData.getDate()));
+            maxTemp.setText(FormatUtils.formatTemperature(context, weatherData.getMaxTemp()));
+            minTemp.setText(FormatUtils.formatTemperature(context, weatherData.getMinTemp()));
         }
     }
 
-    public static class CurrentWeatherViewHolder extends RecyclerView.ViewHolder {
+    static class CurrentWeatherViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.weather_icon)
         ImageView weatherIcon;
@@ -152,22 +162,24 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView description;
         private Context context;
 
-        public CurrentWeatherViewHolder(View itemView) {
+        @MainThread
+        CurrentWeatherViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
         }
 
+        @MainThread
         void bind(WeatherData weatherData) {
             weatherIcon.setImageDrawable(ContextCompat.getDrawable(context,
-                    (WeatherFormatUtils.getArtResourceForWeatherCondition(
+                    (FormatUtils.getArtResourceForWeatherCondition(
                             weatherData.getWeatherId()))));
-            maxTemp.setText(WeatherFormatUtils.formatTemperature(context, weatherData.getMaxTemp()));
-            minTemp.setText(WeatherFormatUtils.formatTemperature(context, weatherData.getMinTemp()));
-            wind.setText(WeatherFormatUtils.getFormattedWind(context, weatherData.getWindSpeed(), weatherData.getWindDeg()));
+            maxTemp.setText(FormatUtils.formatTemperature(context, weatherData.getMaxTemp()));
+            minTemp.setText(FormatUtils.formatTemperature(context, weatherData.getMinTemp()));
+            wind.setText(FormatUtils.getFormattedWind(context, weatherData.getWindSpeed(), weatherData.getWindDeg()));
             humidity.setText(String.format(context.getString(R.string.format_humidity), weatherData.getHumidity()));
             pressure.setText(String.format(context.getString(R.string.format_pressure), weatherData.getPressure()));
-            description.setText(WeatherFormatUtils.formatDescription(weatherData.getDescription()));
+            description.setText(FormatUtils.formatDescription(weatherData.getDescription()));
         }
     }
 

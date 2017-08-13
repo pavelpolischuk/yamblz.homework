@@ -24,17 +24,17 @@ import static org.mockito.Mockito.when;
  */
 public class WeatherInteractorTest {
 
-    final double lat = 10;
-    final double lng = 15;
+    private final double lat = 10;
+    private final double lng = 15;
 
-    WeatherInteractor weatherInteractor;
+    private WeatherInteractor weatherInteractor;
     @Mock
     WeatherRepository weatherRepository;
     @Mock
     ForecastData forecastData;
     @Mock
     WeatherData weatherData;
-    TestScheduler testScheduler;
+    private TestScheduler testScheduler;
 
     @Before
     public void setup() {

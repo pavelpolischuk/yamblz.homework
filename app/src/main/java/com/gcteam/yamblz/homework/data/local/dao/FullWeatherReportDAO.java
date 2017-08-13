@@ -20,4 +20,7 @@ public interface FullWeatherReportDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(StoredFullWeatherReport storedFullWeatherReport);
+
+    @Query("DELETE FROM StoredFullWeatherReport WHERE lat = :lat AND lng = :lng")
+    int deleteCity(double lat, double lng);
 }

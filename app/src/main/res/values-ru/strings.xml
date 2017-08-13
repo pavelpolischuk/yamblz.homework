@@ -40,12 +40,13 @@
     <string name="title_activity_city_pick">Выбрать город</string>
     <string name="format_humidity">Влажность: %d %%</string>
     <string name="format_pressure">Давление: %1.0f hPa</string>
-    <string name="format_wind_kmh">Ветер: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
-    <string name="format_wind_mph">Ветер: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="format_wind_kmh">Ветер: <xliff:g priority="speed">%1$1.0f</xliff:g> km/h <xliff:g priority="direction">%2$s</xliff:g></string>
+    <string name="format_wind_mph">Ветер: <xliff:g priority="speed">%1$1.0f</xliff:g> mph <xliff:g priority="direction">%2$s</xliff:g></string>
     <string name="delete_city_title">Удалить город</string>
     <string name="empty_weather_message">Выберите ваш город</string>
     <string name="detail_title">Прогноз</string>
     <string name="units_imperial">Фаренгейт</string>
     <string name="units_metric">Цельсий</string>
     <string name="pref_units_label">Температура</string>
+    <string name="last_sync_format">Последнее обновление: %s</string>
 </resources>

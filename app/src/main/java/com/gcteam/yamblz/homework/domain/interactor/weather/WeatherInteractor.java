@@ -1,7 +1,12 @@
 package com.gcteam.yamblz.homework.domain.interactor.weather;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
+
 import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
+import com.gcteam.yamblz.homework.domain.object.ForecastData;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
+import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.presentation.di.module.SchedulersModule;
 
 import javax.inject.Inject;
@@ -9,6 +14,7 @@ import javax.inject.Named;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import timber.log.Timber;
 
 /**
  * Created by Kim Michael on 07.08.17
@@ -32,16 +38,24 @@ public class WeatherInteractor {
         this.postExecutionScheduler = postExecutionScheduler;
     }
 
+    @WorkerThread
+    @NonNull
     public Single<FullWeatherReport> getWeather(double lat, double lng, boolean forceUpdate) {
+        Timber.d("Getting weather for %1.0f lat and %1.0f lng", lat, lng);
         if (!forceUpdate && cachedLat == lat && cachedLng == lng) {
+            Timber.d("Using cached weather for getting weather");
             return Single.just(cachedFullWeatherReport);
         }
-        return Single.zip(weatherRepository.getForecast(lat, lng)
-                        .subscribeOn(executionScheduler),
-                weatherRepository.getWeather(lat, lng)
-                        .subscribeOn(executionScheduler),
-                (forecastData, weatherData) ->
-                        new FullWeatherReport(lat, lng, forecastData, weatherData))
+        Timber.d("Using repository for getting weather");
+        Single<ForecastData> forecastData = weatherRepository.getForecast(lat, lng)
+                .subscribeOn(executionScheduler);
+        Single<WeatherData> weatherData = weatherRepository.getWeather(lat, lng)
+                .subscribeOn(executionScheduler);
+        return Single.zip(
+                forecastData,
+                weatherData,
+                (forecast, weather) ->
+                        new FullWeatherReport(lat, lng, forecast, weather))
                 .doOnSuccess(fullWeatherReport -> {
                     cachedFullWeatherReport = fullWeatherReport;
                     cachedLat = lat;

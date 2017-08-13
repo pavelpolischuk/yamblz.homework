@@ -1,6 +1,7 @@
 package com.gcteam.yamblz.homework.presentation.di;
 
 import android.app.Application;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
 import com.gcteam.yamblz.homework.presentation.di.component.AppComponent;
@@ -13,6 +14,7 @@ import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
 public class ComponentManager {
     private AppComponent appComponent;
 
+    @MainThread
     public ComponentManager(@NonNull Application app) {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(app))
@@ -20,6 +22,7 @@ public class ComponentManager {
     }
 
     @NonNull
+    @MainThread
     public AppComponent getAppComponent() {
         return appComponent;
     }

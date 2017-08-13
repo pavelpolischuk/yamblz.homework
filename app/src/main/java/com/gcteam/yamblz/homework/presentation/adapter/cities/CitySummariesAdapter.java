@@ -1,5 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.adapter.cities;
 
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,6 +45,7 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
 
     // Returns inserted position
     // -1 if not inserted
+    @MainThread
     public int insert(@NonNull FilteredCity filteredCity) {
         if (!citySummaries.contains(filteredCity)) {
             citySummaries.add(0, filteredCity);
@@ -57,15 +59,19 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         return -1;
     }
 
+    @MainThread
     public void insertAll(List<FilteredCity> filteredCities) {
         citySummaries.clear();
+        for (int i = 0; i < filteredCities.size(); i++) {
+            filteredCities.get(i).setPriority(i);
+        }
         citySummaries.addAll(filteredCities);
         notifyDataSetChanged();
     }
 
+    @MainThread
     private void remove(int position) {
         int initialSize = citySummaries.size();
-        FilteredCity deletedCity = citySummaries.get(position);
         citySummaries.remove(position);
         // If there is only one city left, delete it
         if (initialSize == 1) {
@@ -83,13 +89,14 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         } else {
             notifyDataSetChanged();
         }
-        onCityClickListener.onDeleteCityClick(deletedCity);
     }
 
+    @MainThread
     public void switchIsDeletedButtonShown() {
         changeIsDeletedButtonShown(!this.isDeleteButtonShown);
     }
 
+    @MainThread
     public void changeIsDeletedButtonShown(boolean isDeleteButtonShown) {
         if (this.isDeleteButtonShown != isDeleteButtonShown) {
             this.isDeleteButtonShown = isDeleteButtonShown;
@@ -97,6 +104,7 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         }
     }
 
+    @MainThread
     private void changeSelection(int position, View view) {
         int prev = selectedPosition;
         selectedPosition = position;
@@ -107,6 +115,7 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
     }
 
     @Override
+    @MainThread
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = layoutInflater.inflate(R.layout.item_city_summary, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
@@ -128,15 +137,18 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         return viewHolder;
     }
 
+    @MainThread
     public boolean isEmpty() {
         return citySummaries.isEmpty();
     }
 
+    @MainThread
     public int getSelectedPosition() {
         return selectedPosition;
     }
 
     @Override
+    @MainThread
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setSelected(position == selectedPosition);
         FilteredCity filteredCity = citySummaries.get(position);
@@ -144,15 +156,18 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
     }
 
     @Override
+    @MainThread
     public int getItemCount() {
         return citySummaries.size();
     }
 
+    @MainThread
     public void setSelected(int chosenCityId) {
         selectedPosition = chosenCityId;
         notifyItemChanged(selectedPosition);
     }
 
+    @MainThread
     public FilteredCity getSelectedCity() {
         return citySummaries.get(selectedPosition);
     }

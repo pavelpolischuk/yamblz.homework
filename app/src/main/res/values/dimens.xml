@@ -27,4 +27,6 @@
     <dimen name="detail_date_text_size">16sp</dimen>
     <dimen name="detail_max_temp_text_size">96sp</dimen>
     <dimen name="detail_min_temp_text_size">48sp</dimen>
+    <dimen name="last_sync_text_padding">6dp</dimen>
+    <dimen name="last_sync_text_size">12sp</dimen>
 </resources>

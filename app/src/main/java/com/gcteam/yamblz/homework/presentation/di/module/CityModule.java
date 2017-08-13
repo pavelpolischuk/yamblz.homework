@@ -1,9 +1,7 @@
 package com.gcteam.yamblz.homework.presentation.di.module;
 
-import com.gcteam.yamblz.homework.data.mapper.CitiesResponseMapper;
 import com.gcteam.yamblz.homework.data.api.GooglePlacesAPI;
 import com.gcteam.yamblz.homework.data.local.cities.CityStorage;
-import com.gcteam.yamblz.homework.data.mapper.StoredCityMapper;
 import com.gcteam.yamblz.homework.data.network.cities.CityService;
 import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityFilterInteractor;
@@ -26,7 +24,6 @@ public class CityModule {
     @CityFilterScope
     public CityFilterInteractor provideCityInteractor(
             CityRepository cityRepository,
-            CitiesResponseMapper citiesResponseMapper,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
         return new CityFilterInteractor(
@@ -41,26 +38,10 @@ public class CityModule {
     public CityRepository provideCitiesRepository(
             CityStorage cityStorage,
             CityService cityService,
-            PreferencesManager preferencesManager,
-            CitiesResponseMapper citiesResponseMapper,
-            StoredCityMapper storedCityMapper) {
+            PreferencesManager preferencesManager) {
         return new CityRepository(cityStorage,
                 cityService,
-                preferencesManager,
-                citiesResponseMapper,
-                storedCityMapper);
-    }
-
-    @Provides
-    @CityFilterScope
-    public CitiesResponseMapper provideCityMapper() {
-        return new CitiesResponseMapper();
-    }
-
-    @Provides
-    @CityFilterScope
-    public StoredCityMapper provideStoredCityMapper() {
-        return new StoredCityMapper();
+                preferencesManager);
     }
 
     @Provides

@@ -8,15 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 /**
  * Created by Kim Michael on 04.08.17
  */
-public class CitiesResponseMapper implements Function<CitiesResponse, List<FilteredCity>> {
-    @Override
-    @NonNull
-    public List<FilteredCity> apply(@NonNull CitiesResponse citiesResponse) throws Exception {
+public class CitiesResponseMapper {
+
+    public static List<FilteredCity> toFilteredCities(@NonNull CitiesResponse citiesResponse) throws Exception {
         List<FilteredCity> filteredCities = new ArrayList<>();
         FilteredCity filteredCity;
         for (Prediction prediction : citiesResponse.getPredictions()) {
