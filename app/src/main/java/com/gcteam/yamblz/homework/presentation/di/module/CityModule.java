@@ -3,7 +3,7 @@ package com.gcteam.yamblz.homework.presentation.di.module;
 import com.gcteam.yamblz.homework.data.api.GooglePlacesAPI;
 import com.gcteam.yamblz.homework.data.local.cities.CityStorage;
 import com.gcteam.yamblz.homework.data.network.cities.CityService;
-import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityFilterInteractor;
 import com.gcteam.yamblz.homework.presentation.di.scope.CityFilterScope;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
@@ -23,11 +23,11 @@ public class CityModule {
     @Provides
     @CityFilterScope
     public CityFilterInteractor provideCityInteractor(
-            CityRepository cityRepository,
+            CityRepositoryImpl cityRepositoryImpl,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
         return new CityFilterInteractor(
-                cityRepository,
+                cityRepositoryImpl,
                 executionScheduler,
                 postExecutionScheduler
         );
@@ -35,11 +35,11 @@ public class CityModule {
 
     @Provides
     @CityFilterScope
-    public CityRepository provideCitiesRepository(
+    public CityRepositoryImpl provideCitiesRepository(
             CityStorage cityStorage,
             CityService cityService,
             PreferencesManager preferencesManager) {
-        return new CityRepository(cityStorage,
+        return new CityRepositoryImpl(cityStorage,
                 cityService,
                 preferencesManager);
     }

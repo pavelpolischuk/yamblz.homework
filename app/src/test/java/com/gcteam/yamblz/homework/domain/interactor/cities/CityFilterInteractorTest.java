@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.domain.interactor.cities;
 
-import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class CityFilterInteractorTest {
 
     private CityFilterInteractor cityFilterInteractor;
     @Mock
-    private CityRepository cityRepository;
+    private CityRepositoryImpl cityRepositoryImpl;
 
     @Before
     public void setup() {
@@ -32,7 +32,7 @@ public class CityFilterInteractorTest {
         TestScheduler executionScheduler = new TestScheduler();
         TestScheduler postExecutionScheduler = new TestScheduler();
         cityFilterInteractor = new CityFilterInteractor(
-                cityRepository,
+                cityRepositoryImpl,
                 executionScheduler,
                 postExecutionScheduler
         );
@@ -42,9 +42,9 @@ public class CityFilterInteractorTest {
     public void getsCitiesFromRepositoryByInput() {
         List<FilteredCity> filteredCities = new ArrayList<>();
         filteredCities.add(new FilteredCity("city", "country", "123", 1));
-        when(cityRepository.getCitiesByFilter("input")).thenReturn(Single.just(filteredCities));
+        when(cityRepositoryImpl.getCitiesByFilter("input")).thenReturn(Single.just(filteredCities));
         cityFilterInteractor.getCitiesByFilter("input");
-        verify(cityRepository).getCitiesByFilter("input");
+        verify(cityRepositoryImpl).getCitiesByFilter("input");
     }
 
 }

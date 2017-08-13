@@ -14,13 +14,17 @@ public class FullWeatherReport {
     @NonNull
     private final WeatherData weatherData;
 
+    private final long lastSyncTime;
+
     public FullWeatherReport(double lat, double lng,
                              @NonNull ForecastData forecastData,
-                             @NonNull WeatherData weatherData) {
+                             @NonNull WeatherData weatherData,
+                             long lastSyncTime) {
         this.forecastData = forecastData;
         this.weatherData = weatherData;
         this.lat = lat;
         this.lng = lng;
+        this.lastSyncTime = lastSyncTime;
     }
 
     @NonNull
@@ -39,5 +43,9 @@ public class FullWeatherReport {
 
     public double getLng() {
         return lng;
+    }
+
+    public long getLastSyncTime() {
+        return lastSyncTime;
     }
 }

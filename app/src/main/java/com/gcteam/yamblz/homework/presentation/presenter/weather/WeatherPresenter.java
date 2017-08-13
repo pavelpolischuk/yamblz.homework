@@ -30,15 +30,15 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         compositeDisposable.clear();
     }
 
-
-    public void refreshForecast(PreferencesManager preferencesManager, boolean forceUpdate) {
+    public void refreshForecast(PreferencesManager preferencesManager, boolean forceUpdate,
+                                boolean showLoading) {
         if (preferencesManager.getChosenCity().equals(PreferencesManager.NO_CHOSEN_CITY)) {
             if (getView() != null) {
                 getView().showEmptyView();
             }
             return;
         }
-        if (getView() != null) {
+        if (getView() != null && showLoading) {
             getView().showLoadingStarted();
         }
         double lat = preferencesManager.getLat();

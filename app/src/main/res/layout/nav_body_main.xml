@@ -19,14 +19,16 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="@dimen/nav_icon_padding"
-            android:src="@drawable/ic_menu_weather" />
+            android:src="@drawable/ic_menu_weather_selector"
+            android:contentDescription="@string/nav_weather_content_description"/>
 
         <TextView
             style="@style/nav_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:text="@string/weather_title" />
+            android:text="@string/weather_title"
+            android:textColor="@color/nav_text_color" />
 
     </LinearLayout>
 
@@ -53,14 +55,16 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="@dimen/nav_icon_padding"
-            android:src="@drawable/ic_delete_selector" />
+            android:src="@drawable/ic_delete_selector"
+            android:contentDescription="@string/nav_delete_content_description"/>
 
         <TextView
             style="@style/nav_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:text="@string/delete_city_title" />
+            android:text="@string/delete_city_title"
+            android:textColor="@color/nav_text_color" />
 
     </LinearLayout>
 
@@ -79,14 +83,16 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="@dimen/nav_icon_padding"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add"
+            android:contentDescription="@string/nav_add_city_content_description"/>
 
         <TextView
             style="@style/nav_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:text="@string/add_city_title" />
+            android:text="@string/add_city_title"
+            android:textColor="@color/nav_text_color" />
 
     </LinearLayout>
 
@@ -107,14 +113,16 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="@dimen/nav_icon_padding"
-            android:src="@drawable/ic_menu_settings" />
+            android:src="@drawable/ic_menu_settings_selector"
+            android:contentDescription="@string/nav_ic_settings_content_description"/>
 
         <TextView
             style="@style/nav_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:text="@string/settings_title" />
+            android:text="@string/settings_title"
+            android:textColor="@color/nav_text_color" />
 
     </LinearLayout>
 
@@ -133,20 +141,25 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="@dimen/nav_icon_padding"
-            android:src="@drawable/ic_menu_about" />
+            android:src="@drawable/ic_menu_about_selector"
+            android:textColor="@color/nav_text_color"
+            android:contentDescription="@string/nav_about_content_description"/>
 
         <TextView
             style="@style/nav_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:text="@string/about_title" />
+            android:text="@string/about_title"
+            android:textColor="@color/nav_text_color" />
 
     </LinearLayout>
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/yandex_logo_width"
         android:layout_height="wrap_content"
-        android:src="@drawable/yandex_logo"/>
+        android:src="@drawable/yandex_logo"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/yandex_logo_content_description"/>
 
 </LinearLayout>

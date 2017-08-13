@@ -4,9 +4,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.gcteam.yamblz.homework.data.local.AppDatabase;
-import com.gcteam.yamblz.homework.domain.object.ForecastData;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
-import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.google.gson.Gson;
 
 import org.junit.Before;
@@ -26,8 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Config(manifest = Config.NONE)
 public class WeatherStorageTest {
 
-    WeatherStorage weatherStorage;
-    FullWeatherReport fullWeatherReport;
+    private WeatherStorage weatherStorage;
+    private FullWeatherReport fullWeatherReport;
 
     @Before
     public void setup() {
@@ -41,14 +39,14 @@ public class WeatherStorageTest {
     @Test
     public void saveFullWeatherReport() {
         weatherStorage.saveWeather(fullWeatherReport);
-        WeatherData weatherData = weatherStorage
-                .getCurrentWeather(fullWeatherReport.getLat(), fullWeatherReport.getLng())
-                .blockingGet();
-        ForecastData forecastData = weatherStorage
-                .getForecast(fullWeatherReport.getLat(), fullWeatherReport.getLng())
-                .blockingGet();
-        assertThat(weatherData).isEqualToComparingFieldByField(fullWeatherReport.getWeatherData());
-        assertThat(forecastData).isEqualToComparingFieldByField(fullWeatherReport.getForecastData());
 
+        FullWeatherReport fetchedReport = weatherStorage
+                .getFullWeatherReport(this.fullWeatherReport.getLat(), this.fullWeatherReport.getLng())
+                .blockingGet();
+
+        assertThat(fetchedReport.getForecastData())
+                .isEqualToComparingFieldByField(fullWeatherReport.getForecastData());
+        assertThat(fetchedReport.getWeatherData())
+                .isEqualToComparingFieldByField(fullWeatherReport.getWeatherData());
     }
 }

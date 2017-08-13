@@ -3,6 +3,8 @@ package com.gcteam.yamblz.homework.presentation.view.city;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.gcteam.yamblz.homework.R;
@@ -47,6 +50,8 @@ public class CityFilterActivity extends AppCompatActivity implements CityFilterV
     Toolbar toolbar;
     @BindView(R.id.loading_spinner)
     ProgressBar loadingSpinner;
+    @BindView(R.id.filtered_cities_container)
+    FrameLayout filteredCitiesContainer;
     EditText cityFilter;
 
     FilteredCitiesAdapter filteredCitiesAdapter;
@@ -117,6 +122,8 @@ public class CityFilterActivity extends AppCompatActivity implements CityFilterV
 
     @Override
     public void showError() {
+        Snackbar.make(filteredCitiesContainer,
+                R.string.loading_error, BaseTransientBottomBar.LENGTH_LONG).show();
         loadingSpinner.setVisibility(View.INVISIBLE);
     }
 

@@ -53,7 +53,7 @@ public class WeatherPresenterTest {
     public void ifNoChosenCity_showEmptyView() {
         when(preferencesManager.getChosenCity()).thenReturn(PreferencesManager.NO_CHOSEN_CITY);
         weatherPresenter.onAttach(weatherView);
-        weatherPresenter.refreshForecast(preferencesManager, false);
+        weatherPresenter.refreshForecast(preferencesManager, false, true);
         verify(weatherView).showEmptyView();
     }
 
@@ -63,7 +63,7 @@ public class WeatherPresenterTest {
         when(weatherInteractor.getWeather(lat, lng, false))
                 .thenReturn(Single.just(fullWeatherReport));
 
-        weatherPresenter.refreshForecast(preferencesManager, false);
+        weatherPresenter.refreshForecast(preferencesManager, false, true);
 
         verify(weatherInteractor).getWeather(lat, lng, false);
         verify(weatherView).showFullWeather(fullWeatherReport);
@@ -75,7 +75,7 @@ public class WeatherPresenterTest {
         when(weatherInteractor.getWeather(lat, lng, false))
                 .thenReturn(Single.error(new Exception("No Internet")));
 
-        weatherPresenter.refreshForecast(preferencesManager, false);
+        weatherPresenter.refreshForecast(preferencesManager, false, true);
 
         verify(weatherView).showErrorMessage();
     }

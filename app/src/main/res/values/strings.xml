@@ -20,15 +20,6 @@
 
     <string name="default_city">Moscow</string>
 
-    <string name="wind_n">%s m/s, N</string>
-    <string name="wind_no">%s m/s, NO</string>
-    <string name="wind_o">%s m/s, O</string>
-    <string name="wind_so">%s m/s, SO</string>
-    <string name="wind_s">%s m/s, S</string>
-    <string name="wind_sw">%s m/s, SW</string>
-    <string name="wind_w">%s m/s, W</string>
-    <string name="wind_nw">%s m/s, NW</string>
-
     <string name="pressure_label">Pressure</string>
     <string name="humidity_label">Humidity</string>
     <string name="wind_label">Wind</string>
@@ -48,6 +39,8 @@
     <string name="format_humidity">Humidity: %d %%</string>
     <string name="format_pressure">Pressure: %1.0f hPa</string>
 
+    <string name="last_sync_format">Last refresh: %s</string>
+
     <string name="delete_city_title">Delete city</string>
     <string name="empty_weather_message">Choose your city</string>
 
@@ -57,6 +50,17 @@
     <string name="units_imperial">Fahrenheit</string>
     <string name="units_metric_value" translatable="false">metric</string>
     <string name="units_imperial_value" translatable="false">imperial</string>
-    <string name="last_sync_format">Last refresh: %s</string>
+
+    <!-- Content descriptions -->
+    <string name="add_city_content_description">Add new city</string>
+    <string name="place_content_description">City</string>
+    <string name="delete_city_content_description">Delete city</string>
+    <string name="weather_icon_content_description">Weather</string>
+    <string name="nav_weather_content_description">Weather</string>
+    <string name="nav_delete_content_description">Delete city</string>
+    <string name="nav_add_city_content_description">Add city</string>
+    <string name="nav_ic_settings_content_description">Settings</string>
+    <string name="nav_about_content_description">About</string>
+    <string name="yandex_logo_content_description">Yandex</string>
 
 </resources>

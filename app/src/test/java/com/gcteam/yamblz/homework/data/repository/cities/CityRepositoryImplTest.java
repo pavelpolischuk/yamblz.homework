@@ -29,11 +29,11 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Kim Michael on 11.08.17
  */
-public class CityRepositoryTest {
+public class CityRepositoryImplTest {
 
     private static final String INPUT = "input";
 
-    CityRepository cityRepository;
+    CityRepositoryImpl cityRepositoryImpl;
     @Mock
     CityStorage cityStorage;
     @Mock
@@ -58,7 +58,7 @@ public class CityRepositoryTest {
         MockitoAnnotations.initMocks(this);
         citiesResponseMapper = new CitiesResponseMapper();
         storedCityMapper = new StoredCityMapper();
-        cityRepository = new CityRepository(
+        cityRepositoryImpl = new CityRepositoryImpl(
                 cityStorage,
                 cityService,
                 preferencesManager
@@ -76,7 +76,7 @@ public class CityRepositoryTest {
     public void getsCitiesByFilterFromService() {
         when(cityService.getSuggestionsByInput(INPUT)).thenReturn(Single.just(citiesResponse));
 
-        cityRepository.getCitiesByFilter(INPUT);
+        cityRepositoryImpl.getCitiesByFilter(INPUT);
 
         verify(cityService, times(1)).getSuggestionsByInput(INPUT);
     }
@@ -86,7 +86,7 @@ public class CityRepositoryTest {
         when(cityStorage.getChosenCity(filteredCity)).thenReturn(Single.just(storedCity));
         when(cityService.getCityDetails(filteredCity)).thenReturn(Single.just(cityDetailsResponse));
 
-        StoredCity fetchedCity = cityRepository.getCityDetails(filteredCity).blockingGet();
+        StoredCity fetchedCity = cityRepositoryImpl.saveChosenCityDetails(filteredCity).blockingGet();
 
         assertThat(fetchedCity).isEqualTo(storedCity);
         assertThat(fetchedCity).isNotEqualTo(mappedStoredCity);
@@ -95,7 +95,7 @@ public class CityRepositoryTest {
     @Test
     public void getAllChosenCitiesFromStorage() {
         when(cityStorage.getChosenCities()).thenReturn(Single.just(chosenCities));
-        List<FilteredCity> fetchedChosenCities = cityRepository.getCities().blockingGet();
+        List<FilteredCity> fetchedChosenCities = cityRepositoryImpl.getCities().blockingGet();
         assertThat(fetchedChosenCities).containsOnly(StoredCityMapper.fromStoredCity(storedCity));
     }
 
@@ -104,32 +104,32 @@ public class CityRepositoryTest {
         when(cityStorage.getChosenCity(filteredCity)).thenReturn(Single.error(new Exception("Error")));
         when(cityService.getCityDetails(filteredCity)).thenReturn(Single.just(cityDetailsResponse));
 
-        StoredCity fetchedCity = cityRepository.getCityDetails(filteredCity).blockingGet();
+        StoredCity fetchedCity = cityRepositoryImpl.saveChosenCityDetails(filteredCity).blockingGet();
 
         assertThat(fetchedCity).isEqualTo(mappedStoredCity);
     }
 
     @Test
     public void savesCityDetails_delegatesToStorage() {
-        cityRepository.saveCityDetails(storedCity);
+        cityRepositoryImpl.saveChosenCityDetails(storedCity);
         verify(cityStorage, times(1)).saveCityDetails(storedCity);
     }
 
     @Test
     public void setNoChosenCity_delegatesToPreferencesManager() {
-        cityRepository.setNoChosenCity();
+        cityRepositoryImpl.setNoChosenCity();
         verify(preferencesManager, times(1)).saveNoChosenCity();
     }
 
     @Test
     public void setChosenCity_delegatesToPreferencesManager() {
-        cityRepository.saveChosenCity(storedCity);
+        cityRepositoryImpl.saveChosenCity(storedCity);
         verify(preferencesManager, times(1)).saveChosenCity(storedCity);
     }
 
     @Test
     public void deleteCity_delegatesToStorage() {
-        cityRepository.deleteCity(filteredCity);
+        cityRepositoryImpl.deleteCity(filteredCity);
         verify(cityStorage, times(1)).deleteCity(filteredCity);
     }
 

@@ -20,14 +20,14 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/weather_icon_content_description"/>
 
     <TextView
         android:id="@+id/max_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="40"
+        android:gravity="end"
         android:textColor="@color/black"
         android:textSize="@dimen/current_max_temp_text_size"
         app:layout_constraintLeft_toLeftOf="@+id/min_temp"
@@ -42,8 +42,7 @@
         android:layout_marginEnd="49dp"
         android:layout_marginRight="49dp"
         android:layout_marginTop="9dp"
-        android:gravity="right"
-        android:text="20"
+        android:gravity="end"
         android:textColor="@color/black"
         android:textSize="@dimen/current_min_temp_text_size"
         app:layout_constraintBottom_toBottomOf="parent"

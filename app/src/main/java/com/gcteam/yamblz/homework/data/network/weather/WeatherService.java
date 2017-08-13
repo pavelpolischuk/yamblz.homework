@@ -4,8 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
-import com.gcteam.yamblz.homework.data.api.dto.weather.forecast.ForecastResponse;
+import com.gcteam.yamblz.homework.data.mapper.ForecastResponseMapper;
 import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
+import com.gcteam.yamblz.homework.domain.object.ForecastData;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 
 import java.util.Arrays;
@@ -63,11 +64,12 @@ public class WeatherService {
 
     @WorkerThread
     @NonNull
-    public Single<ForecastResponse> getForecast(double lat, double lng, String lang) {
+    public Single<ForecastData> getForecast(double lat, double lng, String lang) {
         Timber.d("Getting forecast for %1.0f lat and %1.0f lng", lat, lng);
         return api.forecastByLatLng(API_KEY,
                 lat, lng,
                 METRIC_UNITS,
-                checkLangCode(lang));
+                checkLangCode(lang))
+                .map(ForecastResponseMapper::toForecastData);
     }
 }

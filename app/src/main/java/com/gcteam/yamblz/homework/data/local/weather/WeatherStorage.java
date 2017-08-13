@@ -47,22 +47,13 @@ public class WeatherStorage {
 
     @WorkerThread
     @NonNull
-    public Single<ForecastData> getForecast(double lat, double lng) {
-        Timber.d("Getting forecast for %1.0f lat and %1.0f lng", lat, lng);
+    public Single<FullWeatherReport> getFullWeatherReport(double lat, double lng) {
         return appDatabase.fullWeatherReportDAO().get(lat, lng)
-                .map(storedFullWeatherReport ->
+                .map(storedFullWeatherReport -> new FullWeatherReport(lat, lng,
                         gson.fromJson(storedFullWeatherReport.getForecastDataJson(),
-                                ForecastData.class));
-    }
-
-    @WorkerThread
-    @NonNull
-    public Single<WeatherData> getCurrentWeather(double lat, double lng) {
-        Timber.d("Getting current weather for %1.0f lat and %1.0f lng", lat, lng);
-        return appDatabase.fullWeatherReportDAO().get(lat, lng)
-                .map(storedFullWeatherReport ->
+                                ForecastData.class),
                         gson.fromJson(storedFullWeatherReport.getWeatherDataJson(),
-                                WeatherData.class));
+                                WeatherData.class),
+                        storedFullWeatherReport.getLastSyncTime()));
     }
-
 }

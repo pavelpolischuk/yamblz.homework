@@ -27,7 +27,6 @@ public class CityPickerPresenter extends BasePresenter<CityChooserView> {
         compositeDisposable = new CompositeDisposable();
     }
 
-    @MainThread
     public void addCity(FilteredCity chosenCity) {
         compositeDisposable.add(cityPickerInteractor.addCity(chosenCity)
                 .subscribe());

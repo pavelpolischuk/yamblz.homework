@@ -2,7 +2,7 @@ package com.gcteam.yamblz.homework.weather;
 
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
-import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
+import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.presentation.view.weather.WeatherView;
 
@@ -15,7 +15,7 @@ import io.reactivex.functions.Consumer;
  */
 public class WeatherRepositoryTest {
 
-    private WeatherRepository weatherRepository;
+    private WeatherRepositoryImpl weatherRepositoryImpl;
     @Mock
     private WeatherView weatherView;
     @Mock

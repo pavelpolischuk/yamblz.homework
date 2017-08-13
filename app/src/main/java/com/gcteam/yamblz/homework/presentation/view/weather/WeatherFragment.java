@@ -97,7 +97,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
 
 
         weatherPresenter.onAttach(this);
-        refreshLayout.setOnRefreshListener(() -> weatherPresenter.refreshForecast(preferencesManager, true));
+        refreshLayout.setOnRefreshListener(() ->
+                weatherPresenter.refreshForecast(preferencesManager, true, true));
         refreshLayout.setColorSchemeResources(R.color.red);
 
         fullWeatherAdapter = new FullWeatherAdapter(this);
@@ -115,7 +116,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
         super.onResume();
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         prefs.registerOnSharedPreferenceChangeListener(this);
-        weatherPresenter.refreshForecast(preferencesManager, false);
+        weatherPresenter.refreshForecast(preferencesManager, false, true);
     }
 
     @Override
@@ -137,6 +138,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
 
     @Override
     public void showFullWeather(FullWeatherReport fullWeatherReport) {
+        lastSyncTime.setText(FormatUtils
+                .getFormattedLastSyncTime(
+                fullWeatherReport.getLastSyncTime(),
+                getContext()));
         emptyViewBlock.setVisibility(View.GONE);
         forecast.setVisibility(View.VISIBLE);
         fullWeatherAdapter.insertFullWeather(fullWeatherReport);
@@ -169,14 +174,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
             case PreferencesManager.CHOSEN_CITY_KEY:
-                weatherPresenter.refreshForecast(preferencesManager, true);
+                weatherPresenter.refreshForecast(preferencesManager, true, false);
                 break;
-            case PreferencesManager.LAST_SYNC_TIME_KEY:
-                lastSyncTime.setText(FormatUtils
-                        .getFormattedLastSyncTime(
-                                preferencesManager.getLastSyncTime(),
-                                getContext()));
-                break;
+            default:
         }
     }
 

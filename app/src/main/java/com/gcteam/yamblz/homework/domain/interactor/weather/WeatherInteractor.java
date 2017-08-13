@@ -3,10 +3,8 @@ package com.gcteam.yamblz.homework.domain.interactor.weather;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
-import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
-import com.gcteam.yamblz.homework.domain.object.ForecastData;
+import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
-import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.presentation.di.module.SchedulersModule;
 
 import javax.inject.Inject;
@@ -21,7 +19,7 @@ import timber.log.Timber;
  */
 public class WeatherInteractor {
 
-    private WeatherRepository weatherRepository;
+    private WeatherRepositoryImpl weatherRepositoryImpl;
     private Scheduler executionScheduler;
     private Scheduler postExecutionScheduler;
     private FullWeatherReport cachedFullWeatherReport;
@@ -30,10 +28,10 @@ public class WeatherInteractor {
 
     @Inject
     public WeatherInteractor(
-            WeatherRepository weatherRepository,
+            WeatherRepositoryImpl weatherRepositoryImpl,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
-        this.weatherRepository = weatherRepository;
+        this.weatherRepositoryImpl = weatherRepositoryImpl;
         this.executionScheduler = executionScheduler;
         this.postExecutionScheduler = postExecutionScheduler;
     }
@@ -47,20 +45,12 @@ public class WeatherInteractor {
             return Single.just(cachedFullWeatherReport);
         }
         Timber.d("Using repository for getting weather");
-        Single<ForecastData> forecastData = weatherRepository.getForecast(lat, lng)
-                .subscribeOn(executionScheduler);
-        Single<WeatherData> weatherData = weatherRepository.getWeather(lat, lng)
-                .subscribeOn(executionScheduler);
-        return Single.zip(
-                forecastData,
-                weatherData,
-                (forecast, weather) ->
-                        new FullWeatherReport(lat, lng, forecast, weather))
+        return weatherRepositoryImpl.getFullWeatherReport(lat, lng)
                 .doOnSuccess(fullWeatherReport -> {
                     cachedFullWeatherReport = fullWeatherReport;
                     cachedLat = lat;
                     cachedLng = lng;
-                    weatherRepository.saveWeather(fullWeatherReport);
+                    weatherRepositoryImpl.saveWeather(fullWeatherReport);
                 })
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);

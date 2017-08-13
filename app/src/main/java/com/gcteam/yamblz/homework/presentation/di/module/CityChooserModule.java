@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.presentation.di.module;
 
-import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.interactor.cities.CityPickerInteractor;
 import com.gcteam.yamblz.homework.presentation.di.scope.CityChooserScope;
 import com.gcteam.yamblz.homework.presentation.presenter.city.CityPickerPresenter;
@@ -29,16 +29,16 @@ public class CityChooserModule {
     @Provides
     @CityChooserScope
     public CityPickerInteractor provideCityPickerInteractor(
-            CityRepository cityRepository,
+            CityRepositoryImpl cityRepositoryImpl,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler,
             ExecutorService executorService) {
-        return new CityPickerInteractor(cityRepository, executionScheduler, postExecutionScheduler, executorService);
+        return new CityPickerInteractor(cityRepositoryImpl, executionScheduler, postExecutionScheduler, executorService);
     }
 
     @Provides
     @CityChooserScope
     public ExecutorService provideExecutorService() {
-        return Executors.newFixedThreadPool(2);
+        return Executors.newFixedThreadPool(3);
     }
 }

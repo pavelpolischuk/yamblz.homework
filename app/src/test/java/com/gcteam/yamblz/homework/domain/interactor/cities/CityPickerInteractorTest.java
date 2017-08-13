@@ -1,7 +1,7 @@
 package com.gcteam.yamblz.homework.domain.interactor.cities;
 
 import com.gcteam.yamblz.homework.data.object.StoredCity;
-import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class CityPickerInteractorTest {
     private CityPickerInteractor cityPickerInteractor;
 
     @Mock
-    private CityRepository cityRepository;
+    private CityRepositoryImpl cityRepositoryImpl;
     @Mock
     private ExecutorService executorService;
 
@@ -45,7 +45,7 @@ public class CityPickerInteractorTest {
         MockitoAnnotations.initMocks(this);
         executionScheduler = new TestScheduler();
         cityPickerInteractor = new CityPickerInteractor(
-                cityRepository,
+                cityRepositoryImpl,
                 executionScheduler,
                 executionScheduler,
                 executorService
@@ -57,11 +57,11 @@ public class CityPickerInteractorTest {
     @Test
     public void canGetDetailsForCity_thenSaveThem() {
         TestObserver<StoredCity> testObserver;
-        when(cityRepository.getCityDetails(filteredCity)).thenReturn(Single.just(storedCity));
+        when(cityRepositoryImpl.saveChosenCityDetails(filteredCity)).thenReturn(Single.just(storedCity));
         testObserver = cityPickerInteractor.addCity(filteredCity).test();
         executionScheduler.triggerActions();
         testObserver.awaitTerminalEvent();
-        verify(cityRepository).saveCityDetails(storedCity);
+        verify(cityRepositoryImpl).saveChosenCityDetails(storedCity);
         testObserver.assertNoErrors();
         testObserver.assertValue(storedCity);
     }
@@ -69,12 +69,30 @@ public class CityPickerInteractorTest {
     @Test
     public void canFetchChosenCities() {
         TestObserver<List<FilteredCity>> testObserver;
-        when(cityRepository.getCities()).thenReturn(Single.just(filteredCities));
+        when(cityRepositoryImpl.getCities()).thenReturn(Single.just(filteredCities));
         testObserver = cityPickerInteractor.getChosenCities().test();
         executionScheduler.triggerActions();
         testObserver.awaitTerminalEvent();
-        verify(cityRepository).getCities();
+        verify(cityRepositoryImpl).getCities();
         testObserver.assertNoErrors();
         testObserver.assertValue(filteredCities);
     }
+
+    @Test
+    public void saveChosenCity_delegatesToRepository() {
+        when(cityRepositoryImpl.saveChosenCityDetails(filteredCity)).thenReturn(Single.just(storedCity));
+
+        TestObserver<StoredCity> testObserver = cityPickerInteractor.chooseCity(filteredCity).test();
+        executionScheduler.triggerActions();
+
+        verify(cityRepositoryImpl).saveChosenCityDetails(filteredCity);
+    }
+
+    @Test
+    public void setNoChosenCity_delegatesToRepository() {
+        cityPickerInteractor.setNoChosenCity();
+        verify(cityRepositoryImpl).setNoChosenCity();
+    }
+
+
 }

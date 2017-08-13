@@ -3,7 +3,7 @@ package com.gcteam.yamblz.homework.domain.interactor.cities;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
-import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
 import java.util.List;
@@ -19,16 +19,16 @@ import timber.log.Timber;
  */
 public class CityFilterInteractor {
 
-    private CityRepository cityRepository;
+    private CityRepositoryImpl cityRepositoryImpl;
     private Scheduler executionScheduler;
     private Scheduler postExecutionScheduler;
 
     @Inject
     public CityFilterInteractor(
-            CityRepository cityRepository,
+            CityRepositoryImpl cityRepositoryImpl,
             Scheduler executionScheduler,
             Scheduler postExecutionScheduler) {
-        this.cityRepository = cityRepository;
+        this.cityRepositoryImpl = cityRepositoryImpl;
         this.executionScheduler = executionScheduler;
         this.postExecutionScheduler = postExecutionScheduler;
     }
@@ -37,7 +37,7 @@ public class CityFilterInteractor {
     @NonNull
     public Single<List<FilteredCity>> getCitiesByFilter(@NonNull String input) {
         Timber.d("Getting cities by user input : %s", input);
-        return cityRepository.getCitiesByFilter(input)
+        return cityRepositoryImpl.getCitiesByFilter(input)
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }

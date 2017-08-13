@@ -47,7 +47,7 @@ public class WeatherServiceTest {
         when(preferencesManager.getLat()).thenReturn(lat);
         when(preferencesManager.getLng()).thenReturn(lng);
 
-        weatherService = new WeatherService(preferencesManager, api);
+        weatherService = new WeatherService(api);
     }
 
     @Test

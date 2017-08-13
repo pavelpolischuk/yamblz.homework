@@ -49,12 +49,15 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
     public int insert(@NonNull FilteredCity filteredCity) {
         if (!citySummaries.contains(filteredCity)) {
             citySummaries.add(0, filteredCity);
+            for (int i = 0; i < citySummaries.size(); i++) {
+                citySummaries.get(i).setPriority(i);
+            }
             notifyItemInserted(0);
             int prev = selectedPosition;
             selectedPosition = 0;
             notifyItemChanged(prev + 1);
             onCityClickListener.onCityClick(filteredCity);
-            return citySummaries.size() - 1;
+            return 0;
         }
         return -1;
     }
@@ -62,10 +65,8 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
     @MainThread
     public void insertAll(List<FilteredCity> filteredCities) {
         citySummaries.clear();
-        for (int i = 0; i < filteredCities.size(); i++) {
-            filteredCities.get(i).setPriority(i);
-        }
         citySummaries.addAll(filteredCities);
+        updatePriorities();
         notifyDataSetChanged();
     }
 
@@ -73,6 +74,7 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
     private void remove(int position) {
         int initialSize = citySummaries.size();
         citySummaries.remove(position);
+        updatePriorities();
         // If there is only one city left, delete it
         if (initialSize == 1) {
             notifyItemRemoved(0);
@@ -193,6 +195,12 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         public void bind(FilteredCity filteredCity, boolean isDeleteButtonShown) {
             cityName.setText(filteredCity.getCityName());
             deleteButton.setVisibility(isDeleteButtonShown ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private void updatePriorities() {
+        for (int i = 0; i < citySummaries.size(); i++) {
+            citySummaries.get(i).setPriority(i);
         }
     }
 }

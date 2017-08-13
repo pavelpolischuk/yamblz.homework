@@ -11,6 +11,7 @@ public class StoredFullWeatherReport {
     private final double lng;
     private final String forecastDataJson;
     private final String weatherDataJson;
+
     private final long lastSyncTime;
 
     public StoredFullWeatherReport(double lat,
@@ -39,5 +40,9 @@ public class StoredFullWeatherReport {
 
     public String getWeatherDataJson() {
         return weatherDataJson;
+    }
+
+    public long getLastSyncTime() {
+        return lastSyncTime;
     }
 }

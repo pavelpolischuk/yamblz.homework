@@ -1,11 +1,10 @@
 package com.gcteam.yamblz.homework.domain.interactor.cities;
 
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import com.gcteam.yamblz.homework.data.object.StoredCity;
-import com.gcteam.yamblz.homework.data.repository.cities.CityRepository;
+import com.gcteam.yamblz.homework.data.repository.cities.CityRepositoryImpl;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 
 import java.util.Collections;
@@ -23,28 +22,28 @@ import timber.log.Timber;
  */
 public class CityPickerInteractor {
 
-    private final CityRepository cityRepository;
+    private final CityRepositoryImpl cityRepositoryImpl;
     private final Scheduler executionScheduler;
     private final Scheduler postExecutionScheduler;
     private final ExecutorService executorService;
 
     @Inject
-    public CityPickerInteractor(CityRepository cityRepository,
+    public CityPickerInteractor(CityRepositoryImpl cityRepositoryImpl,
                                 Scheduler executionScheduler,
                                 Scheduler postExecutionScheduler,
                                 ExecutorService executorService) {
-        this.cityRepository = cityRepository;
+        this.cityRepositoryImpl = cityRepositoryImpl;
         this.executionScheduler = executionScheduler;
         this.postExecutionScheduler = postExecutionScheduler;
         this.executorService = executorService;
     }
 
     @NonNull
-    @MainThread
+    @WorkerThread
     public Single<StoredCity> addCity(@NonNull FilteredCity chosenCity) {
         Timber.d("Getting city details and saving to databse for city : %s", chosenCity.getCityName() );
-        return cityRepository.getCityDetails(chosenCity)
-                .doOnSuccess(cityRepository::saveCityDetails)
+        return cityRepositoryImpl.saveChosenCityDetails(chosenCity)
+                .doOnSuccess(cityRepositoryImpl::saveChosenCityDetails)
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }
@@ -53,7 +52,7 @@ public class CityPickerInteractor {
     @WorkerThread
     public Single<List<FilteredCity>> getChosenCities() {
         Timber.d("Getting chosen cities");
-        return cityRepository.getCities()
+        return cityRepositoryImpl.getCities()
                 .map(filteredCities -> {
                     Collections.reverse(filteredCities);
                     return filteredCities;
@@ -66,7 +65,7 @@ public class CityPickerInteractor {
     @WorkerThread
     public Single<StoredCity> chooseCity(@NonNull FilteredCity filteredCity) {
         Timber.d("Setting chosen city : %s", filteredCity.getCityName());
-        return cityRepository.getCityDetails(filteredCity)
+        return cityRepositoryImpl.saveChosenCityDetails(filteredCity)
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);
     }
@@ -74,12 +73,12 @@ public class CityPickerInteractor {
     @WorkerThread
     public void deleteCity(@NonNull FilteredCity filteredCity) {
         Timber.d("Deleting city : %s", filteredCity.getCityName());
-        executorService.execute(() -> cityRepository.deleteCity(filteredCity));
+        executorService.execute(() -> cityRepositoryImpl.deleteCity(filteredCity));
     }
 
     @WorkerThread
     public void setNoChosenCity() {
         Timber.d("Setting no chosen city");
-        cityRepository.setNoChosenCity();
+        cityRepositoryImpl.setNoChosenCity();
     }
 }
