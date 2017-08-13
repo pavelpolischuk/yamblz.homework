@@ -17,11 +17,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="413dp"
         android:layout_marginTop="6dp"
+        android:contentDescription="@string/weather_icon_content_description"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/weather_icon_content_description"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/max_temp"
@@ -61,10 +61,10 @@
         app:layout_constraintBottom_toBottomOf="@+id/weather_icon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weather_icon"
+        app:layout_constraintVertical_bias="0.271"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintVertical_bias="0.271">
+        tools:layout_constraintTop_creator="1">
 
         <TextView
             android:id="@+id/wind"
@@ -93,13 +93,14 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/current_weather_description_text_size"
+        android:layout_marginLeft="28dp"
         android:layout_marginStart="28dp"
-        tools:layout_constraintTop_creator="1"
         android:layout_marginTop="49dp"
-        tools:layout_constraintLeft_creator="1"
+        android:textSize="@dimen/current_weather_description_text_size"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="28dp" />
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
 </android.support.constraint.ConstraintLayout>

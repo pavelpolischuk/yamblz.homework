@@ -1,6 +1,6 @@
 package com.gcteam.yamblz.homework.domain.interactor.weather;
 
-import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepositoryImpl;
+import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
 import com.gcteam.yamblz.homework.domain.object.ForecastData;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
@@ -26,16 +26,15 @@ public class WeatherInteractorTest {
 
     private final double lat = 10;
     private final double lng = 15;
-
-    private WeatherInteractor weatherInteractor;
     @Mock
-    WeatherRepositoryImpl weatherRepositoryImpl;
+    WeatherRepository weatherRepository;
     @Mock
     ForecastData forecastData;
     @Mock
     WeatherData weatherData;
     @Mock
     FullWeatherReport fullWeatherReport;
+    private WeatherInteractor weatherInteractor;
     private TestScheduler testScheduler;
 
     @Before
@@ -43,10 +42,10 @@ public class WeatherInteractorTest {
         MockitoAnnotations.initMocks(this);
         testScheduler = new TestScheduler();
         weatherInteractor = new WeatherInteractor(
-                weatherRepositoryImpl,
+                weatherRepository,
                 testScheduler,
                 testScheduler);
-        when(weatherRepositoryImpl.getFullWeatherReport(lat, lng))
+        when(weatherRepository.getFullWeatherReport(lat, lng))
                 .thenReturn(Single.just(fullWeatherReport));
     }
 
@@ -58,8 +57,8 @@ public class WeatherInteractorTest {
         testScheduler.triggerActions();
 
         testObserver.assertNoErrors();
-        verify(weatherRepositoryImpl).getFullWeatherReport(lat, lng);
-        verify(weatherRepositoryImpl).saveWeather(any());
+        verify(weatherRepository).getFullWeatherReport(lat, lng);
+        verify(weatherRepository).saveWeather(any());
     }
 
     @Test
@@ -74,7 +73,7 @@ public class WeatherInteractorTest {
         testScheduler.triggerActions();
         secondTestObserver.assertNoErrors();
 
-        verify(weatherRepositoryImpl, times(1)).getFullWeatherReport(lat, lng);
+        verify(weatherRepository, times(1)).getFullWeatherReport(lat, lng);
     }
 
     @Test
@@ -89,6 +88,6 @@ public class WeatherInteractorTest {
         testScheduler.triggerActions();
         secondTestObserver.assertNoErrors();
 
-        verify(weatherRepositoryImpl, times(2)).getFullWeatherReport(lat, lng);
+        verify(weatherRepository, times(2)).getFullWeatherReport(lat, lng);
     }
 }

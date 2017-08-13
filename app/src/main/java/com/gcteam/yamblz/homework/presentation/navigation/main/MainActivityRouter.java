@@ -44,7 +44,7 @@ public class MainActivityRouter implements MainRouter {
             fragment.setArguments(bundle);
             FragmentManager fm = activity.getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.detail_container, fragment, Integer.toString(R.string.detail_title))
-                .commit();
+                    .commit();
 
         } else {
             Intent weatherDetailIntent = new Intent(activity, DetailWeatherActivity.class);

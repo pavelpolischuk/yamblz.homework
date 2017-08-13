@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class WeatherStorageTest {
+public class RoomWeatherStorageTest {
 
     private WeatherStorage weatherStorage;
     private FullWeatherReport fullWeatherReport;
@@ -32,7 +32,7 @@ public class WeatherStorageTest {
         Context context = RuntimeEnvironment.application.getApplicationContext();
         AppDatabase appDatabase = Room.databaseBuilder(context,
                 AppDatabase.class, "weather").allowMainThreadQueries().build();
-        weatherStorage = new WeatherStorage(appDatabase, new Gson());
+        weatherStorage = new RoomWeatherStorage(appDatabase, new Gson());
         fullWeatherReport = random(FullWeatherReport.class);
     }
 

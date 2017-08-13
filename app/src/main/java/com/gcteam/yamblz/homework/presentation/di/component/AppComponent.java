@@ -1,6 +1,5 @@
 package com.gcteam.yamblz.homework.presentation.di.component;
 
-import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.di.module.AppModule;
 import com.gcteam.yamblz.homework.presentation.di.module.CityChooserModule;
 import com.gcteam.yamblz.homework.presentation.di.module.DataModule;
@@ -26,8 +25,6 @@ public interface AppComponent {
     WeatherComponent getWeatherComponent();
 
     CityComponent getCityComponent();
-
-    void inject(UpdateWeatherJob updateWeatherJob);
 
     void inject(SettingsFragment settingsFragment);
 }

@@ -174,9 +174,15 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         return citySummaries.get(selectedPosition);
     }
 
+    private void updatePriorities() {
+        for (int i = 0; i < citySummaries.size(); i++) {
+            citySummaries.get(i).setPriority(i);
+        }
+    }
 
     public interface OnCityClickListener {
         void onCityClick(FilteredCity filteredCity);
+
         void onDeleteCityClick(FilteredCity filteredCity);
     }
 
@@ -195,12 +201,6 @@ public class CitySummariesAdapter extends RecyclerView.Adapter<CitySummariesAdap
         public void bind(FilteredCity filteredCity, boolean isDeleteButtonShown) {
             cityName.setText(filteredCity.getCityName());
             deleteButton.setVisibility(isDeleteButtonShown ? View.VISIBLE : View.GONE);
-        }
-    }
-
-    private void updatePriorities() {
-        for (int i = 0; i < citySummaries.size(); i++) {
-            citySummaries.get(i).setPriority(i);
         }
     }
 }

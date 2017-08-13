@@ -25,9 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class CityStorageTest {
+public class RoomCityStorageTest {
 
-    CityStorage cityStorage;
+    CityStorage roomCityStorage;
     StoredCity storedCity;
     StoredCity secondStoredCity;
 
@@ -37,39 +37,39 @@ public class CityStorageTest {
         Context context = RuntimeEnvironment.application.getApplicationContext();
         AppDatabase appDatabase = Room.databaseBuilder(context,
                 AppDatabase.class, "weather").allowMainThreadQueries().build();
-        cityStorage = new CityStorage(appDatabase);
+        roomCityStorage = new RoomCityStorage(appDatabase);
         storedCity = random(StoredCity.class);
         secondStoredCity = random(StoredCity.class);
     }
 
     @Test
     public void getSavedCities() {
-        cityStorage.saveCityDetails(storedCity);
-        List<StoredCity> cities = cityStorage.getChosenCities().blockingGet();
+        roomCityStorage.saveCityDetails(storedCity);
+        List<StoredCity> cities = roomCityStorage.getChosenCities().blockingGet();
         assertThat(cities).containsExactly(storedCity);
     }
 
     @Test
     public void deleteSavedCities() {
-        cityStorage.saveCityDetails(storedCity);
-        cityStorage.saveCityDetails(secondStoredCity);
+        roomCityStorage.saveCityDetails(storedCity);
+        roomCityStorage.saveCityDetails(secondStoredCity);
 
-        List<StoredCity> cities = cityStorage.getChosenCities().blockingGet();
+        List<StoredCity> cities = roomCityStorage.getChosenCities().blockingGet();
         assertThat(cities).containsExactlyInAnyOrder(secondStoredCity, storedCity);
 
-        cityStorage.deleteCity(new FilteredCity(storedCity.getCityName(),
+        roomCityStorage.deleteCity(new FilteredCity(storedCity.getCityName(),
                 storedCity.getCountryName(),
                 storedCity.getPlaceId(),
                 storedCity.getPriority()));
 
-        List<StoredCity> citiesAfterDeletion = cityStorage.getChosenCities().blockingGet();
+        List<StoredCity> citiesAfterDeletion = roomCityStorage.getChosenCities().blockingGet();
         assertThat(citiesAfterDeletion).containsExactlyInAnyOrder(secondStoredCity);
     }
 
     @Test
     public void getChosenCity() {
-        cityStorage.saveCityDetails(storedCity);
-        StoredCity retrievedCity = cityStorage.getChosenCity(new FilteredCity(
+        roomCityStorage.saveCityDetails(storedCity);
+        StoredCity retrievedCity = roomCityStorage.getChosenCity(new FilteredCity(
                 storedCity.getCityName(),
                 storedCity.getCountryName(),
                 storedCity.getPlaceId(),

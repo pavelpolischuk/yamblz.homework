@@ -22,14 +22,14 @@ import timber.log.Timber;
  */
 public class CityRepositoryImpl implements CityRepository {
 
-    private final CityStorage cityStorage;
+    private final CityStorage roomCityStorage;
     private final CityService cityService;
     private final PreferencesManager preferencesManager;
 
-    public CityRepositoryImpl(CityStorage cityStorage,
+    public CityRepositoryImpl(CityStorage roomCityStorage,
                               CityService cityService,
                               PreferencesManager preferencesManager) {
-        this.cityStorage = cityStorage;
+        this.roomCityStorage = roomCityStorage;
         this.cityService = cityService;
         this.preferencesManager = preferencesManager;
     }
@@ -45,7 +45,7 @@ public class CityRepositoryImpl implements CityRepository {
     @NonNull
     public Single<StoredCity> saveChosenCityDetails(FilteredCity filteredCity) {
         Timber.d("Getting city details for city : %s", filteredCity.getCityName());
-        Single<StoredCity> storageData = cityStorage.getChosenCity(filteredCity)
+        Single<StoredCity> storageData = roomCityStorage.getChosenCity(filteredCity)
                 .map(storedCity -> {
                     storedCity.setPriority(filteredCity.getPriority());
                     return storedCity;
@@ -61,14 +61,14 @@ public class CityRepositoryImpl implements CityRepository {
     @WorkerThread
     public void saveChosenCityDetails(StoredCity storedCity) {
         Timber.d(storedCity.getCityName() + " city details are saved");
-        cityStorage.saveCityDetails(storedCity);
+        roomCityStorage.saveCityDetails(storedCity);
     }
 
     @WorkerThread
     @NonNull
     public Single<List<FilteredCity>> getCities() {
         Timber.d("Getting all chosen cities");
-        return cityStorage.getChosenCities()
+        return roomCityStorage.getChosenCities()
                 .flatMap(storedChosenCities -> Observable.fromIterable(storedChosenCities)
                         .map(StoredCityMapper::fromStoredCity)
                         .toList());
@@ -83,7 +83,7 @@ public class CityRepositoryImpl implements CityRepository {
     @WorkerThread
     public void deleteCity(FilteredCity filteredCity) {
         Timber.d(filteredCity.getCityName() + " is deleted");
-        cityStorage.deleteCity(filteredCity);
+        roomCityStorage.deleteCity(filteredCity);
     }
 
     @WorkerThread

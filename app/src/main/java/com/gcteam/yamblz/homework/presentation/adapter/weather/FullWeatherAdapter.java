@@ -25,9 +25,8 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static final int CURRENT_WEATHER_VIEW_TYPE = 0;
     private static final int FORECAST_VIEW_TYPE = 1;
-
-    private FullWeatherReport fullWeatherReport;
     private final OnForecastClickListener onForecastClickListener;
+    private FullWeatherReport fullWeatherReport;
 
     @MainThread
     public FullWeatherAdapter(OnForecastClickListener onForecastClickListener) {
@@ -114,6 +113,10 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return fullWeatherReport.getForecastData().getForecast().size() + 1;
     }
 
+    public interface OnForecastClickListener {
+        void onForecastClick(WeatherData weatherData);
+    }
+
     static class ForecastViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.weather_icon)
@@ -181,9 +184,5 @@ public class FullWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             pressure.setText(String.format(context.getString(R.string.format_pressure), weatherData.getPressure()));
             description.setText(FormatUtils.formatDescription(weatherData.getDescription()));
         }
-    }
-
-    public interface OnForecastClickListener {
-        void onForecastClick(WeatherData weatherData);
     }
 }

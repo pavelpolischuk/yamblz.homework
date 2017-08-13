@@ -8,18 +8,26 @@ import android.os.Parcelable;
  */
 
 public class WeatherData implements Parcelable {
+    public static final Parcelable.Creator<WeatherData> CREATOR = new Parcelable.Creator<WeatherData>() {
+        @Override
+        public WeatherData createFromParcel(Parcel source) {
+            return new WeatherData(source);
+        }
+
+        @Override
+        public WeatherData[] newArray(int size) {
+            return new WeatherData[size];
+        }
+    };
     private final int weatherId;
     private final String description;
-
     private final double dayTemp;
     private final double minTemp;
     private final double maxTemp;
     private final double pressure; // hPa
     private final int humidity; // %
-
     private final double windSpeed;
     private final double windDeg;
-
     private final long date;
 
     public WeatherData(int weatherId,
@@ -42,6 +50,19 @@ public class WeatherData implements Parcelable {
         this.windSpeed = windSpeed;
         this.windDeg = windDeg;
         this.date = date;
+    }
+
+    protected WeatherData(Parcel in) {
+        this.weatherId = in.readInt();
+        this.description = in.readString();
+        this.dayTemp = in.readDouble();
+        this.minTemp = in.readDouble();
+        this.maxTemp = in.readDouble();
+        this.pressure = in.readDouble();
+        this.humidity = in.readInt();
+        this.windSpeed = in.readDouble();
+        this.windDeg = in.readDouble();
+        this.date = in.readLong();
     }
 
     public int getWeatherId() {
@@ -146,29 +167,4 @@ public class WeatherData implements Parcelable {
         dest.writeDouble(this.windDeg);
         dest.writeLong(this.date);
     }
-
-    protected WeatherData(Parcel in) {
-        this.weatherId = in.readInt();
-        this.description = in.readString();
-        this.dayTemp = in.readDouble();
-        this.minTemp = in.readDouble();
-        this.maxTemp = in.readDouble();
-        this.pressure = in.readDouble();
-        this.humidity = in.readInt();
-        this.windSpeed = in.readDouble();
-        this.windDeg = in.readDouble();
-        this.date = in.readLong();
-    }
-
-    public static final Parcelable.Creator<WeatherData> CREATOR = new Parcelable.Creator<WeatherData>() {
-        @Override
-        public WeatherData createFromParcel(Parcel source) {
-            return new WeatherData(source);
-        }
-
-        @Override
-        public WeatherData[] newArray(int size) {
-            return new WeatherData[size];
-        }
-    };
 }

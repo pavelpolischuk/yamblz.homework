@@ -1,4 +1,4 @@
-package com.gcteam.yamblz.homework.data.local.weather;
+package com.gcteam.yamblz.homework.data.repository.weather;
 
 import android.support.annotation.NonNull;
 
@@ -9,9 +9,9 @@ import io.reactivex.Single;
 /**
  * Created by Kim Michael on 13.08.17
  */
-public interface WeatherStorage {
-
-    void saveWeather(@NonNull FullWeatherReport fullWeatherReport);
+public interface WeatherRepository {
 
     Single<FullWeatherReport> getFullWeatherReport(double lat, double lng);
+
+    void saveWeather(@NonNull FullWeatherReport fullWeatherReport);
 }

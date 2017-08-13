@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
  */
 public class WeatherRepositoryImplTest {
 
-    WeatherRepositoryImpl weatherRepositoryImpl;
+    WeatherRepository weatherRepositoryImpl;
     @Mock
     WeatherStorage weatherStorage;
     @Mock

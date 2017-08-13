@@ -1,8 +1,8 @@
 package com.gcteam.yamblz.homework.data.network.weather;
 
-import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.api.dto.weather.current.WeatherResponse;
+import com.gcteam.yamblz.homework.data.mapper.WeatherResponseMapper;
 import com.gcteam.yamblz.homework.domain.object.WeatherData;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.google.gson.Gson;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Kim Michael on 27.07.17
  */
-public class WeatherServiceTest {
+public class OpenWeatherServiceTest {
 
     WeatherService weatherService;
     WeatherResponseMapper weatherResponseMapper;
@@ -47,7 +47,7 @@ public class WeatherServiceTest {
         when(preferencesManager.getLat()).thenReturn(lat);
         when(preferencesManager.getLng()).thenReturn(lng);
 
-        weatherService = new WeatherService(api);
+        weatherService = new OpenWeatherService(api);
     }
 
     @Test

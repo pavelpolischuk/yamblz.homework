@@ -3,7 +3,7 @@ package com.gcteam.yamblz.homework.domain.interactor.weather;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
-import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepositoryImpl;
+import com.gcteam.yamblz.homework.data.repository.weather.WeatherRepository;
 import com.gcteam.yamblz.homework.domain.object.FullWeatherReport;
 import com.gcteam.yamblz.homework.presentation.di.module.SchedulersModule;
 
@@ -19,7 +19,7 @@ import timber.log.Timber;
  */
 public class WeatherInteractor {
 
-    private WeatherRepositoryImpl weatherRepositoryImpl;
+    private WeatherRepository weatherRepository;
     private Scheduler executionScheduler;
     private Scheduler postExecutionScheduler;
     private FullWeatherReport cachedFullWeatherReport;
@@ -28,10 +28,10 @@ public class WeatherInteractor {
 
     @Inject
     public WeatherInteractor(
-            WeatherRepositoryImpl weatherRepositoryImpl,
+            WeatherRepository weatherRepository,
             @Named(SchedulersModule.JOB) Scheduler executionScheduler,
             @Named(SchedulersModule.UI) Scheduler postExecutionScheduler) {
-        this.weatherRepositoryImpl = weatherRepositoryImpl;
+        this.weatherRepository = weatherRepository;
         this.executionScheduler = executionScheduler;
         this.postExecutionScheduler = postExecutionScheduler;
     }
@@ -45,12 +45,12 @@ public class WeatherInteractor {
             return Single.just(cachedFullWeatherReport);
         }
         Timber.d("Using repository for getting weather");
-        return weatherRepositoryImpl.getFullWeatherReport(lat, lng)
+        return weatherRepository.getFullWeatherReport(lat, lng)
                 .doOnSuccess(fullWeatherReport -> {
                     cachedFullWeatherReport = fullWeatherReport;
                     cachedLat = lat;
                     cachedLng = lng;
-                    weatherRepositoryImpl.saveWeather(fullWeatherReport);
+                    weatherRepository.saveWeather(fullWeatherReport);
                 })
                 .subscribeOn(executionScheduler)
                 .observeOn(postExecutionScheduler);

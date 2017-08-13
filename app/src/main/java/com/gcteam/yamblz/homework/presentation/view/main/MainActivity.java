@@ -42,11 +42,8 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements TitlePicker,
         CityChooserView, CitySummariesAdapter.OnCityClickListener, DetailWeatherViewer {
 
-    private boolean isTwoPane;
-
     private static final String TITLE_KEY = "title";
     private static final int PERMISSION_REQUEST_CODE = 1;
-
     @Inject
     CityPickerPresenter cityPickerPresenter;
     @Inject
@@ -62,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements TitlePicker,
     @Nullable
     FrameLayout detailContainer;
     CityChooserComponent cityChooserComponent;
+    private boolean isTwoPane;
     private MainActivityRouter router = new MainActivityRouter(this);
 
     @Override

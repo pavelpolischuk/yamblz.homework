@@ -22,17 +22,14 @@ import static junit.framework.Assert.assertEquals;
 @Config(manifest = Config.NONE)
 public class PreferencesManagerTest {
 
-    PreferencesManager preferencesManager;
-
-
-    WeatherData testWeather;
     final String name = "Moscow";
-
     final String id = "123";
     final double lat = 10;
     final double lng = 15;
     final CityDetailsResponse cityDetailsResponse = new CityDetailsResponse();
     final StoredCity storedCity = new StoredCity("city", "city", 1, 1.0d, 10.0d, "asdf", "country");
+    PreferencesManager preferencesManager;
+    WeatherData testWeather;
 
     @Before
     public void setup() {
@@ -59,7 +56,7 @@ public class PreferencesManagerTest {
 
     @Test
     public void intervalNotSpecified_defaultUpdateIntervalIsReturned() {
-        assertEquals(preferencesManager.getUpdateInterval(), (int)(Integer.valueOf(PreferencesManager.DEFAULT_UPDATE_INTERVAL)));
+        assertEquals(preferencesManager.getUpdateInterval(), (int) (Integer.valueOf(PreferencesManager.DEFAULT_UPDATE_INTERVAL)));
     }
 
 }

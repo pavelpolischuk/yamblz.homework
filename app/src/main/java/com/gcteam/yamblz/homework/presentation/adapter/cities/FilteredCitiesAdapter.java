@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
  */
 public class FilteredCitiesAdapter extends RecyclerView.Adapter<FilteredCitiesAdapter.ViewHolder> {
 
-    private List<FilteredCity> filteredCities;
     @NonNull
     private final LayoutInflater layoutInflater;
+    private List<FilteredCity> filteredCities;
     private OnCityClickListener listener;
 
     private Context context;

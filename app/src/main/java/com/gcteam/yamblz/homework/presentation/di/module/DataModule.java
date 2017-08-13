@@ -8,7 +8,10 @@ import android.support.v7.preference.PreferenceManager;
 import com.gcteam.yamblz.homework.data.api.OpenWeatherMapApi;
 import com.gcteam.yamblz.homework.data.local.AppDatabase;
 import com.gcteam.yamblz.homework.data.local.cities.CityStorage;
+import com.gcteam.yamblz.homework.data.local.cities.RoomCityStorage;
+import com.gcteam.yamblz.homework.data.local.weather.RoomWeatherStorage;
 import com.gcteam.yamblz.homework.data.local.weather.WeatherStorage;
+import com.gcteam.yamblz.homework.data.network.weather.OpenWeatherService;
 import com.gcteam.yamblz.homework.data.network.weather.WeatherService;
 import com.gcteam.yamblz.homework.domain.update.weather.UpdateWeatherJob;
 import com.gcteam.yamblz.homework.presentation.presenter.settings.SettingsPresenter;
@@ -29,20 +32,20 @@ public class DataModule {
     @Provides
     @Singleton
     CityStorage provideCityStorage(AppDatabase appDatabase) {
-        return new CityStorage(appDatabase);
+        return new RoomCityStorage(appDatabase);
     }
 
     @Provides
     @Singleton
     WeatherService provideWeatherService(OpenWeatherMapApi api) {
-        return new WeatherService(api);
+        return new OpenWeatherService(api);
     }
 
     @Provides
     @Singleton
     WeatherStorage provideWeatherStorage(AppDatabase appDatabase,
                                          Gson gson) {
-        return new WeatherStorage(appDatabase, gson);
+        return new RoomWeatherStorage(appDatabase, gson);
     }
 
 

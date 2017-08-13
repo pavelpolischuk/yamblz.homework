@@ -33,6 +33,7 @@ public class CityPickerPresenterTest {
     private StoredCity storedCity;
 
     private List<FilteredCity> filteredCities;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);

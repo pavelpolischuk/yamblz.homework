@@ -62,6 +62,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     testCompile libraries.junit
+    androidTestCompile libraries.junit
     testCompile libraries.mockitoCore
 
     compile libraries.supportAppCompat

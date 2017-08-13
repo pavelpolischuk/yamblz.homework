@@ -10,6 +10,17 @@ import android.support.annotation.Nullable;
  */
 public class FilteredCity implements Parcelable {
 
+    public static final Creator<FilteredCity> CREATOR = new Creator<FilteredCity>() {
+        @Override
+        public FilteredCity createFromParcel(Parcel source) {
+            return new FilteredCity(source);
+        }
+
+        @Override
+        public FilteredCity[] newArray(int size) {
+            return new FilteredCity[size];
+        }
+    };
     @NonNull
     private final String cityName;
     @NonNull
@@ -38,6 +49,13 @@ public class FilteredCity implements Parcelable {
         this.priority = 0;
     }
 
+    protected FilteredCity(Parcel in) {
+        this.cityName = in.readString();
+        this.countryName = in.readString();
+        this.placeId = in.readString();
+        this.priority = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
     @NonNull
     public String getCityName() {
         return cityName;
@@ -62,7 +80,6 @@ public class FilteredCity implements Parcelable {
         this.priority = priority;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -75,25 +92,6 @@ public class FilteredCity implements Parcelable {
         dest.writeString(this.placeId);
         dest.writeValue(this.priority);
     }
-
-    protected FilteredCity(Parcel in) {
-        this.cityName = in.readString();
-        this.countryName = in.readString();
-        this.placeId = in.readString();
-        this.priority = (Integer) in.readValue(Integer.class.getClassLoader());
-    }
-
-    public static final Creator<FilteredCity> CREATOR = new Creator<FilteredCity>() {
-        @Override
-        public FilteredCity createFromParcel(Parcel source) {
-            return new FilteredCity(source);
-        }
-
-        @Override
-        public FilteredCity[] newArray(int size) {
-            return new FilteredCity[size];
-        }
-    };
 
     @Override
     public boolean equals(Object o) {

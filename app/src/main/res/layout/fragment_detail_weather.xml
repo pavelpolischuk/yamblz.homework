@@ -4,58 +4,58 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_gravity="start"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/detail_day"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="@dimen/detail_day_text_size" />
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
             android:id="@+id/detail_date"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:textSize="@dimen/detail_date_text_size" />
 
         <LinearLayout
-            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:gravity="start"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/detail_max_temp"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textSize="@dimen/detail_max_temp_text_size" />
 
                 <TextView
                     android:id="@+id/detail_min_temp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:textSize="@dimen/detail_min_temp_text_size" />
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <ImageView
@@ -67,35 +67,35 @@
                     android:id="@+id/detail_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceLarge"/>
+                    android:textAppearance="?android:textAppearanceLarge" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="0dp"
             android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/detail_humidity"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textAppearance="?android:textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/detail_pressure"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
                 android:textAppearance="?android:textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/detail_wind"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
                 android:textAppearance="?android:textAppearanceLarge" />
         </LinearLayout>
     </LinearLayout>

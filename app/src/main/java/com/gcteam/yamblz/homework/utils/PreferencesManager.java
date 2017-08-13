@@ -60,7 +60,7 @@ public class PreferencesManager {
                         storedCity.getCityName())
                 .putInt(CHOSEN_CITY_ID_KEY,
                         storedCity.getPriority() == null ?
-                            0 : storedCity.getPriority())
+                                0 : storedCity.getPriority())
                 .apply();
     }
 

@@ -30,6 +30,21 @@
     <string name="pref_units_label">Температура</string>
     <string name="last_sync_format">Последнее обновление: %s</string>
     <string name="add_city_content_description">Добавить новый город</string>
-    <string name="yandex_logo_content_description">Яндекс</string>
     <string name="delete_city_content_description">Удалить город</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_weather">Погода</string>
+    <string name="city_list_title">Города</string>
+    <string name="humidity_label">Влажность</string>
+    <string name="nav_about_content_description">О приложении</string>
+    <string name="nav_add_city_content_description">Добавить город</string>
+    <string name="nav_delete_content_description">Удалить город</string>
+    <string name="nav_ic_settings_content_description">Настройки</string>
+    <string name="nav_weather_content_description">Погода</string>
+    <string name="no_internet_message">Проверьте свое интернет соединение</string>
+    <string name="place_content_description">Город</string>
+    <string name="pressure_label">Давление</string>
+    <string name="updated_label">Обновлено</string>
+    <string name="weather_icon_content_description">Погода</string>
+    <string name="wind_label">Ветер</string>
+    <string name="yandex_logo_content_description">Яндекс</string>
 </resources>

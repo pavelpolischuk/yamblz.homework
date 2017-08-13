@@ -29,8 +29,8 @@ import com.gcteam.yamblz.homework.presentation.view.BaseFragment;
 import com.gcteam.yamblz.homework.presentation.view.detail.DetailWeatherViewer;
 import com.gcteam.yamblz.homework.presentation.view.main.CityChooserView;
 import com.gcteam.yamblz.homework.presentation.view.main.TitlePicker;
-import com.gcteam.yamblz.homework.utils.PreferencesManager;
 import com.gcteam.yamblz.homework.utils.FormatUtils;
+import com.gcteam.yamblz.homework.utils.PreferencesManager;
 
 import javax.inject.Inject;
 
@@ -140,8 +140,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView,
     public void showFullWeather(FullWeatherReport fullWeatherReport) {
         lastSyncTime.setText(FormatUtils
                 .getFormattedLastSyncTime(
-                fullWeatherReport.getLastSyncTime(),
-                getContext()));
+                        fullWeatherReport.getLastSyncTime(),
+                        getContext()));
         emptyViewBlock.setVisibility(View.GONE);
         forecast.setVisibility(View.VISIBLE);
         fullWeatherAdapter.insertFullWeather(fullWeatherReport);

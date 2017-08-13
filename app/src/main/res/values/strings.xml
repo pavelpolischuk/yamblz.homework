@@ -8,7 +8,6 @@
     <string name="weather_title">Weather</string>
     <string name="settings_title">Settings</string>
     <string name="about_title">About app</string>
-    <string name="change_city_title">City</string>
     <string name="title_activity_city_pick">Choose city</string>
     <string name="detail_title">Details</string>
 
@@ -17,8 +16,6 @@
 
     <string name="update_interval">Update interval</string>
     <string name="update_interval_default">2 hours</string>
-
-    <string name="default_city">Moscow</string>
 
     <string name="pressure_label">Pressure</string>
     <string name="humidity_label">Humidity</string>

@@ -13,8 +13,6 @@ public class StoredCity {
 
     @PrimaryKey
     private final String placeId;
-    @Nullable
-    private Integer priority;
     @NonNull
     private final String cityName;
     @NonNull
@@ -23,6 +21,8 @@ public class StoredCity {
     private final double lng;
     @NonNull
     private final String countryName;
+    @Nullable
+    private Integer priority;
 
     public StoredCity(@NonNull String cityName,
                       @NonNull String userCityName,
@@ -54,6 +54,10 @@ public class StoredCity {
         return priority;
     }
 
+    public void setPriority(@Nullable Integer priority) {
+        this.priority = priority;
+    }
+
     public double getLat() {
         return lat;
     }
@@ -70,10 +74,6 @@ public class StoredCity {
     @NonNull
     public String getCountryName() {
         return countryName;
-    }
-
-    public void setPriority(@Nullable Integer priority) {
-        this.priority = priority;
     }
 
     @Override

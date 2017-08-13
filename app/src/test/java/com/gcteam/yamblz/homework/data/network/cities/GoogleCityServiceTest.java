@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Kim Michael on 11.08.17
  */
-public class CityServiceTest {
+public class GoogleCityServiceTest {
 
     private static final String PLACE_ID = "place_id";
     private static final String INPUT = "input";
@@ -37,7 +37,7 @@ public class CityServiceTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        cityService = new CityService(googlePlacesAPI);
+        cityService = new GoogleCityService(googlePlacesAPI);
         when(googlePlacesAPI
                 .getCityDetails(GooglePlacesAPI.API_KEY,
                         PLACE_ID, Locale.getDefault().getLanguage()))
@@ -45,7 +45,7 @@ public class CityServiceTest {
         when(googlePlacesAPI
                 .getSuggestionsByInput(GooglePlacesAPI.API_KEY,
                         INPUT, TYPES, Locale.getDefault().getLanguage()))
-        .thenReturn(Single.just(citiesResponse));
+                .thenReturn(Single.just(citiesResponse));
     }
 
     @Test

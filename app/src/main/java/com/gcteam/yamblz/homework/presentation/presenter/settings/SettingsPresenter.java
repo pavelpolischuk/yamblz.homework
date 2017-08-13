@@ -38,7 +38,7 @@ public class SettingsPresenter implements SharedPreferences.OnSharedPreferenceCh
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         String value;
-        switch  (key) {
+        switch (key) {
             case UPDATE_INTERVAL_KEY:
                 value = sharedPreferences.getString(key, "");
                 updateWeatherJob.startUpdate(Integer.decode(value));

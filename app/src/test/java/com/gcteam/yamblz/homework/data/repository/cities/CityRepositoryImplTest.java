@@ -2,10 +2,10 @@ package com.gcteam.yamblz.homework.data.repository.cities;
 
 import com.gcteam.yamblz.homework.data.api.dto.cities.autocomplete.CitiesResponse;
 import com.gcteam.yamblz.homework.data.api.dto.cities.details.CityDetailsResponse;
-import com.gcteam.yamblz.homework.data.local.cities.CityStorage;
+import com.gcteam.yamblz.homework.data.local.cities.RoomCityStorage;
 import com.gcteam.yamblz.homework.data.mapper.CitiesResponseMapper;
 import com.gcteam.yamblz.homework.data.mapper.StoredCityMapper;
-import com.gcteam.yamblz.homework.data.network.cities.CityService;
+import com.gcteam.yamblz.homework.data.network.cities.GoogleCityService;
 import com.gcteam.yamblz.homework.data.object.StoredCity;
 import com.gcteam.yamblz.homework.domain.object.FilteredCity;
 import com.gcteam.yamblz.homework.utils.PreferencesManager;
@@ -33,11 +33,11 @@ public class CityRepositoryImplTest {
 
     private static final String INPUT = "input";
 
-    CityRepositoryImpl cityRepositoryImpl;
+    CityRepository cityRepository;
     @Mock
-    CityStorage cityStorage;
+    RoomCityStorage roomCityStorage;
     @Mock
-    CityService cityService;
+    GoogleCityService cityService;
     @Mock
     PreferencesManager preferencesManager;
 
@@ -58,8 +58,8 @@ public class CityRepositoryImplTest {
         MockitoAnnotations.initMocks(this);
         citiesResponseMapper = new CitiesResponseMapper();
         storedCityMapper = new StoredCityMapper();
-        cityRepositoryImpl = new CityRepositoryImpl(
-                cityStorage,
+        cityRepository = new CityRepositoryImpl(
+                roomCityStorage,
                 cityService,
                 preferencesManager
         );
@@ -76,17 +76,17 @@ public class CityRepositoryImplTest {
     public void getsCitiesByFilterFromService() {
         when(cityService.getSuggestionsByInput(INPUT)).thenReturn(Single.just(citiesResponse));
 
-        cityRepositoryImpl.getCitiesByFilter(INPUT);
+        cityRepository.getCitiesByFilter(INPUT);
 
         verify(cityService, times(1)).getSuggestionsByInput(INPUT);
     }
 
     @Test
     public void getCityDetailsFromRepository() {
-        when(cityStorage.getChosenCity(filteredCity)).thenReturn(Single.just(storedCity));
+        when(roomCityStorage.getChosenCity(filteredCity)).thenReturn(Single.just(storedCity));
         when(cityService.getCityDetails(filteredCity)).thenReturn(Single.just(cityDetailsResponse));
 
-        StoredCity fetchedCity = cityRepositoryImpl.saveChosenCityDetails(filteredCity).blockingGet();
+        StoredCity fetchedCity = cityRepository.saveChosenCityDetails(filteredCity).blockingGet();
 
         assertThat(fetchedCity).isEqualTo(storedCity);
         assertThat(fetchedCity).isNotEqualTo(mappedStoredCity);
@@ -94,43 +94,43 @@ public class CityRepositoryImplTest {
 
     @Test
     public void getAllChosenCitiesFromStorage() {
-        when(cityStorage.getChosenCities()).thenReturn(Single.just(chosenCities));
-        List<FilteredCity> fetchedChosenCities = cityRepositoryImpl.getCities().blockingGet();
+        when(roomCityStorage.getChosenCities()).thenReturn(Single.just(chosenCities));
+        List<FilteredCity> fetchedChosenCities = cityRepository.getCities().blockingGet();
         assertThat(fetchedChosenCities).containsOnly(StoredCityMapper.fromStoredCity(storedCity));
     }
 
     @Test
     public void ifStorageReturnsError_getCityDetailsFromService() {
-        when(cityStorage.getChosenCity(filteredCity)).thenReturn(Single.error(new Exception("Error")));
+        when(roomCityStorage.getChosenCity(filteredCity)).thenReturn(Single.error(new Exception("Error")));
         when(cityService.getCityDetails(filteredCity)).thenReturn(Single.just(cityDetailsResponse));
 
-        StoredCity fetchedCity = cityRepositoryImpl.saveChosenCityDetails(filteredCity).blockingGet();
+        StoredCity fetchedCity = cityRepository.saveChosenCityDetails(filteredCity).blockingGet();
 
         assertThat(fetchedCity).isEqualTo(mappedStoredCity);
     }
 
     @Test
     public void savesCityDetails_delegatesToStorage() {
-        cityRepositoryImpl.saveChosenCityDetails(storedCity);
-        verify(cityStorage, times(1)).saveCityDetails(storedCity);
+        cityRepository.saveChosenCityDetails(storedCity);
+        verify(roomCityStorage, times(1)).saveCityDetails(storedCity);
     }
 
     @Test
     public void setNoChosenCity_delegatesToPreferencesManager() {
-        cityRepositoryImpl.setNoChosenCity();
+        cityRepository.setNoChosenCity();
         verify(preferencesManager, times(1)).saveNoChosenCity();
     }
 
     @Test
     public void setChosenCity_delegatesToPreferencesManager() {
-        cityRepositoryImpl.saveChosenCity(storedCity);
+        cityRepository.saveChosenCity(storedCity);
         verify(preferencesManager, times(1)).saveChosenCity(storedCity);
     }
 
     @Test
     public void deleteCity_delegatesToStorage() {
-        cityRepositoryImpl.deleteCity(filteredCity);
-        verify(cityStorage, times(1)).deleteCity(filteredCity);
+        cityRepository.deleteCity(filteredCity);
+        verify(roomCityStorage, times(1)).deleteCity(filteredCity);
     }
 
 }

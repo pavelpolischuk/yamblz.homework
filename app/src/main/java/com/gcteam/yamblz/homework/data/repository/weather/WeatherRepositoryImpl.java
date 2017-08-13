@@ -18,7 +18,7 @@ import timber.log.Timber;
  * Created by turist on 16.07.2017.
  */
 
-public class WeatherRepositoryImpl {
+public class WeatherRepositoryImpl implements WeatherRepository {
 
     private final WeatherStorage weatherStorage;
     private final WeatherService weatherService;

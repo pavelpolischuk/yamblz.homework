@@ -31,21 +31,21 @@ public class UpdateWeatherJob extends Job {
     @Inject
     PreferencesManager preferencesManager;
 
-    WeatherComponent weatherComponent;
-
-    public void startUpdate(int minutesInterval) {
-            new JobRequest.Builder(UpdateWeatherJob.TAG)
-                    .setPeriodic(TimeUnit.MINUTES.toMillis(minutesInterval), TimeUnit.MINUTES.toMillis(15))
-                    .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
-                    .setRequirementsEnforced(true)
-                    .setPersisted(true)
-                    .setUpdateCurrent(true)
-                    .build()
-                    .schedule();
-    }
+    private WeatherComponent weatherComponent;
 
     public static boolean checkStarted() {
         return !JobManager.instance().getAllJobsForTag(UpdateWeatherJob.TAG).isEmpty();
+    }
+
+    public void startUpdate(int minutesInterval) {
+        new JobRequest.Builder(UpdateWeatherJob.TAG)
+                .setPeriodic(TimeUnit.MINUTES.toMillis(minutesInterval), TimeUnit.MINUTES.toMillis(15))
+                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                .setRequirementsEnforced(true)
+                .setPersisted(true)
+                .setUpdateCurrent(true)
+                .build()
+                .schedule();
     }
 
     @Override
@@ -61,8 +61,8 @@ public class UpdateWeatherJob extends Job {
 
         FullWeatherReport fullWeatherReport =
                 weatherInteractor
-                .getWeather(preferencesManager.getLat(), preferencesManager.getLng(),
-                true).onErrorReturn(throwable -> null).blockingGet();
+                        .getWeather(preferencesManager.getLat(), preferencesManager.getLng(),
+                                true).onErrorReturn(throwable -> null).blockingGet();
 
         if (fullWeatherReport == null) {
             Timber.d("Failed updating forecast, rescheduling");
