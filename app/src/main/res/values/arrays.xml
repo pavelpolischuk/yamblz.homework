@@ -16,4 +16,15 @@
         <item>720</item>
         <item>1440</item>
     </string-array>
+
+    <string-array name="pref_units">
+        <item>@string/units_metric</item>
+        <item>@string/units_imperial</item>
+    </string-array>
+
+    <string-array name="pref_units_values">
+        <item>@string/units_metric_value</item>
+        <item>@string/units_imperial_value</item>
+    </string-array>
+
 </resources>

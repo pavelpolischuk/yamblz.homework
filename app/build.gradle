@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply from: '../code_quality_tools/jacoco.gradle'
 
 def keystorePropertiesFile = project.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -27,6 +29,11 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix '.debug'
+
+            // Enables code coverage with Jacoco only for instrumentation tests.
+            // Coverage for JVM tests done by code_quality_tools/jacoco.gradle.
+            testCoverageEnabled true
         }
         release {
             minifyEnabled true
@@ -34,84 +41,73 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles fileTree('proguard').asList().toArray()
         }
+
+        buildTypes.each {
+            it.buildConfigField "String", "OPEN_WEATHER_MAP_API_KEY", keystoreProperties["OPEN_WEATHER_MAP_API_KEY"]
+            it.buildConfigField "String", "GOOGLE_PLACES_API_KEY", keystoreProperties["GOOGLE_PLACES_API_KEY"]
+        }
     }
 
     testOptions {
         unitTests.returnDefaultValues = true
     }
-}
 
-ext {
-    support = '25.4.0'
-    constraint_layout = '1.0.2'
-
-    play_services = '8.4.0'
-    evernote = '1.1.11'
-
-    okhttp = '3.4.1'
-    picasso = '2.5.2'
-    retrofit = '2.3.0'
-    glide = '3.7.0'
-
-    butterknife = '8.7.0'
-
-    rxbinding = '2.0.0'
-    rxandroid = '2.0.1'
-    rxjava = '2.1.1'
-
-    junit = '4.12'
-    mockito = '2.8.47'
-
-    dagger = '2.11'
-    daggerAnnotations = '1.0'
-
-    roboelectric = '3.4'
-
-    espresso = '3.0.0'
-    testRunner = '1.0.0'
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile "junit:junit:${junit}"
-    testCompile "org.mockito:mockito-core:${mockito}"
+    testCompile libraries.junit
+    androidTestCompile libraries.junit
+    testCompile libraries.mockitoCore
 
-    compile "com.android.support:appcompat-v7:${support}"
-    compile "com.android.support:preference-v7:${support}"
-    compile "com.android.support:preference-v14:${support}"
-    compile "com.android.support:design:${support}"
-    compile "com.android.support.constraint:constraint-layout:${constraint_layout}"
+    compile libraries.supportAppCompat
+    compile libraries.supportPreferencev7
+    compile libraries.supportPreferencev14
+    compile libraries.supportDesign
+    compile libraries.supportConstraintLayout
 
-    compile "com.evernote:android-job:${evernote}"
-    compile "com.google.android.gms:play-services-gcm:${play_services}"
-    compile "com.google.android.gms:play-services-location:${play_services}"
-    compile "com.google.android.gms:play-services-maps:${play_services}"
+    compile libraries.evernoteJob
 
-    compile "com.squareup.retrofit2:retrofit:${retrofit}"
-    compile "com.squareup.retrofit2:converter-gson:${retrofit}"
-    compile "com.squareup.retrofit2:adapter-rxjava2:${retrofit}"
-    compile "com.squareup.picasso:picasso:${picasso}"
-    compile "com.squareup.okhttp3:logging-interceptor:${okhttp}"
+    compile libraries.gcm
 
-    compile "io.reactivex.rxjava2:rxandroid:${rxandroid}"
-    compile "io.reactivex.rxjava2:rxjava:${rxjava}"
-    compile "com.jakewharton.rxbinding2:rxbinding:${rxbinding}"
-    compile "com.jakewharton.rxbinding2:rxbinding-support-v4:${rxbinding}"
-    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rxbinding}"
-    compile "com.jakewharton:butterknife:${butterknife}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
+    compile libraries.retrofit
+    compile libraries.retrofitRx2Adapter
+    compile libraries.retrofitGsonConverter
 
-    compile "com.google.dagger:dagger:${dagger}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${dagger}"
-    provided "javax.annotation:jsr250-api:${daggerAnnotations}"
+    compile libraries.okHttpLoggingInterceptor
 
-    testCompile "org.robolectric:robolectric:${roboelectric}"
+    compile libraries.rxAndroid
+    compile libraries.rxJava
+    compile libraries.rxBindingAppCompat
 
-    androidTestCompile("com.android.support.test.espresso:espresso-core:${espresso}", {
+    compile libraries.butterknife
+    annotationProcessor libraries.butterknifeCompiler
+
+    compile libraries.dagger
+    annotationProcessor libraries.daggerCompiler
+    provided libraries.daggerAnnotations
+
+    testCompile libraries.roboelectric
+
+    androidTestCompile(libraries.espressoCore) {
         exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestCompile "com.android.support.test.espresso:espresso-contrib:${espresso}"
-    androidTestCompile "com.android.support.test:runner:${testRunner}"
+    }
+    androidTestCompile libraries.espressoContrib
+    androidTestCompile libraries.testRunner
+
+    compile libraries.stetho
+
+    compile libraries.room
+    annotationProcessor libraries.roomCompiler
+    compile libraries.roomRx
+    compile libraries.timber
+
+    testCompile libraries.assertJ
+
+    testCompile libraries.randomBeans
 }

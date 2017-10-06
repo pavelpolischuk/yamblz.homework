@@ -1,91 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swiperefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
 
-        <android.support.v7.widget.AppCompatImageView android:id="@+id/icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="4dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <TextView android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorDark"
-            app:layout_constraintLeft_toRightOf="@+id/icon"
-            app:layout_constraintBottom_toBottomOf="@+id/icon"/>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <TextView android:id="@+id/temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:textColor="@color/colorDark"
-            android:padding="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/icon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView android:id="@+id/pressure_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pressure_label"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
-            app:layout_constraintLeft_toRightOf="@+id/temperature"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
-        <TextView android:id="@+id/pressure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/pressure_label"
-            app:layout_constraintBaseline_toBaselineOf="@+id/pressure_label" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black">
 
-        <TextView android:id="@+id/humidity_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/humidity_label"
-            app:layout_constraintLeft_toLeftOf="@+id/pressure_label"
-            app:layout_constraintTop_toBottomOf="@+id/pressure_label"/>
-        <TextView android:id="@+id/humidity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/humidity_label"
-            app:layout_constraintBaseline_toBaselineOf="@+id/humidity_label"/>
+                <TextView
+                    android:id="@+id/last_sync_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/last_sync_text_padding"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/last_sync_text_size" />
+            </FrameLayout>
 
-        <TextView android:id="@+id/wind_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wind_label"
-            app:layout_constraintLeft_toLeftOf="@+id/pressure_label"
-            app:layout_constraintTop_toBottomOf="@+id/humidity_label"/>
-        <TextView android:id="@+id/wind"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/wind_label"
-            app:layout_constraintBaseline_toBaselineOf="@+id/wind_label"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/forecast"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <TextView android:id="@+id/updated_label"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/empty_view_block"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/add_icon_size"
+                android:layout_height="@dimen/add_icon_size"
+                android:contentDescription="@string/add_city_content_description"
+                android:src="@drawable/ic_add" />
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/updated_label"
-                android:padding="4dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/wind_label"/>
-        <TextView android:id="@+id/updated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/updated_label"
-            app:layout_constraintBaseline_toBaselineOf="@+id/updated_label"/>
-    </android.support.constraint.ConstraintLayout>
+                android:background="@color/colorPrimary"
+                android:clickable="false"
+                android:padding="@dimen/empty_view_button_padding"
+                android:text="@string/empty_weather_message" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--Weather-->
+    <LinearLayout
+        android:id="@+id/nav_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:minHeight="@dimen/nav_item_height"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:contentDescription="@string/nav_weather_content_description"
+            android:padding="@dimen/nav_icon_padding"
+            android:src="@drawable/ic_menu_weather_selector" />
+
+        <TextView
+            style="@style/nav_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:text="@string/weather_title"
+            android:textColor="@color/nav_text_color" />
+
+    </LinearLayout>
+
+    <!--City description-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/city_chooser"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never" />
+
+    <!-- Delete cities -->
+    <LinearLayout
+        android:id="@+id/nav_delete_cities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:minHeight="@dimen/nav_item_height"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:contentDescription="@string/nav_delete_content_description"
+            android:padding="@dimen/nav_icon_padding"
+            android:src="@drawable/ic_delete_selector" />
+
+        <TextView
+            style="@style/nav_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:text="@string/delete_city_title"
+            android:textColor="@color/nav_text_color" />
+
+    </LinearLayout>
+
+    <!--City picker-->
+    <LinearLayout
+        android:id="@+id/nav_city_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:minHeight="@dimen/nav_item_height"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:contentDescription="@string/nav_add_city_content_description"
+            android:padding="@dimen/nav_icon_padding"
+            android:src="@drawable/ic_add" />
+
+        <TextView
+            style="@style/nav_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:text="@string/add_city_title"
+            android:textColor="@color/nav_text_color" />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider" />
+
+    <!--Settings-->
+    <LinearLayout
+        android:id="@+id/nav_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:minHeight="@dimen/nav_item_height"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:contentDescription="@string/nav_ic_settings_content_description"
+            android:padding="@dimen/nav_icon_padding"
+            android:src="@drawable/ic_menu_settings_selector" />
+
+        <TextView
+            style="@style/nav_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:text="@string/settings_title"
+            android:textColor="@color/nav_text_color" />
+
+    </LinearLayout>
+
+    <!--About-->
+    <LinearLayout
+        android:id="@+id/nav_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:minHeight="@dimen/nav_item_height"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:contentDescription="@string/nav_about_content_description"
+            android:padding="@dimen/nav_icon_padding"
+            android:src="@drawable/ic_menu_about_selector"
+            android:textColor="@color/nav_text_color" />
+
+        <TextView
+            style="@style/nav_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:text="@string/about_title"
+            android:textColor="@color/nav_text_color" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/yandex_logo_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/yandex_logo_content_description"
+        android:src="@drawable/yandex_logo" />
+
+</LinearLayout>
